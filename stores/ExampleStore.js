@@ -1,13 +1,14 @@
 import { observable, action } from 'mobx'
 
-class RootStore {
+class ExampleStore {
   @observable
-  user
+  test = 0
 
   @action
-  init() {
-    this.data = new Document()
+  testFunc = () => {
+    this.test += 1
+    console.log('test')
   }
 }
 
-export const rootStore = new RootStore()
+export const exampleStore = new ExampleStore()

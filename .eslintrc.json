@@ -27,5 +27,6 @@
     // "ordered-imports": [0],
     // "arrow-parens": [0],
     // "member-access": [0]
+    "react/forbid-prop-types": 0
   }
 }

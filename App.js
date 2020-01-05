@@ -1,19 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Provider } from 'mobx-react'
+import { exampleStore } from './stores/ExampleStore'
+import Home from './views/Home'
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!!</Text>
-    </View>
+    <Provider exampleStore={exampleStore}>
+      <Home />
+    </Provider>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    flex: 1,
-    justifyContent: 'center',
-  },
-})
