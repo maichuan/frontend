@@ -5,20 +5,27 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "lint": "eslint --project ."
   },
   "dependencies": {
     "expo": "~36.0.0",
+    "mobx": "^5.15.1",
+    "mobx-react": "^6.1.4",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.7.4",
+    "babel-eslint": "^10.0.3",
     "babel-preset-expo": "~8.0.0",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-native": "^3.8.1",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1"
