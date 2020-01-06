@@ -1,16 +1,15 @@
 import { observable, action } from 'mobx'
 
-export class ExampleStore {
+export class NavigationStore {
   constructor(rootStore) {
     this.rootStore = rootStore
   }
 
   @observable
-  test = 0
+  navigation
 
   @action
-  testFunc = () => {
-    this.test += 1
-    console.log('test')
+  setNavigation = navigation => {
+    this.navigation = navigation
   }
 }

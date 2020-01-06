@@ -1,12 +1,14 @@
-import { createStackNavigator, createAppContainer } from 'react-navigation'
-import Login from '../components/login/Login'
-import Register from '../components/login/Register'
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+
+import Home from '../views/Home'
+import Camera from '../views/Camera'
 
 export default createAppContainer(
   createStackNavigator(
     {
-      Login: Login,
-      Regis: Register,
+      Home: Home,
+      Camera: Camera,
     },
     {
       headerMode: 'none',
