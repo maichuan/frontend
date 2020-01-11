@@ -6,6 +6,8 @@ import Menu from '../../components/restaurant/menu'
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
+import { SafeView } from '../../components/common/styled'
+
 import { mock } from './mock'
 
 const Restaurant = ({ navigation, menusStore }) => {
@@ -13,11 +15,18 @@ const Restaurant = ({ navigation, menusStore }) => {
   const restaurantId = params.id
   const table = params.table
 
+  const changePage = () => {
+    console.log('clicked!!')
+    console.log(navigation)
+
+    navigation.navigate('Cart')
+  }
+
   return (
-    <Container>
+    <SafeView>
       <Content>
         <Text>Hello! Mr. Kong</Text>
-        <Text>What would you like to eat today</Text>
+        <Text>This is your restaurant</Text>
         <Text>
           {restaurantId + ' ===> '} Sat on table: {table}
         </Text>
@@ -28,7 +37,10 @@ const Restaurant = ({ navigation, menusStore }) => {
       <Button onPress={() => menusStore.clear()}>
         <Text>Clear</Text>
       </Button>
-    </Container>
+      <Button onPress={() => navigation.navigate('Cart')}>
+        <Text>Check Order</Text>
+      </Button>
+    </SafeView>
   )
 }
 

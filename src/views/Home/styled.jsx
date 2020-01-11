@@ -11,7 +11,7 @@ export const BottomTab = styled(View)`
   justify-content: center;
   width: 100%;
   height: 100px;
-  bottom: 10px;
+  bottom: 0px;
   background-color: #000;
 `
 export const OpenQrButton = styled(Button)`

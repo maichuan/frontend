@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack'
 import Home from '../views/Home'
 import Camera from '../views/Camera'
 import Restaurant from '../views/Restaurant'
+import Cart from '../views/Cart'
 
 const options = {
   // headerMode: 'none',
@@ -44,6 +45,7 @@ export default createAppContainer(
       Home: Home,
       Camera: Camera,
       Restaurant: Restaurant,
+      Cart: Cart,
     },
     options,
   ),
