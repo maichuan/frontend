@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import { AppLoading } from 'expo'
 import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons'
+import { Root } from 'native-base'
 
 import { Provider } from 'mobx-react'
-import { rootStore } from './stores/RootStore'
+import { rootStore } from './src/stores/RootStore'
 
-import AppNavigator from './navigators/AppNavigator'
+import AppNavigator from './src/navigators/AppNavigator'
 
 const App = () => {
   const [isReady, setIsReady] = useState(false)
@@ -29,7 +30,9 @@ const App = () => {
       <AppNavigator />
     </Provider>
   ) : (
-    <AppLoading />
+    <Root>
+      <AppLoading />
+    </Root>
   )
 }
 

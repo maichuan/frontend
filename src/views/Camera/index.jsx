@@ -3,8 +3,7 @@ import { Text, View, StyleSheet, Button } from 'react-native'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 import PropTypes from 'prop-types'
 
-import { observer, inject } from 'mobx-react'
-import { compose } from 'recompose'
+import { CameraView } from './styled'
 
 const Camera = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null)
@@ -22,6 +21,11 @@ const Camera = ({ navigation }) => {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true)
     alert(`Bar code with type ${type} and data ${data} has been scanned!`)
+
+    navigation.navigate('Restaurant', {
+      id: 12345,
+      table: 0,
+    })
   }
 
   if (hasPermission === null) {
@@ -32,13 +36,7 @@ const Camera = ({ navigation }) => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-      }}
-    >
+    <CameraView>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
@@ -51,7 +49,7 @@ const Camera = ({ navigation }) => {
         title={'Back to Home'}
         onPress={() => navigation.navigate('Home')}
       />
-    </View>
+    </CameraView>
   )
 }
 
@@ -59,9 +57,4 @@ Camera.propTypes = {
   navigation: PropTypes.object,
 }
 
-export default compose(
-  inject(({ rootStore }) => ({
-    navigation: rootStore.navigationStore.navigation,
-  })),
-  observer,
-)(Camera)
+export default Camera

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Button, Content, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
@@ -7,13 +7,7 @@ import { compose } from 'recompose'
 
 import { Containers, BottomTab, OpenQrButton } from './styled'
 
-const Home = ({ exampleStore, navigationStore, navigation }) => {
-  useEffect(() => {
-    if (!navigationStore.navigation) {
-      navigationStore.setNavigation(navigation)
-    }
-  }, [])
-
+const Home = ({ exampleStore, navigation }) => {
   return (
     <Containers>
       <Content>
@@ -25,9 +19,7 @@ const Home = ({ exampleStore, navigationStore, navigation }) => {
         </Button>
       </Content>
       <BottomTab>
-        <OpenQrButton
-          onPress={() => navigationStore.navigation.navigate('Camera')}
-        >
+        <OpenQrButton onPress={() => navigation.navigate('Camera')}>
           <Text>Qr code</Text>
         </OpenQrButton>
       </BottomTab>
@@ -37,15 +29,13 @@ const Home = ({ exampleStore, navigationStore, navigation }) => {
 
 Home.propTypes = {
   exampleStore: PropTypes.object,
-  navigationStore: PropTypes.object,
   navigation: PropTypes.object,
 }
 
 export default compose(
-  inject('rootStore'),
+  // inject('rootStore'),
   inject(({ rootStore }) => ({
     exampleStore: rootStore.exampleStore,
-    navigationStore: rootStore.navigationStore,
   })),
   observer,
 )(Home)

@@ -1,10 +1,10 @@
 import { ExampleStore } from './ExampleStore'
-import { NavigationStore } from './NavigationStore'
+import { MenusStore } from './MenusStore'
 
 class RootStore {
   constructor() {
     this.exampleStore = new ExampleStore(this)
-    this.navigationStore = new NavigationStore(this)
+    this.menusStore = new MenusStore(this)
   }
 }
 
