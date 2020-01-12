@@ -1,3 +1,4 @@
-import React from 'react'
+import { createContext } from 'react'
 
-export const HomeContext = React.createContext()
+export const HomeContext = createContext()
+export const RestaurantContext = createContext()

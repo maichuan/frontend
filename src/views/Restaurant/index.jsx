@@ -1,5 +1,5 @@
 import React from 'react'
-import { Content, Text, Container, Button } from 'native-base'
+import { Content, Text, Button } from 'native-base'
 import PropTypes from 'prop-types'
 import Menu from '../../components/restaurant/Menu'
 
@@ -7,6 +7,8 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
 import withSafeArea from '../../hocs/withSafeView'
+import Cart from '../../components/restaurant/Cart'
+import { RestaurantContext } from '../../utils/context'
 
 import { mock } from './mock'
 
@@ -16,7 +18,7 @@ const Restaurant = ({ navigation, menusStore }) => {
   const table = params.table
 
   return (
-    <>
+    <RestaurantContext.Provider value={{ navigation }}>
       <Content>
         <Text>Hello! Mr. Kong</Text>
         <Text>This is your restaurant</Text>
@@ -30,10 +32,8 @@ const Restaurant = ({ navigation, menusStore }) => {
       <Button onPress={() => menusStore.clear()}>
         <Text>Clear</Text>
       </Button>
-      <Button onPress={() => navigation.navigate('Cart')}>
-        <Text>Check Order</Text>
-      </Button>
-    </>
+      <Cart />
+    </RestaurantContext.Provider>
   )
 }
 

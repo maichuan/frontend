@@ -4,6 +4,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import PropTypes from 'prop-types'
 
 import { CameraView } from './styled'
+import { validateQrCode } from '../../utils/validators'
 
 const Camera = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null)
@@ -18,14 +19,16 @@ const Camera = ({ navigation }) => {
     checkAndSetPermission()
   }, [])
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true)
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`)
-
-    navigation.navigate('Restaurant', {
-      id: 12345,
-      table: 0,
-    })
+  const handleBarCodeScanned = ({ data }) => {
+    try {
+      const dataToJson = JSON.parse(data)
+      if (validateQrCode(dataToJson)) {
+        setScanned(true)
+        navigation.navigate('Restaurant', dataToJson)
+      }
+    } catch (e) {
+      // skip
+    }
   }
 
   if (hasPermission === null) {
