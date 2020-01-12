@@ -27,12 +27,12 @@ const App = () => {
 
   return isReady ? (
     <Provider rootStore={rootStore}>
-      <AppNavigator />
+      <Root>
+        <AppNavigator />
+      </Root>
     </Provider>
   ) : (
-    <Root>
-      <AppLoading />
-    </Root>
+    <AppLoading />
   )
 }
 

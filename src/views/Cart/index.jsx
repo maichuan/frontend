@@ -18,6 +18,7 @@ const Cart = ({ menusStore }) => {
           <MenuCart key={i} data={m} />
         ))}
       </Content>
+      <Text>{'Total Price: ' + menusStore.totalPrice}</Text>
       <Button onPress={() => alert('Confirm!!')}>
         <Text>Submit Order</Text>
       </Button>
