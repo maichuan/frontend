@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import { Text, Button, View } from 'native-base'
 import styled from 'styled-components'
 import Modal from 'react-native-modal'
@@ -83,10 +82,10 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
 }
 
 MenuModal.propTypes = {
-  data: PropTypes.object,
-  showModal: PropTypes.bool,
-  closeModal: PropTypes.func,
-  menusStore: PropTypes.object,
+  data: PropTypes.object.isRequired,
+  showModal: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  menusStore: PropTypes.object.isRequired,
 }
 
 export default compose(

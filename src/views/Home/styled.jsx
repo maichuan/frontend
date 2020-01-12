@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Container, Button, View } from 'native-base'
+import { Container, Button, View, Icon } from 'native-base'
 
 export const Containers = styled(Container)`
   background-color: #fff;
@@ -18,4 +18,8 @@ export const OpenQrButton = styled(Button)`
   width: 100px;
   height: 100px;
   border-radius: 1000;
+`
+export const QrCodeIcon = styled(Icon)`
+  font-size: 50px;
+  margin: auto;
 `

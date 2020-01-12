@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
-import { Containers, BottomTab, OpenQrButton } from './styled'
+import { Containers, BottomTab, OpenQrButton, QrCodeIcon } from './styled'
 import RestaurantCard from '../../components/home/RestaurantCard'
 import { HomeContext } from '../../utils/context'
 import withSafeView from '../../hocs/withSafeView'
@@ -25,7 +25,7 @@ const Home = ({ exampleStore, navigation }) => {
         </Content>
         <BottomTab>
           <OpenQrButton onPress={() => navigation.navigate('Camera')}>
-            <Text>Qr code</Text>
+            <QrCodeIcon type="AntDesign" name="qrcode" />
           </OpenQrButton>
         </BottomTab>
       </Containers>
