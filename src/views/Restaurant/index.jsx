@@ -1,12 +1,12 @@
 import React from 'react'
 import { Content, Text, Container, Button } from 'native-base'
 import PropTypes from 'prop-types'
-import Menu from '../../components/restaurant/menu'
+import Menu from '../../components/restaurant/Menu'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
-import { SafeView } from '../../components/common/styled'
+import withSafeArea from '../../hocs/withSafeView'
 
 import { mock } from './mock'
 
@@ -15,15 +15,8 @@ const Restaurant = ({ navigation, menusStore }) => {
   const restaurantId = params.id
   const table = params.table
 
-  const changePage = () => {
-    console.log('clicked!!')
-    console.log(navigation)
-
-    navigation.navigate('Cart')
-  }
-
   return (
-    <SafeView>
+    <>
       <Content>
         <Text>Hello! Mr. Kong</Text>
         <Text>This is your restaurant</Text>
@@ -40,7 +33,7 @@ const Restaurant = ({ navigation, menusStore }) => {
       <Button onPress={() => navigation.navigate('Cart')}>
         <Text>Check Order</Text>
       </Button>
-    </SafeView>
+    </>
   )
 }
 
@@ -50,6 +43,7 @@ Restaurant.propTypes = {
 }
 
 export default compose(
+  withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
   })),

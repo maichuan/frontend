@@ -11,6 +11,5 @@ export class ExampleStore {
   @action
   testFunc = () => {
     this.test += 1
-    console.log('test')
   }
 }

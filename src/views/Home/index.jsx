@@ -6,31 +6,29 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
 import { Containers, BottomTab, OpenQrButton } from './styled'
-import RestaurantCard from '../../components/home/restaurant_card'
+import RestaurantCard from '../../components/home/RestaurantCard'
 import { HomeContext } from '../../utils/context'
-import { SafeView } from '../../components/common/styled'
+import withSafeView from '../../hocs/withSafeView'
 
 const Home = ({ exampleStore, navigation }) => {
   return (
     <HomeContext.Provider value={{ navigation }}>
-      <SafeView>
-        <Containers>
-          <Content>
-            <Text>Hello! Mr. Kong</Text>
-            <Text>What would you like to eat today</Text>
-            <Text>{exampleStore.test || '555'}</Text>
-            <Button rounded success onPress={() => exampleStore.testFunc()}>
-              <Text>Press Me</Text>
-            </Button>
-            <RestaurantCard />
-          </Content>
-          <BottomTab>
-            <OpenQrButton onPress={() => navigation.navigate('Camera')}>
-              <Text>Qr code</Text>
-            </OpenQrButton>
-          </BottomTab>
-        </Containers>
-      </SafeView>
+      <Containers>
+        <Content>
+          <Text>Hello! Mr. Kong</Text>
+          <Text>What would you like to eat today</Text>
+          <Text>{exampleStore.test || '555'}</Text>
+          <Button rounded success onPress={() => exampleStore.testFunc()}>
+            <Text>Press Me</Text>
+          </Button>
+          <RestaurantCard />
+        </Content>
+        <BottomTab>
+          <OpenQrButton onPress={() => navigation.navigate('Camera')}>
+            <Text>Qr code</Text>
+          </OpenQrButton>
+        </BottomTab>
+      </Containers>
     </HomeContext.Provider>
   )
 }
@@ -41,6 +39,7 @@ Home.propTypes = {
 }
 
 export default compose(
+  withSafeView,
   inject(({ rootStore }) => ({
     exampleStore: rootStore.exampleStore,
   })),

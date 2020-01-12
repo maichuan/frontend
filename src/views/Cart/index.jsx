@@ -5,14 +5,12 @@ import PropTypes from 'prop-types'
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
-import { SafeView } from '../../components/common/styled'
-import MenuCart from '../../components/cart/menu_cart'
+import withSafeArea from '../../hocs/withSafeView'
+import MenuCart from '../../components/cart/MenuCart'
 
 const Cart = ({ menusStore }) => {
-  console.log(menusStore.menus)
-
   return (
-    <SafeView>
+    <>
       <Content>
         <Text>Hello! Mr. Kong</Text>
         <Text>This is your restaurant</Text>
@@ -23,7 +21,7 @@ const Cart = ({ menusStore }) => {
       <Button onPress={() => alert('Confirm!!')}>
         <Text>Submit Order</Text>
       </Button>
-    </SafeView>
+    </>
   )
 }
 
@@ -32,6 +30,7 @@ Cart.propTypes = {
 }
 
 export default compose(
+  withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
   })),
