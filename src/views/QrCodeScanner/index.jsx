@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Text, StyleSheet, Button } from 'react-native'
-import { BarCodeScanner } from 'expo-barcode-scanner'
 import PropTypes from 'prop-types'
+import { BarCodeScanner } from 'expo-barcode-scanner'
 
-import { CameraView } from './styled'
 import { validateQrCode } from '../../utils/validators'
+import { CameraView } from './styled'
 
-const Camera = ({ navigation }) => {
+const QrCodeScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
 
@@ -56,8 +56,8 @@ const Camera = ({ navigation }) => {
   )
 }
 
-Camera.propTypes = {
+QrCodeScanner.propTypes = {
   navigation: PropTypes.object,
 }
 
-export default Camera
+export default QrCodeScanner

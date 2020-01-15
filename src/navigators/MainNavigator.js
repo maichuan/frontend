@@ -1,11 +1,15 @@
 import React from 'react'
-import { createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createStackNavigator } from 'react-navigation-stack'
 
+import QrCode from '../components/common/QrCodeButton'
+import TabBarIcon from '../components/common/TabBarIcon'
+
 import Home from '../views/Home'
-import Camera from '../views/Camera'
 import Restaurant from '../views/Restaurant'
 import Cart from '../views/Cart'
+import UserInfo from '../views/UserInfo'
+import QrCodeScanner from '../views/QrCodeScanner'
 
 const options = {
   // headerMode: 'none',
@@ -40,14 +44,84 @@ const options = {
   },
 }
 
-export default createAppContainer(
-  createStackNavigator(
-    {
-      Home: Home,
-      Camera: Camera,
-      Restaurant: Restaurant,
-      Cart: Cart,
-    },
-    options,
+const MainTab = createStackNavigator({
+  Home: Home,
+  Restaurant: Restaurant,
+  Cart: Cart,
+})
+
+MainTab.navigationOptions = {
+  tabBarLabel: 'Home',
+  // eslint-disable-next-line react/prop-types
+  tabBarIcon: ({ focused, tintColor }) => (
+    <TabBarIcon
+      focused={focused}
+      tintColor={tintColor}
+      type="FontAwesome"
+      name="home"
+    />
   ),
+}
+
+const UserTab = createStackNavigator({
+  Info: UserInfo,
+})
+
+UserTab.navigationOptions = {
+  tabBarLabel: 'Home',
+  // eslint-disable-next-line react/prop-types
+  tabBarIcon: ({ tintColor }) => (
+    <TabBarIcon tintColor={tintColor} type="FontAwesome" name="user" />
+  ),
+}
+
+const QrCodeTab = createStackNavigator({ Empty: () => null })
+
+QrCodeTab.navigationOptions = {
+  tabBarIcon: <QrCode />,
+  tabBarOnPress: ({ navigation }) => {
+    navigation.navigate('QrCode')
+  },
+}
+
+const TabNav = createBottomTabNavigator(
+  {
+    MainTab,
+    QrCodeTab,
+    UserTab,
+  },
+  {
+    initialRouteName: 'MainTab',
+    tabBarOptions: {
+      showLabel: false, // hide labels
+      activeTintColor: '#F8F8F8', // active icon color
+      inactiveTintColor: '#586589', // inactive icon color
+      style: {
+        backgroundColor: '#171F33', // TabBar background
+      },
+      labelStyle: {
+        fontSize: 15,
+        margin: 0,
+        padding: 0,
+        fontWeight: 'bold',
+      },
+      //     style: {
+      //       height: 60,
+      //       backgroundColor: '#c33bab',
+      //     },
+      //     activeTintColor: 'white',
+      //     inactiveTintColor: '#de90cd',
+    },
+  },
+)
+
+export default createStackNavigator(
+  {
+    TabNav,
+    QrCode: QrCodeScanner,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
 )

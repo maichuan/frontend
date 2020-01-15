@@ -23,11 +23,11 @@ const Home = ({ exampleStore, navigation }) => {
           </Button>
           <RestaurantCard />
         </Content>
-        <BottomTab>
+        {/* <BottomTab>
           <OpenQrButton onPress={() => navigation.navigate('Camera')}>
             <QrCodeIcon type="AntDesign" name="qrcode" />
           </OpenQrButton>
-        </BottomTab>
+        </BottomTab> */}
       </Containers>
     </HomeContext.Provider>
   )
