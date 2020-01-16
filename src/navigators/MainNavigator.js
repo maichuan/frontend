@@ -50,17 +50,25 @@ const MainTab = createStackNavigator({
   Cart: Cart,
 })
 
-MainTab.navigationOptions = {
-  tabBarLabel: 'Home',
-  // eslint-disable-next-line react/prop-types
-  tabBarIcon: ({ focused, tintColor }) => (
-    <TabBarIcon
-      focused={focused}
-      tintColor={tintColor}
-      type="FontAwesome"
-      name="home"
-    />
-  ),
+MainTab.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true
+  if (navigation.state.index > 0) {
+    tabBarVisible = false
+  }
+
+  return {
+    tabBarVisible,
+    tabBarLabel: 'Home',
+    // eslint-disable-next-line react/prop-types
+    tabBarIcon: ({ focused, tintColor }) => (
+      <TabBarIcon
+        focused={focused}
+        tintColor={tintColor}
+        type="FontAwesome"
+        name="home"
+      />
+    ),
+  }
 }
 
 const UserTab = createStackNavigator({
@@ -93,11 +101,11 @@ const TabNav = createBottomTabNavigator(
   {
     initialRouteName: 'MainTab',
     tabBarOptions: {
-      showLabel: false, // hide labels
-      activeTintColor: '#F8F8F8', // active icon color
-      inactiveTintColor: '#586589', // inactive icon color
+      showLabel: false,
+      activeTintColor: '#F8F8F8',
+      inactiveTintColor: '#586589',
       style: {
-        backgroundColor: '#171F33', // TabBar background
+        backgroundColor: '#171F33',
       },
       labelStyle: {
         fontSize: 15,
