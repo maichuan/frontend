@@ -9,7 +9,7 @@ import {
   Containers,
   WelcomeView,
   WelcomeMessage,
-  SearchInput,
+  SearchInput as SearchInputOld,
   SearchBox,
   SearchIcon,
   HorizontalView,
@@ -21,7 +21,8 @@ import {
 import RestaurantCard from '../../components/home/RestaurantCard'
 import { HomeContext } from '../../utils/context'
 import withSafeView from '../../hocs/withSafeView'
-import { SearchContainer } from './styled'
+import SearchInput from '../../components/common/SearchInput'
+// import { SearchContainer } from './styled'
 
 const Home = ({ exampleStore, navigation }) => {
   const [searchText, setSearchText] = useState('')
@@ -32,18 +33,13 @@ const Home = ({ exampleStore, navigation }) => {
           <WelcomeMessage>Hello, Kong</WelcomeMessage>
         </WelcomeView>
         <ScrollBody>
-          <SearchContainer>
-            <SearchBox>
-              <SearchIcon name="ios-search" size={20} color="#000" />
-              <SearchInput
-                value={searchText}
-                placeholder="Search for your restaurant"
-                onChangeText={searchString => {
-                  setSearchText(searchString)
-                }}
-              />
-            </SearchBox>
-          </SearchContainer>
+          {/* <SearchContainer> */}
+          <SearchInput
+            placeholder="Search for your restaurant"
+            text={searchText}
+            setText={setSearchText}
+          />
+          {/* </SearchContainer> */}
           <HorizontalView horizontal>
             {Array(5)
               .fill()

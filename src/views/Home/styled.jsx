@@ -59,7 +59,7 @@ export const SearchInput = styled.TextInput`
 export const HorizontalView = styled.ScrollView`
   max-width: 370px;
   height: 128px;
-  box-shadow: 10px 10px 5px grey;
+  /* box-shadow: 10px 10px 5px grey; */
   border: 2px solid rgba(183, 183, 183, 0.83);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
