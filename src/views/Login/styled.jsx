@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Button } from 'native-base'
 
 export const Container = styled.View`
   display: flex;
@@ -27,3 +28,4 @@ export const HorizontalView = styled.View`
   justify-content: center;
   flex: 1;
 `
+export const SButton = styled(Button)``
