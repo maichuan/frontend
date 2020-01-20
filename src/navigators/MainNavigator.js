@@ -9,6 +9,7 @@ import Home from '../views/Home'
 import Restaurant from '../views/Restaurant'
 import Cart from '../views/Cart'
 import UserInfo from '../views/UserInfo'
+import Login from '../views/Login'
 import QrCodeScanner from '../views/QrCodeScanner'
 
 const options = {
@@ -72,6 +73,7 @@ MainTab.navigationOptions = ({ navigation }) => {
 }
 
 const UserTab = createStackNavigator({
+  Login: Login,
   Info: UserInfo,
 })
 
