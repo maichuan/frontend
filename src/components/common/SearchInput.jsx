@@ -10,7 +10,7 @@ const SearchBox = styled.View`
   border-width: 1px;
   border-color: #000;
   border-radius: 6px;
-  max-width: 370px;
+  max-width: ${props => (props.width ? props.width : '370px')};
   margin: 10px 0px;
 `
 const SearchIcon = styled(Icon)`
@@ -22,9 +22,9 @@ export const Input = styled.TextInput`
   color: #424242;
 `
 
-const SearchInput = ({ placeholder, text, setText }) => {
+const SearchInput = ({ placeholder, text, setText, width }) => {
   return (
-    <SearchBox>
+    <SearchBox width={width}>
       <SearchIcon name="ios-search" size={20} color="#000" />
       <Input
         value={text}
@@ -41,6 +41,7 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   setText: PropTypes.func.isRequired,
+  width: PropTypes.number,
 }
 
 export default SearchInput
