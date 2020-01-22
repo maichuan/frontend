@@ -13,43 +13,46 @@ import Login from '../views/Login'
 import QrCodeScanner from '../views/QrCodeScanner'
 
 const options = {
-  // headerMode: 'none',
-  // navigationOptions: {
-  //   headerVisible: false,
-  //   cardStyle: {
-  //     shadowColor: 'transparent',
-  //     backgroundColor: 'transparent',
-  //   },
-  // },
-  defaultNavigationOptions: {
-    headerStyle: {
-      backgroundColor: 'hsla(0,100%,50%,0.5)',
+  headerMode: 'none',
+  navigationOptions: {
+    headerVisible: false,
+    cardStyle: {
+      shadowColor: 'transparent',
+      backgroundColor: 'transparent',
     },
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-    headerBackTitle: 'Back',
-    headerTitle: 'Kong',
-    // headerTitle: (
-    //   <Image
-    //     style={{
-    //       width: 70,
-    //       height: 70,
-    //       resizeMode: 'contain',
-    //       marginHorizontal: 7,
-    //     }}
-    //     source={require('../assets/app_logo-removebg.png')}
-    //   />
-    // ),
   },
+  // defaultNavigationOptions: {
+  //   headerStyle: {
+  //     backgroundColor: 'hsla(0,100%,50%,0.5)',
+  //   },
+  //   headerTintColor: '#fff',
+  //   headerTitleStyle: {
+  //     fontWeight: 'bold',
+  //   },
+  //   headerBackTitle: 'Back',
+  //   headerTitle: 'Kong',
+  //   // headerTitle: (
+  //   //   <Image
+  //   //     style={{
+  //   //       width: 70,
+  //   //       height: 70,
+  //   //       resizeMode: 'contain',
+  //   //       marginHorizontal: 7,
+  //   //     }}
+  //   //     source={require('../assets/app_logo-removebg.png')}
+  //   //   />
+  //   // ),
+  // },
 }
 
-const MainTab = createStackNavigator({
-  Home: Home,
-  Restaurant: Restaurant,
-  Cart: Cart,
-})
+const MainTab = createStackNavigator(
+  {
+    Home: Home,
+    Restaurant: Restaurant,
+    Cart: Cart,
+  },
+  options,
+)
 
 MainTab.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true
