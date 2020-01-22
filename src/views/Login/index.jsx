@@ -12,7 +12,14 @@ const Login = ({ navigation }) => {
   const [pass, setPass] = useState(null)
 
   const signin = () => {
-    if (firebaseApp != undefined) {
+    if (email === null || pass === null) {
+      Alert.alert(
+        'Authentication Failed',
+        'Please enter your email and password',
+        [{ text: 'OK', onPress: () => {} }],
+        { cancelable: false },
+      )
+    } else if (firebaseApp != undefined) {
       firebaseApp
         .auth()
         .signInWithEmailAndPassword(email, pass)
@@ -32,7 +39,14 @@ const Login = ({ navigation }) => {
   }
 
   const signup = () => {
-    if (firebaseApp != undefined) {
+    if (email === null || pass === null) {
+      Alert.alert(
+        'Authentication Failed',
+        'Please enter your email and password',
+        [{ text: 'OK', onPress: () => {} }],
+        { cancelable: false },
+      )
+    } else if (firebaseApp != undefined) {
       firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, pass)
