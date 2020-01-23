@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Image, Alert } from 'react-native'
-import { Content, Text, View } from 'native-base'
+import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import { firebaseApp } from '../../utils/firebase'
 
 import withSafeArea from '../../hocs/withSafeView'
-import { ProfileImg, Input, Container, SButton } from './styled'
+import { ProfileImg, Input, Container, BGroup, SButton, SText } from './styled'
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState(null)
@@ -24,6 +23,16 @@ const Login = ({ navigation }) => {
         .auth()
         .signInWithEmailAndPassword(email, pass)
         .then(() => {
+          firebase
+            .auth()
+            .currentUser.getIdToken(/* forceRefresh */ true)
+            .then(function(idToken) {
+              // Send token to your backend via HTTPS
+              // ...
+            })
+            .catch(function(error) {
+              // Handle error
+            })
           navigation.navigate('Home')
         })
         .catch(function(error) {
@@ -78,12 +87,14 @@ const Login = ({ navigation }) => {
         secureTextEntry
         placeholder={'Password'}
       />
-      <SButton onPress={signin}>
-        <Text>SignIn</Text>
-      </SButton>
-      <SButton onPress={signup}>
-        <Text>SignUp</Text>
-      </SButton>
+      <BGroup>
+        <SButton onPress={signin}>
+          <SText>SignIn</SText>
+        </SButton>
+        <SButton onPress={signup}>
+          <SText>SignUp</SText>
+        </SButton>
+      </BGroup>
     </Container>
   )
 }

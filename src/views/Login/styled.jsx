@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Button } from 'native-base'
 
 export const Container = styled.View`
   display: flex;
@@ -21,14 +20,19 @@ export const Input = styled.TextInput`
   padding: 0px 5px;
   border-radius: 5px;
 `
-export const HorizontalView = styled.View`
+export const BGroup = styled.View`
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
-  flex: 1;
+  margin: 20px;
 `
-export const SButton = styled(Button)`
-  width: 80%;
-  margin-bottom: 20px;
+
+export const SButton = styled.TouchableOpacity`
+  width: 40%;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+`
+export const SText = styled.Text`
+  margin: 5px;
+  textalign: center;
 `
