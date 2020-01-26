@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { Text, Card, Left, Right, CardItem, Button } from 'native-base'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import { Height, Width } from '../../utils/utils'
+import { Width } from '../../utils/utils'
 import MenuModal from './MenuModal'
 
 const MenuImage = styled.Image`
@@ -45,12 +44,11 @@ const Menu = ({ data }) => {
   return (
     <>
       <Box activeOpacity={0.9} onPress={() => addMenu()}>
-        {/* <MenuButton > */}
         <MenuImage
           size={Width / 3}
           source={require('../../../assets/shrimp.jpg')}
         />
-        {/* </MenuButton> */}
+
         <NameView>
           <Name> {data.name}</Name>
         </NameView>

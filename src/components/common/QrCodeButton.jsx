@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Icon } from 'native-base'
 import styled from 'styled-components'
+import Constants from '../../utils/constants'
 
 const BottomTab = styled(View)`
   position: absolute;
@@ -9,13 +10,13 @@ const BottomTab = styled(View)`
   width: 100%;
   height: 100px;
   bottom: 0px;
-  margin-bottom: 7px;
+  /* margin-bottom: 7px; */
 `
 const OpenQrButton = styled(View)`
   width: 90px;
   height: 90px;
   border-radius: 1000;
-  background-color: #171f33;
+  background-color: ${Constants.tabColor};
   border-width: 3px;
 `
 const QrCodeIcon = styled(Icon)`

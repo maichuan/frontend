@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
 import { validateQrCode } from '../../utils/validators'
-import { CameraView } from './styled'
+import { CameraView, Exit, XText } from './styled'
 
 const QrCodeScanner = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null)
@@ -48,10 +48,9 @@ const QrCodeScanner = ({ navigation }) => {
       {scanned && (
         <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
       )}
-      <Button
-        title={'Back to Home'}
-        onPress={() => navigation.navigate('Home')}
-      />
+      <Exit onPress={() => navigation.goBack()}>
+        <XText>&times;</XText>
+      </Exit>
     </CameraView>
   )
 }

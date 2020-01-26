@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
-import { createStackNavigator } from 'react-navigation-stack'
+import { TransitionPresets, createStackNavigator } from 'react-navigation-stack'
 
 import QrCode from '../components/common/QrCodeButton'
 import TabBarIcon from '../components/common/TabBarIcon'
@@ -11,6 +11,9 @@ import Cart from '../views/Cart'
 import UserInfo from '../views/UserInfo'
 import Login from '../views/Login'
 import QrCodeScanner from '../views/QrCodeScanner'
+import Process from '../views/Process'
+
+import Constants from '../utils/constants'
 
 const options = {
   headerMode: 'none',
@@ -81,10 +84,34 @@ const UserTab = createStackNavigator({
 })
 
 UserTab.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'User',
   // eslint-disable-next-line react/prop-types
   tabBarIcon: ({ tintColor }) => (
     <TabBarIcon tintColor={tintColor} type="FontAwesome" name="user" />
+  ),
+}
+
+const ProvessTab = createStackNavigator({
+  Process: Process,
+})
+
+ProvessTab.navigationOptions = {
+  tabBarLabel: 'Process',
+  // eslint-disable-next-line react/prop-types
+  tabBarIcon: ({ tintColor }) => (
+    <TabBarIcon tintColor={tintColor} type="FontAwesome" name="spinner" />
+  ),
+}
+
+const NoNameTab = createStackNavigator({
+  None: Process,
+})
+
+NoNameTab.navigationOptions = {
+  tabBarLabel: 'Process',
+  // eslint-disable-next-line react/prop-types
+  tabBarIcon: ({ tintColor }) => (
+    <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gamepad" />
   ),
 }
 
@@ -100,7 +127,9 @@ QrCodeTab.navigationOptions = {
 const TabNav = createBottomTabNavigator(
   {
     MainTab,
+    ProvessTab,
     QrCodeTab,
+    NoNameTab,
     UserTab,
   },
   {
@@ -110,20 +139,15 @@ const TabNav = createBottomTabNavigator(
       activeTintColor: '#F8F8F8',
       inactiveTintColor: '#586589',
       style: {
-        backgroundColor: '#171F33',
+        backgroundColor: Constants.tabColor,
+        height: 60,
       },
-      labelStyle: {
-        fontSize: 15,
-        margin: 0,
-        padding: 0,
-        fontWeight: 'bold',
-      },
-      //     style: {
-      //       height: 60,
-      //       backgroundColor: '#c33bab',
-      //     },
-      //     activeTintColor: 'white',
-      //     inactiveTintColor: '#de90cd',
+      // labelStyle: {
+      //   fontSize: 15,
+      //   margin: 0,
+      //   padding: 0,
+      //   fontWeight: 'bold',
+      // },
     },
   },
 )
@@ -136,5 +160,10 @@ export default createStackNavigator(
   {
     mode: 'modal',
     headerMode: 'none',
+    defaultNavigationOptions: {
+      gestureEnabled: true,
+      cardOverlayEnabled: true,
+      ...TransitionPresets.ModalPresentationIOS,
+    },
   },
 )

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Content, Text, Icon } from 'native-base'
+import { Platform } from 'react-native'
+import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
 import Menu from '../../components/restaurant/Menu'
 import PopularMenu from '../../components/restaurant/PopularMenu'
@@ -7,7 +8,6 @@ import PopularMenu from '../../components/restaurant/PopularMenu'
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
-import withSafeArea from '../../hocs/withSafeView'
 import Cart from '../../components/restaurant/Cart'
 import { RestaurantContext } from '../../utils/context'
 import {
@@ -20,8 +20,10 @@ import {
   FilterButton,
   PopularText,
   HorizontalView,
+  Container,
 } from './styled'
 import SearchInput from '../../components/common/SearchInput'
+import { SafeView } from '../../components/common/styled'
 
 import { mock } from './mock'
 
@@ -33,7 +35,7 @@ const Restaurant = ({ navigation, menusStore }) => {
 
   return (
     <RestaurantContext.Provider value={{ navigation }}>
-      <Content>
+      <Container>
         <HeadImage source={require('../../../assets/mock_res.jpg')} />
         <TextImage>
           <TableNoView>
@@ -67,8 +69,9 @@ const Restaurant = ({ navigation, menusStore }) => {
         {mock.map((m, i) => (
           <Menu key={i} data={m} />
         ))}
-      </Content>
+      </Container>
       <Cart />
+      {Platform.OS === 'ios' && <SafeView bottom />}
     </RestaurantContext.Provider>
   )
 }
@@ -79,7 +82,6 @@ Restaurant.propTypes = {
 }
 
 export default compose(
-  withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
   })),

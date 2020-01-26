@@ -1,6 +1,8 @@
 import styled from 'styled-components'
-import Search from '../../components/common/SearchInput'
 
+export const Container = styled.ScrollView`
+  flex: 1;
+`
 export const HeadImage = styled.Image`
   align-self: stretch;
   height: 220px;

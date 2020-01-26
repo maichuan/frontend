@@ -9,9 +9,6 @@ import {
   Containers,
   WelcomeView,
   WelcomeMessage,
-  SearchInput as SearchInputOld,
-  SearchBox,
-  SearchIcon,
   HorizontalView,
   Body,
   ScrollBody,
@@ -20,44 +17,45 @@ import {
 } from './styled'
 import RestaurantCard from '../../components/home/RestaurantCard'
 import { HomeContext } from '../../utils/context'
-import withSafeView from '../../hocs/withSafeView'
 import SearchInput from '../../components/common/SearchInput'
-// import { SearchContainer } from './styled'
+import { SafeView } from '../../components/common/styled'
+
+import Constant from '../../utils/constants'
 
 const Home = ({ exampleStore, navigation }) => {
   const [searchText, setSearchText] = useState('')
   return (
     <HomeContext.Provider value={{ navigation }}>
-      <Containers>
-        <WelcomeView>
-          <WelcomeMessage>Hello, Kong</WelcomeMessage>
-        </WelcomeView>
-        <ScrollBody>
-          {/* <SearchContainer> */}
+      <SafeView color={Constant.tabColor}>
+        <Containers>
+          <WelcomeView>
+            <WelcomeMessage>Hello, Kong</WelcomeMessage>
+          </WelcomeView>
           <SearchInput
             placeholder="Search for your restaurant"
             text={searchText}
             setText={setSearchText}
           />
-          {/* </SearchContainer> */}
-          <HorizontalView horizontal>
-            {Array(5)
-              .fill()
-              .map((_, i) => (
-                <TrendRestaurant key={i}>
-                  <Text>Wow{' ' + i}</Text>
-                </TrendRestaurant>
-              ))}
-          </HorizontalView>
-          <Body>
-            <NearByText>Near By restaurant</NearByText>
-            <RestaurantCard />
-            <RestaurantCard />
-            <RestaurantCard />
-            <RestaurantCard />
-          </Body>
-        </ScrollBody>
-      </Containers>
+          <ScrollBody>
+            <HorizontalView horizontal>
+              {Array(5)
+                .fill()
+                .map((_, i) => (
+                  <TrendRestaurant key={i}>
+                    <Text>Wow{' ' + i}</Text>
+                  </TrendRestaurant>
+                ))}
+            </HorizontalView>
+            <Body>
+              <NearByText>Near By restaurant</NearByText>
+              <RestaurantCard />
+              <RestaurantCard />
+              <RestaurantCard />
+              <RestaurantCard />
+            </Body>
+          </ScrollBody>
+        </Containers>
+      </SafeView>
     </HomeContext.Provider>
   )
 }
@@ -68,7 +66,6 @@ Home.propTypes = {
 }
 
 export default compose(
-  withSafeView,
   inject(({ rootStore }) => ({
     exampleStore: rootStore.exampleStore,
   })),

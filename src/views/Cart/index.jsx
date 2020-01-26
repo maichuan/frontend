@@ -1,4 +1,5 @@
 import React from 'react'
+import { StackActions, NavigationActions } from 'react-navigation'
 import { Text, Content, Button } from 'native-base'
 import PropTypes from 'prop-types'
 
@@ -8,7 +9,12 @@ import { compose } from 'recompose'
 import withSafeArea from '../../hocs/withSafeView'
 import MenuCart from '../../components/cart/MenuCart'
 
-const Cart = ({ menusStore }) => {
+const Cart = ({ menusStore, navigation }) => {
+  const onSubmitClicked = () => {
+    navigation.goBack()
+    navigation.navigate('Process')
+  }
+
   return (
     <>
       <Content>
@@ -19,7 +25,7 @@ const Cart = ({ menusStore }) => {
         ))}
       </Content>
       <Text>{'Total Price: ' + menusStore.totalPrice}</Text>
-      <Button onPress={() => alert('Confirm!!')}>
+      <Button onPress={() => onSubmitClicked()}>
         <Text>Submit Order</Text>
       </Button>
     </>
@@ -28,6 +34,7 @@ const Cart = ({ menusStore }) => {
 
 Cart.propTypes = {
   menusStore: PropTypes.object,
+  navigation: PropTypes.object,
 }
 
 export default compose(

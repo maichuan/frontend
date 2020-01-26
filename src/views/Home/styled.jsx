@@ -1,11 +1,14 @@
 import styled from 'styled-components'
-import { Container, Icon } from 'native-base'
+import { Platform } from 'react-native'
+import { Icon } from 'native-base'
+import Constants from '../../utils/constants'
 
-export const Containers = styled(Container)`
+export const Containers = styled.View`
   background-color: #fff;
   flex: 1;
   justify-content: center;
   align-items: center;
+  margin-top: ${Platform.OS === 'android' ? '25px' : '0'};
 `
 export const ScrollBody = styled.ScrollView.attrs(props => ({
   contentContainerStyle: {
@@ -23,7 +26,7 @@ export const Body = styled.View`
   justify-content: center;
 `
 export const WelcomeView = styled.View`
-  background-color: #171f33;
+  background-color: ${Constants.tabColor};
   height: 100px;
   width: 100%;
 `

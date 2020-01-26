@@ -8,12 +8,13 @@ import { compose } from 'recompose'
 
 import { RestaurantContext } from '../../utils/context'
 
-const InlineView = styled(View)`
+const InlineView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: 60px;
 `
-const TotalPrice = styled(View)`
+const TotalPrice = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -21,7 +22,7 @@ const TotalPrice = styled(View)`
 const CartIcon = styled(Icon)`
   margin: auto 10px;
 `
-const Price = styled(Text)`
+const Price = styled.Text`
   font-size: 20px;
   margin: auto 10px;
   font-weight: bold;
