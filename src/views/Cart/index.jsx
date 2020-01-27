@@ -11,7 +11,7 @@ import MenuCart from '../../components/cart/MenuCart'
 
 const Cart = ({ menusStore, navigation }) => {
   const onSubmitClicked = () => {
-    navigation.goBack()
+    navigation.popToTop()
     navigation.navigate('Process')
   }
 
