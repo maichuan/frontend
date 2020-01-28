@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
+import * as firebase from 'firebase'
 import { firebaseApp } from '../../utils/firebase'
 
 import withSafeArea from '../../hocs/withSafeView'
-import { ProfileImg, Input, Container, BGroup, SButton, SText } from './styled'
+import {
+  ProfileImg,
+  Input,
+  Container,
+  BGroup,
+  SLButton,
+  SRButton,
+  VLine,
+  SText,
+  FBLogin,
+  FBBlock,
+  FBLogo,
+  FBText,
+} from './styled'
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState(null)
@@ -71,6 +85,31 @@ const Login = ({ navigation }) => {
     }
   }
 
+  const signInWithFB = () => {
+    let provider = new firebase.auth.FacebookAuthProvider()
+
+    firebaseApp
+      .auth()
+      .signInWithPopup(provider)
+      .then(function(result) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        token = result.credential.accessToken
+        // The signed-in user info.
+        user = result.user
+        // ...
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        //errorCode = error.code;
+        errorMessage = error.message
+        // The email of the user's account used.
+        femail = error.email
+        // The firebase.auth.AuthCredential type that was used.
+        credential = error.credential
+        // ...
+      })
+  }
+
   return (
     <Container>
       <ProfileImg source={require('../../../assets/hamburger.jpg')} />
@@ -88,13 +127,20 @@ const Login = ({ navigation }) => {
         placeholder={'Password'}
       />
       <BGroup>
-        <SButton onPress={signin}>
+        <SLButton onPress={signin}>
           <SText>SignIn</SText>
-        </SButton>
-        <SButton onPress={signup}>
+        </SLButton>
+        <VLine />
+        <SRButton onPress={signup}>
           <SText>SignUp</SText>
-        </SButton>
+        </SRButton>
       </BGroup>
+      <FBLogin onPress={signInWithFB}>
+        <FBBlock>
+          <FBLogo source={require('../../../assets/fb_logo.png')} />
+          <FBText>Continue with Facebook</FBText>
+        </FBBlock>
+      </FBLogin>
     </Container>
   )
 }
