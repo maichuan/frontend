@@ -34,7 +34,7 @@ const Login = ({ navigation }) => {
         [{ text: 'OK', onPress: () => {} }],
         { cancelable: false },
       )
-    } else if (firebaseApp != undefined) {
+    } else if (firebaseApp) {
       firebaseApp
         .auth()
         .signInWithEmailAndPassword(email, pass)
@@ -71,7 +71,7 @@ const Login = ({ navigation }) => {
         [{ text: 'OK', onPress: () => {} }],
         { cancelable: false },
       )
-    } else if (firebaseApp != undefined) {
+    } else if (firebaseApp) {
       firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, pass)
@@ -92,12 +92,12 @@ const Login = ({ navigation }) => {
 
     Facebook.initializeAsync(FACEBOOK_APPID, FACEBOOK_APPNAME)
 
-    const {
-      type,
-      token,
-    } = await Facebook.logInWithReadPermissionsAsync(FACEBOOK_APPID, {
-      permissions,
-    })
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync(
+      FACEBOOK_APPID,
+      {
+        permissions,
+      },
+    )
 
     switch (type) {
       case 'success': {
@@ -107,7 +107,7 @@ const Login = ({ navigation }) => {
         const credential = firebase.auth.FacebookAuthProvider.credential(token)
         const facebookProfileData = await firebaseApp
           .auth()
-          .signInAndRetrieveDataWithCredential(credential) // Sign in with Facebook credential
+          .signInWithCredential(credential) // Sign in with Facebook credential
 
         // Do something with Facebook profile data
         // OR you have subscribed to auth state change, authStateChange handler will process the profile data
@@ -128,14 +128,14 @@ const Login = ({ navigation }) => {
         onChangeText={text => {
           setEmail(text)
         }}
-        placeholder={'Email Addesss'}
+        placeholder="Email Addesss"
       />
       <Input
         onChangeText={text => {
           setPass(text)
         }}
         secureTextEntry
-        placeholder={'Password'}
+        placeholder="Password"
       />
       <BGroup>
         <SLButton onPress={signin}>
