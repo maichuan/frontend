@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import * as firebase from 'firebase'
+import * as Facebook from 'expo-facebook'
 import { firebaseApp } from '../../utils/firebase'
+import { FACEBOOK_APPID, FACEBOOK_APPNAME } from 'react-native-dotenv'
 
 import withSafeArea from '../../hocs/withSafeView'
 import {
@@ -85,29 +87,38 @@ const Login = ({ navigation }) => {
     }
   }
 
-  const signInWithFB = () => {
-    let provider = new firebase.auth.FacebookAuthProvider()
+  const signInWithFB = async () => {
+    const permissions = ['public_profile', 'email'] // Permissions required, consult Facebook docs
 
-    firebaseApp
-      .auth()
-      .signInWithPopup(provider)
-      .then(function(result) {
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        token = result.credential.accessToken
-        // The signed-in user info.
-        user = result.user
-        // ...
-      })
-      .catch(function(error) {
-        // Handle Errors here.
-        //errorCode = error.code;
-        errorMessage = error.message
-        // The email of the user's account used.
-        femail = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        credential = error.credential
-        // ...
-      })
+    Facebook.initializeAsync(FACEBOOK_APPID, FACEBOOK_APPNAME)
+
+    const {
+      type,
+      token,
+    } = await Facebook.logInWithReadPermissionsAsync(FACEBOOK_APPID, {
+      permissions,
+    })
+
+    switch (type) {
+      case 'success': {
+        await firebaseApp
+          .auth()
+          .setPersistence(firebase.auth.Auth.Persistence.LOCAL) // Set persistent auth state
+        const credential = firebase.auth.FacebookAuthProvider.credential(token)
+        const facebookProfileData = await firebaseApp
+          .auth()
+          .signInAndRetrieveDataWithCredential(credential) // Sign in with Facebook credential
+
+        // Do something with Facebook profile data
+        // OR you have subscribed to auth state change, authStateChange handler will process the profile data
+
+        return Promise.resolve({ type: 'success' })
+      }
+      case 'cancel': {
+        console.log('cancel')
+        return Promise.reject({ type: 'cancel' })
+      }
+    }
   }
 
   return (

@@ -29,41 +29,41 @@ export const BGroup = styled.View`
 
 export const SLButton = styled.TouchableOpacity`
   width: 40%;
-  backgroundcolor: grey;
+  background-color: grey;
   border: 2px solid grey;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
 `
 export const SRButton = styled.TouchableOpacity`
   width: 40%;
-  backgroundcolor: grey;
+  background-color: grey;
   border: 2px solid grey;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 `
 export const VLine = styled.View`
-  backgroundcolor: grey;
+  background-color: grey;
   border: 1px solid grey;
-  marginleft: 12px;
-  marginright: 12px;
+  margin-left: 12px;
+  margin-right: 12px;
 `
 
 export const SText = styled.Text`
   color: white;
   margin: 10px;
-  textalign: center;
+  text-align: center;
 `
 export const FBLogin = styled.TouchableOpacity`
   width: 80%;
-  backgroundcolor: #4267b2;
+  background-color: #4267b2;
   border: 2px solid #4267b2;
   border-radius: 3px;
 `
 export const FBBlock = styled.View`
   margin: 10px;
   display: flex;
-  flexdirection: row;
-  justifycontent: center;
+  flex-direction: row;
+  justify-content: center;
 `
 export const FBLogo = styled.Image`
   width: 24px;
@@ -71,7 +71,7 @@ export const FBLogo = styled.Image`
 `
 export const FBText = styled.Text`
   color: white;
-  fontweight: bold;
-  fontsize: 16px;
-  marginleft: 20px;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 20px;
 `
