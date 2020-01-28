@@ -1,5 +1,4 @@
 import React from 'react'
-import { StackActions, NavigationActions } from 'react-navigation'
 import { Text, Content, Button } from 'native-base'
 import PropTypes from 'prop-types'
 
@@ -9,8 +8,11 @@ import { compose } from 'recompose'
 import withSafeArea from '../../hocs/withSafeView'
 import MenuCart from '../../components/cart/MenuCart'
 
-const Cart = ({ menusStore, navigation }) => {
-  const onSubmitClicked = () => {
+const Cart = ({ menusStore, spinnerStore, navigation }) => {
+  const onSubmitClicked = async () => {
+    spinnerStore.open()
+    await new Promise(r => setTimeout(r, 300))
+    spinnerStore.close()
     navigation.popToTop()
     navigation.navigate('Process')
   }
@@ -34,6 +36,7 @@ const Cart = ({ menusStore, navigation }) => {
 
 Cart.propTypes = {
   menusStore: PropTypes.object,
+  spinnerStore: PropTypes.object,
   navigation: PropTypes.object,
 }
 
@@ -41,6 +44,7 @@ export default compose(
   withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
+    spinnerStore: rootStore.spinnerStore,
   })),
   observer,
 )(Cart)

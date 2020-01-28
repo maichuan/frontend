@@ -27,6 +27,18 @@ const Price = styled.Text`
   margin: auto 10px;
   font-weight: bold;
 `
+const Continue = styled.TouchableOpacity`
+  background-color: #75cf55;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 10px;
+  border-radius: 5px;
+`
+const ContinueText = styled.Text`
+  font-size: 20px;
+  color: #fff;
+  font-weight: 700;
+`
 
 const Cart = ({ menusStore }) => {
   const { navigation } = useContext(RestaurantContext)
@@ -37,9 +49,9 @@ const Cart = ({ menusStore }) => {
         <CartIcon ios="ios-cart" android="md-cart" />
         <Price>Total Price: {menusStore.totalPrice}</Price>
       </TotalPrice>
-      <Button success onPress={() => navigation.navigate('Cart')}>
-        <Text>Continue</Text>
-      </Button>
+      <Continue onPress={() => navigation.navigate('Cart')}>
+        <ContinueText>Continue</ContinueText>
+      </Continue>
     </InlineView>
   )
 }
