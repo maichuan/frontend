@@ -7,7 +7,7 @@ import { Root } from 'native-base'
 import { Provider } from 'mobx-react'
 import { rootStore } from './src/stores/RootStore'
 
-import AppNavigator from './src/navigators/AppNavigator'
+import Main from './src/views/main.jsx'
 
 const App = () => {
   const [isReady, setIsReady] = useState(false)
@@ -27,9 +27,7 @@ const App = () => {
 
   return isReady ? (
     <Provider rootStore={rootStore}>
-      <Root>
-        <AppNavigator />
-      </Root>
+      <Main />
     </Provider>
   ) : (
     <AppLoading />
