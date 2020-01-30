@@ -13,6 +13,7 @@ const Cart = ({ menusStore, spinnerStore, navigation }) => {
     spinnerStore.open()
     await new Promise(r => setTimeout(r, 300))
     spinnerStore.close()
+
     navigation.popToTop()
     navigation.navigate('Process')
   }

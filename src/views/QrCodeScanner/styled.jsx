@@ -12,7 +12,6 @@ export const Exit = styled.TouchableOpacity`
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #adadad;
   top: 20;
   left: 20;
   border-radius: 100px;
@@ -20,4 +19,5 @@ export const Exit = styled.TouchableOpacity`
 export const XText = styled.Text`
   font-size: 30px;
   font-weight: 800;
+  color: #adadad;
 `

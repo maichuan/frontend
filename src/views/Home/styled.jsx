@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Platform } from 'react-native'
 import { Icon } from 'native-base'
+import { Width } from '../../utils/utils'
 import Constants from '../../utils/constants'
 
 export const Containers = styled.View`
@@ -28,7 +29,7 @@ export const Body = styled.View`
 export const WelcomeView = styled.View`
   background-color: ${Constants.tabColor};
   height: 100px;
-  width: 100%;
+  width: ${Width};
 `
 export const WelcomeMessage = styled.Text`
   color: white;
@@ -49,7 +50,7 @@ export const SearchBox = styled.View`
 export const SearchContainer = styled.View`
   display: flex;
   align-items: center;
-  width: 100%;
+  width: ${Width};
 `
 export const SearchIcon = styled(Icon)`
   margin: 3px 10px;
@@ -61,14 +62,13 @@ export const SearchInput = styled.TextInput`
 `
 export const HorizontalView = styled.ScrollView`
   max-width: 370px;
-  height: 128px;
-  /* box-shadow: 10px 10px 5px grey; */
+  height: ${Width / 3};
   border: 2px solid rgba(183, 183, 183, 0.83);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
 `
 export const TrendRestaurant = styled.TouchableOpacity`
-  width: 160px;
+  width: ${Width / 2};
   margin: 5px;
   border-width: 1px;
   border-color: #c4c4c4;

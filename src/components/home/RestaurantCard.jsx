@@ -1,10 +1,16 @@
 import React, { useContext } from 'react'
 import { Image } from 'react-native'
 import { Text, Card, Left, Right, CardItem } from 'native-base'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { HomeContext } from '../../utils/context'
 
-const RestaurantCard = () => {
+const RestaurantImage = styled.Image`
+  height: 200px;
+  flex: 1;
+`
+
+const RestaurantCard = ({ data }) => {
   const { navigation } = useContext(HomeContext)
 
   const changePage = () => {
@@ -16,18 +22,14 @@ const RestaurantCard = () => {
   return (
     <Card>
       <CardItem cardBody button onPress={() => changePage()}>
-        <Image
-          source={require('../../../assets/hamburger.jpg')}
-          style={{ height: 200, width: null, flex: 1 }}
-        />
+        <RestaurantImage source={require('../../../assets/hamburger.jpg')} />
       </CardItem>
       <CardItem button onPress={() => changePage()}>
         <Left>
-          <Text>เบอร์เกอร์ท่านก้อง</Text>
+          <Text>{data.name}</Text>
         </Left>
-
         <Right>
-          <Text>อร่อย</Text>
+          <Text>{data.distance}</Text>
         </Right>
       </CardItem>
     </Card>
@@ -36,6 +38,12 @@ const RestaurantCard = () => {
 
 RestaurantCard.propTypes = {
   data: PropTypes.object,
+}
+RestaurantCard.defaultProps = {
+  data: {
+    name: 'เบอร์เกอร์ท่านก้อง',
+    distance: 10,
+  },
 }
 
 export default RestaurantCard

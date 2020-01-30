@@ -24,6 +24,7 @@ import {
 } from './styled'
 import SearchInput from '../../components/common/SearchInput'
 import { SafeView } from '../../components/common/styled'
+import { Width } from '../../utils/utils'
 
 import { mock } from './mock'
 
@@ -42,7 +43,6 @@ const Restaurant = ({ navigation, menusStore }) => {
             <RestaurantName>Jackkkkkkkkkkkkkkk</RestaurantName>
             <RestaurantName>{restaurantId}</RestaurantName>
           </TableNoView>
-
           <TableNoView>
             <RestaurantName>Table No.</RestaurantName>
             <TableNo>{table}</TableNo>
@@ -53,7 +53,7 @@ const Restaurant = ({ navigation, menusStore }) => {
             placeholder="Find something to eat"
             text={searchText}
             setText={setSearchText}
-            width={225}
+            width={Width / 1.6}
           />
           <FilterButton>
             <Icon name="sort-variant" type="MaterialCommunityIcons" />

@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { Width } from '../../utils/utils'
 
 export const Container = styled.ScrollView`
   flex: 1;
 `
 export const HeadImage = styled.Image`
   align-self: stretch;
-  height: 220px;
+  height: ${Width / 1.75};
 `
 export const TextImage = styled.View`
   position: absolute;
@@ -13,8 +14,8 @@ export const TextImage = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  height: 220px;
+  width: ${Width};
+  height: ${Width / 1.75};
 `
 export const RestaurantName = styled.Text`
   text-shadow: 2px 2px black;
@@ -47,7 +48,7 @@ export const SearchView = styled.View`
   align-items: center;
 `
 export const FilterButton = styled.TouchableOpacity`
-  width: 100px;
+  width: ${Width / 4};
   border-color: #575757;
   border-width: 1px;
   margin: 10px;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Text } from 'native-base'
 import PropTypes from 'prop-types'
 
@@ -19,11 +19,24 @@ import RestaurantCard from '../../components/home/RestaurantCard'
 import { HomeContext } from '../../utils/context'
 import SearchInput from '../../components/common/SearchInput'
 import { SafeView } from '../../components/common/styled'
+import RefreshView from '../../components/common/RefreshView'
 
 import Constant from '../../utils/constants'
+import { serverClient } from '../../api'
 
 const Home = ({ exampleStore, navigation }) => {
   const [searchText, setSearchText] = useState('')
+  const [data, setData] = useState({})
+
+  const fetchWelcome = async () => {
+    const res = await serverClient.get('/welcome')
+    setData(res.data)
+  }
+
+  useEffect(() => {
+    fetchWelcome()
+  }, [])
+
   return (
     <HomeContext.Provider value={{ navigation }}>
       <SafeView color={Constant.tabColor}>
@@ -36,7 +49,7 @@ const Home = ({ exampleStore, navigation }) => {
             text={searchText}
             setText={setSearchText}
           />
-          <ScrollBody>
+          <RefreshView>
             <HorizontalView horizontal>
               {Array(5)
                 .fill()
@@ -53,7 +66,7 @@ const Home = ({ exampleStore, navigation }) => {
               <RestaurantCard />
               <RestaurantCard />
             </Body>
-          </ScrollBody>
+          </RefreshView>
         </Containers>
       </SafeView>
     </HomeContext.Provider>
