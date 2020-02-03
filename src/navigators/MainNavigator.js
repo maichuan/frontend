@@ -79,8 +79,8 @@ MainTab.navigationOptions = ({ navigation }) => {
 }
 
 const UserTab = createStackNavigator({
-  Login: Login,
   Info: UserInfo,
+  // Login: Login,
 })
 
 UserTab.navigationOptions = {

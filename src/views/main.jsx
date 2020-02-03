@@ -9,8 +9,9 @@ import PropTypes from 'prop-types'
 
 import AppNavigator from '../navigators/AppNavigator'
 import Spinner from '../components/common/Spinner'
+import { firebaseApp } from '../utils/firebase'
 
-const Main = ({ spinnerStore }) => {
+const Main = ({ spinnerStore, authStore }) => {
   const [location, setLocation] = useState({})
 
   const getLocationAsync = async () => {
@@ -22,7 +23,7 @@ const Main = ({ spinnerStore }) => {
     // }
     if (status === 'granted') {
       let l = await Location.getCurrentPositionAsync({})
-      console.log(l)
+      console.log(l.coords.latitude, l.coords.longitude)
 
       setLocation(location)
     }
@@ -30,23 +31,31 @@ const Main = ({ spinnerStore }) => {
 
   useEffect(() => {
     getLocationAsync()
+
+    firebaseApp.auth().onAuthStateChanged(user => {
+      if (user) {
+        authStore.setAuth(user)
+      }
+    })
   }, [])
 
   return (
     <Root>
-      {spinnerStore.display && <Spinner />}
       <AppNavigator />
+      {spinnerStore.display && <Spinner />}
     </Root>
   )
 }
 
 Main.propTypes = {
   spinnerStore: PropTypes.object,
+  authStore: PropTypes.object,
 }
 
 export default compose(
   inject(({ rootStore }) => ({
     spinnerStore: rootStore.spinnerStore,
+    authStore: rootStore.authStore,
   })),
   observer,
 )(Main)

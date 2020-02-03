@@ -34,7 +34,7 @@ const Home = ({ exampleStore, navigation }) => {
   }
 
   useEffect(() => {
-    fetchWelcome()
+    // fetchWelcome()
   }, [])
 
   return (

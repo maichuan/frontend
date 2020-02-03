@@ -11,7 +11,7 @@ import MenuCart from '../../components/cart/MenuCart'
 const Cart = ({ menusStore, spinnerStore, navigation }) => {
   const onSubmitClicked = async () => {
     spinnerStore.open()
-    await new Promise(r => setTimeout(r, 300))
+    await new Promise(r => setTimeout(r, 1000))
     spinnerStore.close()
 
     navigation.popToTop()
