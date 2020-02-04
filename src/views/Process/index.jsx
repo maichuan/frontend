@@ -1,5 +1,4 @@
 import React from 'react'
-import { View, Text } from 'native-base'
 import PropTypes from 'prop-types'
 
 import { Container } from './styled'
@@ -11,11 +10,13 @@ const mock = {
       menuId: 1,
       name: 'Menu1',
       status: 0,
+      queue: 2,
     },
     {
       menuId: 2,
       name: 'Menu2',
-      status: 2,
+      status: 1,
+      queue: 0,
     },
   ],
 }
@@ -23,7 +24,6 @@ const mock = {
 const Process = ({ navigation }) => {
   return (
     <Container>
-      <Text>Your current order</Text>
       {mock.data.map((d, i) => (
         <ProcessMenu data={d} key={i} />
       ))}
