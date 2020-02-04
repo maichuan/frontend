@@ -1,5 +1,5 @@
 import React from 'react'
-import { FlatList } from 'react-native'
+// import { FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
@@ -16,11 +16,18 @@ import {
   ConfirmButton,
   ConfirmText,
 } from './styled'
+import { serverClient } from '../../api'
 
 const Cart = ({ menusStore, spinnerStore, navigation }) => {
   const onSubmitClicked = async () => {
     spinnerStore.open()
     await new Promise(r => setTimeout(r, 1000))
+    serverClient.post('/order', {
+      userId: 1,
+      menus: menusStore.menus,
+      restaurantId: 1,
+      totalPrice: 1,
+    })
     spinnerStore.close()
 
     navigation.popToTop()

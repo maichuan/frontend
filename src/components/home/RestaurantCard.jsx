@@ -61,6 +61,8 @@ RestaurantCard.defaultProps = {
   data: {
     name: 'เบอร์เกอร์ท่านก้อง',
     distance: 10,
+    lat: 13,
+    long: 100,
   },
 }
 

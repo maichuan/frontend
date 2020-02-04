@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { Container } from './styled'
 import ProcessMenu from '../../components/process/ProcessMenu'
+import { serverClient } from '../../api'
 
 const mock = {
   data: [
@@ -22,6 +23,14 @@ const mock = {
 }
 
 const Process = ({ navigation }) => {
+  const [data, setData] = useState({})
+
+  const fetchOrder = async () => {
+    const data = await serverClient.get('/orders')
+    setData(data.data)
+  }
+
+  useEffect(() => {}, [])
   return (
     <Container>
       {mock.data.map((d, i) => (

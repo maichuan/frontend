@@ -67,6 +67,7 @@ const Home = ({ authStore, navigation }) => {
                 data.restaurants.map((d, i) => (
                   <RestaurantCard key={i} data={d} />
                 ))}
+              <RestaurantCard />
             </Body>
           </RefreshView>
         </Containers>
