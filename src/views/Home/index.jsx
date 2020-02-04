@@ -24,17 +24,19 @@ import RefreshView from '../../components/common/RefreshView'
 import Constant from '../../utils/constants'
 import { serverClient } from '../../api'
 
-const Home = ({ exampleStore, navigation }) => {
+const Home = ({ authStore, navigation }) => {
   const [searchText, setSearchText] = useState('')
   const [data, setData] = useState({})
 
   const fetchWelcome = async () => {
-    const res = await serverClient.get('/welcome')
+    const res = await serverClient.get('/restaurants')
+    // console.log(res.data)
+
     setData(res.data)
   }
 
   useEffect(() => {
-    // fetchWelcome()
+    fetchWelcome()
   }, [])
 
   return (
@@ -42,7 +44,7 @@ const Home = ({ exampleStore, navigation }) => {
       <SafeView color={Constant.tabColor}>
         <Containers>
           <WelcomeView>
-            <WelcomeMessage>Hello, Kong</WelcomeMessage>
+            <WelcomeMessage>Hi, {authStore.auth.displayName}</WelcomeMessage>
           </WelcomeView>
           <SearchInput
             placeholder="Search for your restaurant"
@@ -61,10 +63,10 @@ const Home = ({ exampleStore, navigation }) => {
             </HorizontalView>
             <Body>
               <NearByText>Near By restaurant</NearByText>
-              <RestaurantCard />
-              <RestaurantCard />
-              <RestaurantCard />
-              <RestaurantCard />
+              {data.restaurants &&
+                data.restaurants.map((d, i) => (
+                  <RestaurantCard key={i} data={d} />
+                ))}
             </Body>
           </RefreshView>
         </Containers>
@@ -74,13 +76,13 @@ const Home = ({ exampleStore, navigation }) => {
 }
 
 Home.propTypes = {
-  exampleStore: PropTypes.object,
+  authStore: PropTypes.object,
   navigation: PropTypes.object,
 }
 
 export default compose(
   inject(({ rootStore }) => ({
-    exampleStore: rootStore.exampleStore,
+    authStore: rootStore.authStore,
   })),
   observer,
 )(Home)

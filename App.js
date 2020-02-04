@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { AppLoading } from 'expo'
 import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons'
-import { Root } from 'native-base'
 
 import { Provider } from 'mobx-react'
 import { rootStore } from './src/stores/RootStore'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Content, Button } from 'native-base'
+import { FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
@@ -7,6 +7,15 @@ import { compose } from 'recompose'
 
 import withSafeArea from '../../hocs/withSafeView'
 import MenuCart from '../../components/cart/MenuCart'
+import {
+  Container,
+  SummayText,
+  TotalPriceView,
+  TotalText,
+  PriceText,
+  ConfirmButton,
+  ConfirmText,
+} from './styled'
 
 const Cart = ({ menusStore, spinnerStore, navigation }) => {
   const onSubmitClicked = async () => {
@@ -20,17 +29,26 @@ const Cart = ({ menusStore, spinnerStore, navigation }) => {
 
   return (
     <>
-      <Content>
-        <Text>Hello! Mr. Kong</Text>
-        <Text>This is your restaurant</Text>
+      <Container>
+        <SummayText>Order Summary</SummayText>
         {menusStore.menus.map((m, i) => (
           <MenuCart key={i} data={m} />
         ))}
-      </Content>
-      <Text>{'Total Price: ' + menusStore.totalPrice}</Text>
-      <Button onPress={() => onSubmitClicked()}>
-        <Text>Submit Order</Text>
-      </Button>
+        {/* <FlatList
+          data={menusStore.menus}
+          renderItem={({ item }) => <MenuCart data={item} />}
+          keyExtractor={item => item.name}
+        /> */}
+      </Container>
+      <TotalPriceView>
+        <TotalText>Total </TotalText>
+        <PriceText>{menusStore.totalPrice + ' ฿'}</PriceText>
+      </TotalPriceView>
+      <TotalPriceView>
+        <ConfirmButton activeOpacity={0.8} onPress={() => onSubmitClicked()}>
+          <ConfirmText>Submit Order</ConfirmText>
+        </ConfirmButton>
+      </TotalPriceView>
     </>
   )
 }

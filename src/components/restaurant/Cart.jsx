@@ -28,7 +28,7 @@ const Price = styled.Text`
   font-weight: bold;
 `
 const Continue = styled.TouchableOpacity`
-  background-color: #75cf55;
+  background-color: ${({ disabled }) => (disabled ? '#d1d0cd' : '#75cf55')};
   justify-content: center;
   align-items: center;
   padding: 0px 10px;
@@ -49,7 +49,10 @@ const Cart = ({ menusStore }) => {
         <CartIcon ios="ios-cart" android="md-cart" />
         <Price>Total Price: {menusStore.totalPrice}</Price>
       </TotalPrice>
-      <Continue onPress={() => navigation.navigate('Cart')}>
+      <Continue
+        disabled={!(menusStore.menus.length > 0)}
+        onPress={() => navigation.navigate('Cart')}
+      >
         <ContinueText>Continue</ContinueText>
       </Continue>
     </InlineView>

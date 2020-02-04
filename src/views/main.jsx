@@ -12,8 +12,6 @@ import Spinner from '../components/common/Spinner'
 import { firebaseApp } from '../utils/firebase'
 
 const Main = ({ spinnerStore, authStore }) => {
-  const [location, setLocation] = useState({})
-
   const getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION)
     // if (status !== 'granted') {
@@ -23,9 +21,11 @@ const Main = ({ spinnerStore, authStore }) => {
     // }
     if (status === 'granted') {
       let l = await Location.getCurrentPositionAsync({})
-      console.log(l.coords.latitude, l.coords.longitude)
 
-      setLocation(location)
+      authStore.setCurLoaciton({
+        latitude: l.coords.latitude,
+        longitude: l.coords.longitude,
+      })
     }
   }
 

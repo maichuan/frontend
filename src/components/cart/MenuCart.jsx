@@ -1,5 +1,4 @@
 import React from 'react'
-import { Text, Card, Left, Right, CardItem, Button, Body } from 'native-base'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -8,10 +7,36 @@ import { compose } from 'recompose'
 
 import { displayToast } from '../../utils/utils'
 
-const InlineBody = styled(Body)`
+const Component = styled.View`
+  width: 100%;
+  height: 100px;
   display: flex;
   flex-direction: row;
-  margin: auto;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  padding: 20px;
+  border-width: 0.2px;
+  border-color: #d1d0cd;
+`
+const Quantity = styled.Text`
+  border-width: 1px;
+  border-color: #adadad;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
+  font-weight: 600;
+`
+const Remove = styled.TouchableOpacity``
+const RemoveText = styled.Text`
+  font-size: 30px;
+  color: #adadad;
+`
+const Name = styled.Text`
+  font-size: 18px;
+`
+const Price = styled.Text`
+  font-size: 18px;
 `
 
 const MenuCart = ({ data, menusStore }) => {
@@ -21,24 +46,16 @@ const MenuCart = ({ data, menusStore }) => {
   }
 
   return (
-    <Card>
-      <CardItem>
-        <Left>
-          <Text>{data.name}</Text>
-        </Left>
-        <InlineBody>
-          <Text>{(data.price || 0) + ' x '}</Text>
-          <Text>
-            {data.quantity + ' = ' + data.price * data.quantity + '.-'}
-          </Text>
-        </InlineBody>
-        <Right>
-          <Button transparent onPress={() => removeMenu()}>
-            <Text>&#x2718;</Text>
-          </Button>
-        </Right>
-      </CardItem>
-    </Card>
+    <Component>
+      <Quantity>{data.quantity + 'x'}</Quantity>
+
+      <Name>{data.name}</Name>
+      <Price>{data.price * data.quantity + '.-'}</Price>
+
+      <Remove activeOpacity={0.8} onPress={() => removeMenu()}>
+        <RemoveText>&times;</RemoveText>
+      </Remove>
+    </Component>
   )
 }
 

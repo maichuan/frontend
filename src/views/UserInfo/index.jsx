@@ -17,15 +17,21 @@ const UserInfo = ({ navigation, authStore }) => {
 
   return authStore.auth.uid ? (
     <Container>
-      <ProfileImg source={{ uri: authStore.auth.photoURL }} />
-      <Name>{authStore.auth.displayName}</Name>
+      {authStore.auth.photoURL && (
+        <ProfileImg source={{ uri: authStore.auth.photoURL }} />
+      )}
+      <Name>
+        {authStore.auth.displayName
+          ? authStore.auth.displayName
+          : authStore.auth.email}
+      </Name>
 
       <Logout onPress={() => onLogoutClicked()}>
         <LogoutText>Logout</LogoutText>
       </Logout>
     </Container>
   ) : (
-    <Login />
+    <Login navigation={navigation} />
   )
 }
 

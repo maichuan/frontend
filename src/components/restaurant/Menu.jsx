@@ -46,7 +46,11 @@ const Menu = ({ data }) => {
       <Box activeOpacity={0.9} onPress={() => addMenu()}>
         <MenuImage
           size={Width / 3}
-          source={require('../../../assets/shrimp.jpg')}
+          source={
+            data.imgURL
+              ? { uri: data.imgURL }
+              : require('../../../assets/shrimp.jpg')
+          }
         />
 
         <NameView>

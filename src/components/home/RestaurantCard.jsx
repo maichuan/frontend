@@ -1,35 +1,52 @@
 import React, { useContext } from 'react'
-import { Image } from 'react-native'
 import { Text, Card, Left, Right, CardItem } from 'native-base'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { HomeContext } from '../../utils/context'
+
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+
+import { getDistance } from 'geolib'
 
 const RestaurantImage = styled.Image`
   height: 200px;
   flex: 1;
 `
 
-const RestaurantCard = ({ data }) => {
+const RestaurantCard = ({ data, authStore }) => {
   const { navigation } = useContext(HomeContext)
 
   const changePage = () => {
     navigation.navigate('Restaurant', {
-      id: 12345,
+      ...data,
       table: 0,
     })
   }
   return (
     <Card>
       <CardItem cardBody button onPress={() => changePage()}>
-        <RestaurantImage source={require('../../../assets/hamburger.jpg')} />
+        <RestaurantImage
+          source={
+            data.imgURL
+              ? { uri: data.imgURL }
+              : require('../../../assets/hamburger.jpg')
+          }
+        />
       </CardItem>
       <CardItem button onPress={() => changePage()}>
         <Left>
           <Text>{data.name}</Text>
         </Left>
         <Right>
-          <Text>{data.distance}</Text>
+          <Text>
+            {getDistance(authStore.curLocation, {
+              latitude: data.lat,
+              longitude: data.long,
+            }) /
+              1000 +
+              ' km'}
+          </Text>
         </Right>
       </CardItem>
     </Card>
@@ -38,6 +55,7 @@ const RestaurantCard = ({ data }) => {
 
 RestaurantCard.propTypes = {
   data: PropTypes.object,
+  authStore: PropTypes.object,
 }
 RestaurantCard.defaultProps = {
   data: {
@@ -46,4 +64,9 @@ RestaurantCard.defaultProps = {
   },
 }
 
-export default RestaurantCard
+export default compose(
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+  })),
+  observer,
+)(RestaurantCard)

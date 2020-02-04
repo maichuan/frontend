@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Platform } from 'react-native'
 import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
@@ -25,23 +25,37 @@ import {
 import SearchInput from '../../components/common/SearchInput'
 import { SafeView } from '../../components/common/styled'
 import { Width } from '../../utils/utils'
+import { serverClient } from '../../api'
 
 import { mock } from './mock'
 
 const Restaurant = ({ navigation, menusStore }) => {
-  const { params } = navigation.state
-  const restaurantId = params.id
-  const table = params.table
+  const { id, imgURL, name, table } = navigation.state.params
   const [searchText, setSearchText] = useState('')
+  const [data, setData] = useState({})
+
+  const fetchMenu = async () => {
+    const res = await serverClient.get(`/restaurants/${id}/menus`)
+
+    setData(res.data)
+  }
+
+  useEffect(() => {
+    fetchMenu()
+  }, [])
 
   return (
     <RestaurantContext.Provider value={{ navigation }}>
       <Container>
-        <HeadImage source={require('../../../assets/mock_res.jpg')} />
+        <HeadImage
+          source={
+            imgURL ? { uri: imgURL } : require('../../../assets/mock_res.jpg')
+          }
+        />
         <TextImage>
           <TableNoView>
-            <RestaurantName>Jackkkkkkkkkkkkkkk</RestaurantName>
-            <RestaurantName>{restaurantId}</RestaurantName>
+            <RestaurantName>{name}</RestaurantName>
+            <RestaurantName>{id}</RestaurantName>
           </TableNoView>
           <TableNoView>
             <RestaurantName>Table No.</RestaurantName>
@@ -66,9 +80,9 @@ const Restaurant = ({ navigation, menusStore }) => {
           ))}
         </HorizontalView>
         <PopularText>All Menu</PopularText>
-        {mock.map((m, i) => (
-          <Menu key={i} data={m} />
-        ))}
+        {data.data
+          ? data.data.map((d, i) => <Menu key={i} data={d} />)
+          : mock.map((m, i) => <Menu key={i} data={m} />)}
       </Container>
       <Cart />
       {Platform.OS === 'ios' && <SafeView bottom />}

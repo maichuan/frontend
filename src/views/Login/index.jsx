@@ -5,6 +5,7 @@ import * as firebase from 'firebase'
 import * as Facebook from 'expo-facebook'
 import { firebaseApp } from '../../utils/firebase'
 import { FACEBOOK_APPID, FACEBOOK_APPNAME } from 'react-native-dotenv'
+import { serverClient } from '../../api'
 
 import withSafeArea from '../../hocs/withSafeView'
 import {
@@ -38,17 +39,10 @@ const Login = ({ navigation }) => {
       firebaseApp
         .auth()
         .signInWithEmailAndPassword(email, pass)
-        .then(() => {
-          firebase
-            .auth()
-            .currentUser.getIdToken(/* forceRefresh */ true)
-            .then(function(idToken) {
-              // Send token to your backend via HTTPS
-              // ...
-            })
-            .catch(function(error) {
-              // Handle error
-            })
+        .then(user => {
+          serverClient.post('/user/signup', {
+            uid: user.user.uid,
+          })
           navigation.navigate('Home')
         })
         .catch(function(error) {
@@ -75,6 +69,11 @@ const Login = ({ navigation }) => {
       firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, pass)
+        .then(user =>
+          serverClient.post('/user/signup', {
+            uid: user.user.uid,
+          }),
+        )
         .catch(function(error) {
           console.log(error)
           Alert.alert(
@@ -111,6 +110,10 @@ const Login = ({ navigation }) => {
 
         // Do something with Facebook profile data
         // OR you have subscribed to auth state change, authStateChange handler will process the profile data
+
+        serverClient.post('/user/signup', {
+          uid: firebaseApp.auth().currentUser.uid,
+        })
 
         return Promise.resolve({ type: 'success' })
       }
