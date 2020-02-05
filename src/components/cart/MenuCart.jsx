@@ -6,6 +6,7 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
 import { displayToast } from '../../utils/utils'
+import { Width } from '../../utils/utils'
 
 const Component = styled.View`
   width: 100%;
@@ -34,6 +35,9 @@ const RemoveText = styled.Text`
 `
 const Name = styled.Text`
   font-size: 18px;
+  flex: 1;
+  flex-wrap: wrap;
+  padding: 0px 10px;
 `
 const Price = styled.Text`
   font-size: 18px;
