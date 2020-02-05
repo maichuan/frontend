@@ -28,7 +28,7 @@ export const PriceText = styled.Text`
   font-weight: 700;
 `
 export const ConfirmButton = styled.TouchableOpacity`
-  background-color: #75cf55;
+  background-color: ${({ disabled }) => (disabled ? '#d1d0cd' : '#75cf55')};
   width: 100%;
   border-radius: 10px;
   height: 50px;

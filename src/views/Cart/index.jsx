@@ -28,6 +28,7 @@ const Cart = ({ menusStore, spinnerStore, navigation }) => {
       restaurantId: 1,
       totalPrice: 1,
     })
+    menusStore.clear()
     spinnerStore.close()
 
     navigation.popToTop()
@@ -52,7 +53,11 @@ const Cart = ({ menusStore, spinnerStore, navigation }) => {
         <PriceText>{menusStore.totalPrice + ' ฿'}</PriceText>
       </TotalPriceView>
       <TotalPriceView>
-        <ConfirmButton activeOpacity={0.8} onPress={() => onSubmitClicked()}>
+        <ConfirmButton
+          disabled={!(menusStore.menus.length > 0)}
+          activeOpacity={0.8}
+          onPress={() => onSubmitClicked()}
+        >
           <ConfirmText>Submit Order</ConfirmText>
         </ConfirmButton>
       </TotalPriceView>

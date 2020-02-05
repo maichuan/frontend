@@ -30,14 +30,15 @@ import { serverClient } from '../../api'
 import { mock } from './mock'
 
 const Restaurant = ({ navigation, menusStore }) => {
-  const { id, imgURL, name, table } = navigation.state.params
+  // const { id, imgURL, name, table } = navigation.state.params
+  const { id, table } = navigation.state.params
   const [searchText, setSearchText] = useState('')
-  const [data, setData] = useState({})
+  const [restaurant, setResturant] = useState(null)
 
   const fetchMenu = async () => {
-    const res = await serverClient.get(`/restaurants/${id}/menus`)
+    const res = await serverClient.get(`/restaurants/${id}`)
 
-    setData(res.data)
+    setResturant(res.data)
   }
 
   useEffect(() => {
@@ -45,48 +46,51 @@ const Restaurant = ({ navigation, menusStore }) => {
   }, [])
 
   return (
-    <RestaurantContext.Provider value={{ navigation }}>
-      <Container>
-        <HeadImage
-          source={
-            imgURL ? { uri: imgURL } : require('../../../assets/mock_res.jpg')
-          }
-        />
-        <TextImage>
-          <TableNoView>
-            <RestaurantName>{name}</RestaurantName>
-            <RestaurantName>{id}</RestaurantName>
-          </TableNoView>
-          <TableNoView>
-            <RestaurantName>Table No.</RestaurantName>
-            <TableNo>{table}</TableNo>
-          </TableNoView>
-        </TextImage>
-        <SearchView>
-          <SearchInput
-            placeholder="Find something to eat"
-            text={searchText}
-            setText={setSearchText}
-            width={Width / 1.6}
+    restaurant && (
+      <RestaurantContext.Provider value={{ navigation }}>
+        <Container>
+          <HeadImage
+            source={
+              restaurant.imgURL
+                ? { uri: restaurant.imgURL }
+                : require('../../../assets/mock_res.jpg')
+            }
           />
-          <FilterButton>
-            <Icon name="sort-variant" type="MaterialCommunityIcons" />
-          </FilterButton>
-        </SearchView>
-        <PopularText>Most Popular</PopularText>
-        <HorizontalView horizontal>
-          {mock.map((m, i) => (
-            <PopularMenu key={i} data={m} />
-          ))}
-        </HorizontalView>
-        <PopularText>All Menu</PopularText>
-        {data.data
-          ? data.data.map((d, i) => <Menu key={i} data={d} />)
-          : mock.map((m, i) => <Menu key={i} data={m} />)}
-      </Container>
-      <Cart />
-      {Platform.OS === 'ios' && <SafeView bottom />}
-    </RestaurantContext.Provider>
+          <TextImage>
+            <TableNoView>
+              <RestaurantName>{restaurant.name}</RestaurantName>
+              <RestaurantName>{restaurant.id}</RestaurantName>
+            </TableNoView>
+            <TableNoView>
+              <RestaurantName>Table No.</RestaurantName>
+              <TableNo>{table}</TableNo>
+            </TableNoView>
+          </TextImage>
+          <SearchView>
+            <SearchInput
+              placeholder="Find something to eat"
+              text={searchText}
+              setText={setSearchText}
+              width={Width / 1.6}
+            />
+            <FilterButton>
+              <Icon name="sort-variant" type="MaterialCommunityIcons" />
+            </FilterButton>
+          </SearchView>
+          <PopularText>Most Popular</PopularText>
+          <HorizontalView horizontal>
+            {restaurant.menus &&
+              restaurant.menus.map((m, i) => <PopularMenu key={i} data={m} />)}
+          </HorizontalView>
+          <PopularText>All Menu</PopularText>
+          {restaurant.menus
+            ? restaurant.menus.map((d, i) => <Menu key={i} data={d} />)
+            : mock.map((m, i) => <Menu key={i} data={m} />)}
+        </Container>
+        <Cart />
+        {Platform.OS === 'ios' && <SafeView bottom />}
+      </RestaurantContext.Provider>
+    )
   )
 }
 

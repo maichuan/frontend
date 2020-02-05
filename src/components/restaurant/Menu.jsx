@@ -30,7 +30,7 @@ const Box = styled.TouchableOpacity`
   /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); */
 `
 const Name = styled.Text`
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
 `
 

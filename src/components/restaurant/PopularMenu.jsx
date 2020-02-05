@@ -23,7 +23,7 @@ const NameView = styled.View`
 `
 const Box = styled.View``
 const Name = styled.Text`
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 500;
   color: white;
   text-shadow: 2px 2px black;
@@ -40,7 +40,13 @@ const PopularMenu = ({ data }) => {
     <>
       <Box>
         <MenuButton onPress={() => addMenu()}>
-          <MenuImage source={require('../../../assets/shrimp.jpg')} />
+          <MenuImage
+            source={
+              data.imgURL
+                ? { uri: data.imgURL }
+                : require('../../../assets/shrimp.jpg')
+            }
+          />
         </MenuButton>
         <NameView>
           <Name> {data.name}</Name>
