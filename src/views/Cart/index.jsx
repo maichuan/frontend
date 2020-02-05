@@ -18,21 +18,25 @@ import {
 } from './styled'
 import { serverClient } from '../../api'
 
-const Cart = ({ menusStore, spinnerStore, navigation }) => {
+const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
   const onSubmitClicked = async () => {
-    spinnerStore.open()
-    await new Promise(r => setTimeout(r, 1000))
-    serverClient.post('/order', {
-      userId: 1,
-      menus: menusStore.menus,
-      restaurantId: 1,
-      totalPrice: 1,
-    })
-    menusStore.clear()
-    spinnerStore.close()
+    if (authStore.auth.uid) {
+      spinnerStore.open()
+      await new Promise(r => setTimeout(r, 1000))
+      serverClient.post('/order', {
+        userId: 1,
+        menus: menusStore.menus,
+        restaurantId: 1,
+        totalPrice: 1,
+      })
+      menusStore.clear()
+      spinnerStore.close()
 
-    navigation.popToTop()
-    navigation.navigate('Process')
+      navigation.popToTop()
+      navigation.navigate('Process')
+    } else {
+      navigation.navigate('Info')
+    }
   }
 
   return (
@@ -68,6 +72,7 @@ const Cart = ({ menusStore, spinnerStore, navigation }) => {
 Cart.propTypes = {
   menusStore: PropTypes.object,
   spinnerStore: PropTypes.object,
+  authStore: PropTypes.object,
   navigation: PropTypes.object,
 }
 
@@ -75,6 +80,7 @@ export default compose(
   withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
+    authStore: rootStore.authStore,
     spinnerStore: rootStore.spinnerStore,
   })),
   observer,
