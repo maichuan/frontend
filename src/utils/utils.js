@@ -12,3 +12,18 @@ export const displayToast = text =>
       textAlign: 'center',
     },
   })
+
+export const questionConverter = question => {
+  return question.split(',').map(q => {
+    questions = q.split(':')
+    if (questions.length === 3) {
+      return {
+        question: questions[0],
+        type: questions[1],
+        choices: questions[2].split(';'),
+      }
+    } else {
+      return {}
+    }
+  })
+}
