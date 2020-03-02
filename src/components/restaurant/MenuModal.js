@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Modal from 'react-native-modal'
 import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
+import { questionConverter } from '../../utils/utils'
+import SingleAnswer from './SingleAnswer'
+
+const mockQuestion =
+  'ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java,ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java'
 
 const BottomModal = styled(Modal)`
   margin: 0;
@@ -23,6 +28,10 @@ const ModalView = styled.View`
   border-color: rgba(0, 0, 0, 0.1);
   height: 75%;
 `
+const ModalScroll = styled.ScrollView``
+const ModalTouch = styled.TouchableOpacity``
+const ModalFeed = styled.TouchableWithoutFeedback``
+const ModalInnerView = styled.View``
 const RestaurantName = styled.Text`
   font-weight: bold;
   font-size: 28px;
@@ -91,6 +100,13 @@ const Special = styled.TextInput`
 const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   const [quantity, setQuantity] = useState(1)
   const [special, setSpecial] = useState('')
+  const [questions, setQuestions] = useState([])
+
+  useEffect(() => {
+    const questionss = questionConverter(mockQuestion)
+    console.log(questionss)
+    setQuestions(questionss)
+  }, [])
 
   const increase = () => {
     setQuantity(quantity + 1)
@@ -120,26 +136,36 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
     >
       <SafeBottom>
         <ModalView>
-          <RestaurantName>{data.name}</RestaurantName>
-          <Description>Food description Lorem ipsum</Description>
-          <RowView>
-            <QuestionText>Quantity</QuestionText>
-            <QuantityView>
-              <QuantityButton bordered onPress={() => decrease()}>
-                <QuantityAction>-</QuantityAction>
-              </QuantityButton>
-              <Quantity>{quantity}</Quantity>
-              <QuantityButton bordered onPress={() => increase()}>
-                <QuantityAction>+</QuantityAction>
-              </QuantityButton>
-            </QuantityView>
-          </RowView>
-          <QuestionText>Special Instructions</QuestionText>
-          <Special
-            onChangeText={text => onChangeText(text)}
-            placeholder="Add some special instructions here."
-            value={special}
-          />
+          <ModalScroll>
+            <ModalScroll>
+              <ModalFeed>
+                <ModalInnerView>
+                  <RestaurantName>{data.name}</RestaurantName>
+                  <Description>Food description Lorem ipsum</Description>
+                  <RowView>
+                    <QuestionText>Quantity</QuestionText>
+                    <QuantityView>
+                      <QuantityButton bordered onPress={() => decrease()}>
+                        <QuantityAction>-</QuantityAction>
+                      </QuantityButton>
+                      <Quantity>{quantity}</Quantity>
+                      <QuantityButton bordered onPress={() => increase()}>
+                        <QuantityAction>+</QuantityAction>
+                      </QuantityButton>
+                    </QuantityView>
+                  </RowView>
+                  {questions.length > 0 &&
+                    questions.map((q, i) => <SingleAnswer key={i} data={q} />)}
+                  <QuestionText>Special Instructions</QuestionText>
+                  <Special
+                    onChangeText={text => onChangeText(text)}
+                    placeholder="Add some special instructions here."
+                    value={special}
+                  />
+                </ModalInnerView>
+              </ModalFeed>
+            </ModalScroll>
+          </ModalScroll>
         </ModalView>
         <ConfirmButton activeOpacity={1} onPress={() => handleConfirmClicked()}>
           <ComfirmText>Add to Cart: {data.price * quantity} .-</ComfirmText>

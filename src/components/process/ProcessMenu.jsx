@@ -20,7 +20,7 @@ const Name = styled.Text`
 `
 const StatusView = styled.View``
 const CancelButton = styled.TouchableOpacity`
-  background-color: red;
+  background-color: ${({ disabled }) => (disabled ? 'gray' : 'red')};
   border-radius: 5px;
   padding: 5px;
   align-items: center;
@@ -39,6 +39,7 @@ const ProcessMenu = ({ data }) => {
         <Status status={data.status} queue={data.queue} />
       </StatusView>
       <CancelButton
+        disabled={data.status !== 0}
         onPress={() =>
           Alert.alert(
             'Cancel order',

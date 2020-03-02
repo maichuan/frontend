@@ -56,7 +56,15 @@ const Home = ({ authStore, navigation }) => {
               {Array(5)
                 .fill()
                 .map((_, i) => (
-                  <TrendRestaurant key={i}>
+                  <TrendRestaurant
+                    onPress={() =>
+                      navigation.navigate('Restaurant', {
+                        name: 'sss',
+                        table: 0,
+                      })
+                    }
+                    key={i}
+                  >
                     <Text>Wow{' ' + i}</Text>
                   </TrendRestaurant>
                 ))}

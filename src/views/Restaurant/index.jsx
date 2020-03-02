@@ -36,8 +36,8 @@ const Restaurant = ({ navigation, menusStore }) => {
   const [restaurant, setResturant] = useState(null)
 
   const fetchMenu = async () => {
-    const res = await serverClient.get(`/restaurants/${id}`)
-
+    // const res = await serverClient.get(`/restaurants/${id}`)
+    const res = { data: { name: 'Test', id: 5 } } // TODO: Remove after complete question test
     setResturant(res.data)
   }
 
