@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -18,14 +18,20 @@ const Question = styled.Text`
 
 const SingleAnswer = ({ data }) => {
   const [ans, setAns] = useState(0)
-  console.log(data.choices.map((c, i) => ({ label: c, value: i })))
+  // console.log(data.choices.map((c, i) => ({ label: c, value: i })))
+  useEffect(() => {
+    console.log(ans)
+  }, [ans])
 
   return (
     <Component>
       <Question>{data.question}</Question>
 
       <RadioForm
-        radio_props={data.choices.map((c, i) => ({ label: c, value: i }))}
+        radio_props={data.choices.map(choice => ({
+          label: choice,
+          value: choice,
+        }))}
         initial={-1}
         onPress={value => setAns(value)}
       />

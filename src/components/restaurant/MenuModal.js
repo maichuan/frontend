@@ -7,6 +7,7 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 import { questionConverter } from '../../utils/utils'
 import SingleAnswer from './SingleAnswer'
+import MultipleAnswer from './MultipleAnswer'
 
 const mockQuestion =
   'ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java,ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java'
@@ -29,7 +30,7 @@ const ModalView = styled.View`
   height: 75%;
 `
 const ModalScroll = styled.ScrollView``
-const ModalTouch = styled.TouchableOpacity``
+// const ModalTouch = styled.TouchableOpacity``
 const ModalFeed = styled.TouchableWithoutFeedback``
 const ModalInnerView = styled.View``
 const RestaurantName = styled.Text`
@@ -103,9 +104,8 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   const [questions, setQuestions] = useState([])
 
   useEffect(() => {
-    const questionss = questionConverter(mockQuestion)
-    console.log(questionss)
-    setQuestions(questionss)
+    const ques = questionConverter(mockQuestion)
+    setQuestions(ques)
   }, [])
 
   const increase = () => {
@@ -130,41 +130,46 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   return (
     <BottomModal
       isVisible={showModal}
-      onBackdropPress={() => closeModal()}
+      onBackdropPress={closeModal}
       swipeDirection="down"
-      onSwipeComplete={() => closeModal()}
+      propagateSwipe
+      onSwipeComplete={closeModal}
     >
       <SafeBottom>
         <ModalView>
           <ModalScroll>
-            <ModalScroll>
-              <ModalFeed>
-                <ModalInnerView>
-                  <RestaurantName>{data.name}</RestaurantName>
-                  <Description>Food description Lorem ipsum</Description>
-                  <RowView>
-                    <QuestionText>Quantity</QuestionText>
-                    <QuantityView>
-                      <QuantityButton bordered onPress={() => decrease()}>
-                        <QuantityAction>-</QuantityAction>
-                      </QuantityButton>
-                      <Quantity>{quantity}</Quantity>
-                      <QuantityButton bordered onPress={() => increase()}>
-                        <QuantityAction>+</QuantityAction>
-                      </QuantityButton>
-                    </QuantityView>
-                  </RowView>
-                  {questions.length > 0 &&
-                    questions.map((q, i) => <SingleAnswer key={i} data={q} />)}
-                  <QuestionText>Special Instructions</QuestionText>
-                  <Special
-                    onChangeText={text => onChangeText(text)}
-                    placeholder="Add some special instructions here."
-                    value={special}
-                  />
-                </ModalInnerView>
-              </ModalFeed>
-            </ModalScroll>
+            <ModalFeed>
+              <ModalInnerView>
+                <RestaurantName>{data.name}</RestaurantName>
+                <Description>Food description Lorem ipsum</Description>
+                <RowView>
+                  <QuestionText>Quantity</QuestionText>
+                  <QuantityView>
+                    <QuantityButton bordered onPress={() => decrease()}>
+                      <QuantityAction>-</QuantityAction>
+                    </QuantityButton>
+                    <Quantity>{quantity}</Quantity>
+                    <QuantityButton bordered onPress={() => increase()}>
+                      <QuantityAction>+</QuantityAction>
+                    </QuantityButton>
+                  </QuantityView>
+                </RowView>
+                {questions.length > 0 &&
+                  questions.map((q, i) => {
+                    if (q.type === 1) {
+                      return <SingleAnswer key={i} data={q} />
+                    } else {
+                      return <MultipleAnswer key={i} data={q} />
+                    }
+                  })}
+                <QuestionText>Special Instructions</QuestionText>
+                <Special
+                  onChangeText={text => onChangeText(text)}
+                  placeholder="Add some special instructions here."
+                  value={special}
+                />
+              </ModalInnerView>
+            </ModalFeed>
           </ModalScroll>
         </ModalView>
         <ConfirmButton activeOpacity={1} onPress={() => handleConfirmClicked()}>

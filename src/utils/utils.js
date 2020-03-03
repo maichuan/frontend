@@ -15,11 +15,11 @@ export const displayToast = text =>
 
 export const questionConverter = question => {
   return question.split(',').map(q => {
-    questions = q.split(':')
+    const questions = q.split(':')
     if (questions.length === 3) {
       return {
         question: questions[0],
-        type: questions[1],
+        type: Number(questions[1]),
         choices: questions[2].split(';'),
       }
     } else {
