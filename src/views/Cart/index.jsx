@@ -1,6 +1,8 @@
 import React from 'react'
 // import { FlatList } from 'react-native'
+import styled from 'styled-components'
 import PropTypes from 'prop-types'
+import { SwipeListView } from 'react-native-swipe-list-view'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
@@ -43,14 +45,14 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
     <>
       <Container>
         <SummayText>Order Summary</SummayText>
-        {menusStore.menus.map((m, i) => (
-          <MenuCart key={i} data={m} />
-        ))}
-        {/* <FlatList
+        <SwipeListView
+          closeOnScroll
+          closeOnRowOpen
+          previewRowKey="0"
           data={menusStore.menus}
-          renderItem={({ item }) => <MenuCart data={item} />}
-          keyExtractor={item => item.name}
-        /> */}
+          renderItem={data => <MenuCart data={data.item} />}
+          keyExtractor={(_, index) => index}
+        />
       </Container>
       <TotalPriceView>
         <TotalText>Total </TotalText>

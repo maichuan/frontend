@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { SwipeRow } from 'react-native-swipe-list-view'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
@@ -8,8 +9,8 @@ import { compose } from 'recompose'
 import { displayToast } from '../../utils/utils'
 import { Width } from '../../utils/utils'
 
-const Component = styled.View`
-  width: 100%;
+const Component = styled.TouchableHighlight`
+  width: ${Width};
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -42,6 +43,28 @@ const Name = styled.Text`
 const Price = styled.Text`
   font-size: 18px;
 `
+const DeleteView = styled.View`
+  align-items: center;
+  background-color: #ddd;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+
+  /* padding-left: 15; */
+`
+const DeleteButton = styled.TouchableOpacity`
+  align-items: center;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  justify-content: center;
+  position: absolute;
+  width: 80px;
+  background-color: red;
+`
+const DeleteText = styled.Text`
+  color: #fff;
+`
 
 const MenuCart = ({ data, menusStore }) => {
   const removeMenu = () => {
@@ -50,16 +73,25 @@ const MenuCart = ({ data, menusStore }) => {
   }
 
   return (
-    <Component>
-      <Quantity>{data.quantity + 'x'}</Quantity>
+    <SwipeRow
+      disableRightSwipe={true}
+      stopRightSwipe={-100}
+      rightOpenValue={-80}
+    >
+      <DeleteView>
+        <DeleteButton activeOpacity={0.8} onPress={removeMenu}>
+          <DeleteText>Delete</DeleteText>
+        </DeleteButton>
+      </DeleteView>
+      <Component underlayColor={'#fff'}>
+        <>
+          <Quantity>{data.quantity + 'x'}</Quantity>
 
-      <Name>{data.name}</Name>
-      <Price>{data.price * data.quantity + '.-'}</Price>
-
-      <Remove activeOpacity={0.8} onPress={() => removeMenu()}>
-        <RemoveText>&times;</RemoveText>
-      </Remove>
-    </Component>
+          <Name>{data.name}</Name>
+          <Price>{data.price * data.quantity + '.-'}</Price>
+        </>
+      </Component>
+    </SwipeRow>
   )
 }
 
