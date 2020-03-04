@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import CheckBox from 'react-native-check-box'
@@ -18,6 +17,7 @@ const Checkbox = ({ choice, onListChecked }) => {
       onClick={handleCheck}
       isChecked={checked}
       rightText={choice}
+      checkedCheckBoxColor="green"
     />
   )
 }

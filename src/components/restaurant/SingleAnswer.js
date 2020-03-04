@@ -2,25 +2,21 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from 'react-native-simple-radio-button'
+import RadioForm from 'react-native-simple-radio-button'
 
 const Component = styled.View`
-  /* flex: 1; */
-  /* background-color: blue; */
+  background-color: #fff;
+  padding: 7px;
 `
 const Question = styled.Text`
-  font-size: 30px;
+  font-size: 20px;
 `
 
-const SingleAnswer = ({ data }) => {
+const SingleAnswer = ({ data, onAnswer }) => {
   const [ans, setAns] = useState(0)
-  // console.log(data.choices.map((c, i) => ({ label: c, value: i })))
+
   useEffect(() => {
-    console.log(ans)
+    onAnswer({ question: data.question, choices: ans })
   }, [ans])
 
   return (
@@ -34,6 +30,9 @@ const SingleAnswer = ({ data }) => {
         }))}
         initial={-1}
         onPress={value => setAns(value)}
+        buttonSize={10}
+        buttonColor="#000"
+        selectedButtonColor="green"
       />
     </Component>
   )
@@ -41,6 +40,7 @@ const SingleAnswer = ({ data }) => {
 
 SingleAnswer.propTypes = {
   data: PropTypes.object.isRequired,
+  onAnswer: PropTypes.func.isRequired,
 }
 
 export default SingleAnswer

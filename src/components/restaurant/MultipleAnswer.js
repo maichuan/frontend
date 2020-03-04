@@ -5,15 +5,19 @@ import PropTypes from 'prop-types'
 import Checkbox from './Checkbox'
 
 const Component = styled.View`
-  /* flex: 1; */
-  /* background-color: blue; */
+  background-color: #fff;
+  padding: 7px;
 `
 const Question = styled.Text`
-  font-size: 30px;
+  font-size: 20px;
 `
 
-const MultipleAnswer = ({ data }) => {
+const MultipleAnswer = ({ data, onAnswer }) => {
   const [checkedList, setCheckedList] = useState([])
+
+  useEffect(() => {
+    onAnswer({ question: data.question, choices: checkedList })
+  }, [checkedList])
 
   const updateCheckedList = choice => {
     if (checkedList.includes(choice)) {
@@ -35,6 +39,7 @@ const MultipleAnswer = ({ data }) => {
 
 MultipleAnswer.propTypes = {
   data: PropTypes.object.isRequired,
+  onAnswer: PropTypes.func.isRequired,
 }
 
 export default MultipleAnswer

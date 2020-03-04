@@ -10,7 +10,7 @@ import SingleAnswer from './SingleAnswer'
 import MultipleAnswer from './MultipleAnswer'
 
 const mockQuestion =
-  'ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java,ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java'
+  'ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java'
 
 const BottomModal = styled(Modal)`
   margin: 0;
@@ -21,7 +21,7 @@ const SafeBottom = styled.SafeAreaView`
 `
 const ModalView = styled.View`
   background-color: #fff;
-  padding: 22px;
+  padding-bottom: 22px;
   display: flex;
   flex-direction: column;
   border-top-left-radius: 10px;
@@ -30,24 +30,24 @@ const ModalView = styled.View`
   height: 75%;
 `
 const ModalScroll = styled.ScrollView``
-// const ModalTouch = styled.TouchableOpacity``
 const ModalFeed = styled.TouchableWithoutFeedback``
 const ModalInnerView = styled.View``
 const RestaurantName = styled.Text`
   font-weight: bold;
   font-size: 28px;
-  margin: 10px 0px;
+  margin: 15px;
 `
 const Description = styled.Text`
   font-weight: normal;
   font-size: 20px;
-  margin: 10px 0px;
+  margin: 20px;
 `
 const RowView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 10px;
 `
 const QuestionText = styled.Text`
   font-weight: bold;
@@ -97,11 +97,27 @@ const Special = styled.TextInput`
   font-size: 18px;
   margin: 10px;
 `
+const QuestionView = styled.View`
+  background-color: #ededed;
+  padding: 5px 0;
+`
+const SingleQuestionView = styled.View`
+  margin: 5px 0;
+`
+const SpecialView = styled.View`
+  padding: 10px;
+`
+const RedArea = styled.View`
+  height: 20px;
+  width: 100%;
+  background-color: red;
+`
 
 const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   const [quantity, setQuantity] = useState(1)
   const [special, setSpecial] = useState('')
   const [questions, setQuestions] = useState([])
+  const [answers, setAnswers] = useState([])
 
   useEffect(() => {
     const ques = questionConverter(mockQuestion)
@@ -127,6 +143,23 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
     closeModal()
   }
 
+  const updateAnswers = answer => {
+    const existAnswer = answers.find(
+      ({ question }) => question === answer.question,
+    )
+    if (existAnswer) {
+      setAnswers(
+        answers.map(ans =>
+          ans.question === answer.question
+            ? { ...ans, choices: answer.choices }
+            : ans,
+        ),
+      )
+    } else {
+      setAnswers([...answers, answer])
+    }
+  }
+
   return (
     <BottomModal
       isVisible={showModal}
@@ -137,37 +170,50 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
     >
       <SafeBottom>
         <ModalView>
+          <RedArea />
           <ModalScroll>
             <ModalFeed>
               <ModalInnerView>
                 <RestaurantName>{data.name}</RestaurantName>
                 <Description>Food description Lorem ipsum</Description>
-                <RowView>
-                  <QuestionText>Quantity</QuestionText>
-                  <QuantityView>
-                    <QuantityButton bordered onPress={() => decrease()}>
-                      <QuantityAction>-</QuantityAction>
-                    </QuantityButton>
-                    <Quantity>{quantity}</Quantity>
-                    <QuantityButton bordered onPress={() => increase()}>
-                      <QuantityAction>+</QuantityAction>
-                    </QuantityButton>
-                  </QuantityView>
-                </RowView>
-                {questions.length > 0 &&
-                  questions.map((q, i) => {
-                    if (q.type === 1) {
-                      return <SingleAnswer key={i} data={q} />
-                    } else {
-                      return <MultipleAnswer key={i} data={q} />
-                    }
-                  })}
-                <QuestionText>Special Instructions</QuestionText>
-                <Special
-                  onChangeText={text => onChangeText(text)}
-                  placeholder="Add some special instructions here."
-                  value={special}
-                />
+                <QuestionView>
+                  <RowView>
+                    <QuestionText>Quantity</QuestionText>
+                    <QuantityView>
+                      <QuantityButton bordered onPress={() => decrease()}>
+                        <QuantityAction>-</QuantityAction>
+                      </QuantityButton>
+                      <Quantity>{quantity}</Quantity>
+                      <QuantityButton bordered onPress={() => increase()}>
+                        <QuantityAction>+</QuantityAction>
+                      </QuantityButton>
+                    </QuantityView>
+                  </RowView>
+                  {questions.length > 0 &&
+                    questions.map((q, i) => {
+                      if (q.type === 1) {
+                        return (
+                          <SingleQuestionView key={i}>
+                            <SingleAnswer data={q} onAnswer={updateAnswers} />
+                          </SingleQuestionView>
+                        )
+                      } else {
+                        return (
+                          <SingleQuestionView key={i}>
+                            <MultipleAnswer data={q} onAnswer={updateAnswers} />
+                          </SingleQuestionView>
+                        )
+                      }
+                    })}
+                </QuestionView>
+                <SpecialView>
+                  <QuestionText>Special Instructions</QuestionText>
+                  <Special
+                    onChangeText={text => onChangeText(text)}
+                    placeholder="Add some special instructions here."
+                    value={special}
+                  />
+                </SpecialView>
               </ModalInnerView>
             </ModalFeed>
           </ModalScroll>
