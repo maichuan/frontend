@@ -17,7 +17,7 @@ const Checkbox = ({ choice, onListChecked }) => {
       onClick={handleCheck}
       isChecked={checked}
       rightText={choice}
-      checkedCheckBoxColor="green"
+      checkedCheckBoxColor="#75cf55"
     />
   )
 }

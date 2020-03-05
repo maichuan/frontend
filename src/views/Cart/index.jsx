@@ -1,6 +1,4 @@
 import React from 'react'
-// import { FlatList } from 'react-native'
-import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { SwipeListView } from 'react-native-swipe-list-view'
 

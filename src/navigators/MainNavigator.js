@@ -12,6 +12,7 @@ import UserInfo from '../views/UserInfo'
 import Login from '../views/Login'
 import QrCodeScanner from '../views/QrCodeScanner'
 import Process from '../views/Process'
+import History from '../views/History'
 
 import Constants from '../utils/constants'
 
@@ -103,11 +104,11 @@ ProvessTab.navigationOptions = {
   ),
 }
 
-const NoNameTab = createStackNavigator({
-  None: Process,
+const HistoryTab = createStackNavigator({
+  History: History,
 })
 
-NoNameTab.navigationOptions = {
+HistoryTab.navigationOptions = {
   tabBarLabel: 'Process',
   // eslint-disable-next-line react/prop-types
   tabBarIcon: ({ tintColor }) => (
@@ -129,7 +130,7 @@ const TabNav = createBottomTabNavigator(
     MainTab,
     ProvessTab,
     QrCodeTab,
-    NoNameTab,
+    HistoryTab,
     UserTab,
   },
   {

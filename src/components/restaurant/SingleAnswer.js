@@ -32,7 +32,7 @@ const SingleAnswer = ({ data, onAnswer }) => {
         onPress={value => setAns(value)}
         buttonSize={10}
         buttonColor="#000"
-        selectedButtonColor="green"
+        selectedButtonColor="#75cf55"
       />
     </Component>
   )

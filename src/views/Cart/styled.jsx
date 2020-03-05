@@ -4,6 +4,7 @@ export const Container = styled.View`
   display: flex;
   flex: 1;
   align-items: center;
+  padding-top: 7px;
 `
 export const SummayText = styled.Text`
   color: #d1d0cd;
@@ -11,6 +12,7 @@ export const SummayText = styled.Text`
   font-weight: 600;
   width: 100%;
   padding: 10px 15px;
+  color: #000;
 `
 export const TotalPriceView = styled.View`
   display: flex;

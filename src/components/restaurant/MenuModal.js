@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
-import { questionConverter } from '../../utils/utils'
+import { questionConverter, Height } from '../../utils/utils'
 import SingleAnswer from './SingleAnswer'
 import MultipleAnswer from './MultipleAnswer'
 
@@ -21,13 +21,13 @@ const SafeBottom = styled.SafeAreaView`
 `
 const ModalView = styled.View`
   background-color: #fff;
-  padding-bottom: 22px;
+  padding-bottom: 15px;
   display: flex;
   flex-direction: column;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   border-color: rgba(0, 0, 0, 0.1);
-  height: 75%;
+  max-height: 75%;
 `
 const ModalScroll = styled.ScrollView``
 const ModalFeed = styled.TouchableWithoutFeedback``
@@ -77,13 +77,18 @@ const Quantity = styled.Text`
   text-align: center;
   font-size: 25px;
 `
+const ConfirmView = styled.View`
+  padding: 15px;
+  background-color: #fff;
+  border-width: 1px;
+  border-color: #c7c7c7;
+`
 const ConfirmButton = styled.TouchableOpacity`
   width: 100%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: green;
+  background-color: #75cf55;
   height: 50px;
 `
 const ComfirmText = styled.Text`
@@ -107,10 +112,20 @@ const SingleQuestionView = styled.View`
 const SpecialView = styled.View`
   padding: 10px;
 `
-const RedArea = styled.View`
-  height: 20px;
+const SwipeDownArea = styled.View`
   width: 100%;
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const HeadSign = styled.View`
+  width: 75px;
+  height: 10px;
+  border-radius: 10px;
+  border-width: 1px;
+  border-color: #5e5e5e;
+  background-color: #202020;
+  margin: 7px;
 `
 
 const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
@@ -118,6 +133,7 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   const [special, setSpecial] = useState('')
   const [questions, setQuestions] = useState([])
   const [answers, setAnswers] = useState([])
+  const [contentSize, setContentSize] = useState(0)
 
   useEffect(() => {
     const ques = questionConverter(mockQuestion)
@@ -169,9 +185,16 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
       onSwipeComplete={closeModal}
     >
       <SafeBottom>
+        <SwipeDownArea>
+          <HeadSign />
+        </SwipeDownArea>
         <ModalView>
-          <RedArea />
-          <ModalScroll>
+          <ModalScroll
+            scrollEnabled={contentSize > Height * 0.65}
+            onContentSizeChange={(_, contentHeight) =>
+              setContentSize(contentHeight)
+            }
+          >
             <ModalFeed>
               <ModalInnerView>
                 <RestaurantName>{data.name}</RestaurantName>
@@ -218,9 +241,11 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
             </ModalFeed>
           </ModalScroll>
         </ModalView>
-        <ConfirmButton activeOpacity={1} onPress={() => handleConfirmClicked()}>
-          <ComfirmText>Add to Cart: {data.price * quantity} .-</ComfirmText>
-        </ConfirmButton>
+        <ConfirmView>
+          <ConfirmButton activeOpacity={1} onPress={handleConfirmClicked}>
+            <ComfirmText>Add to Cart: {data.price * quantity} .-</ComfirmText>
+          </ConfirmButton>
+        </ConfirmView>
       </SafeBottom>
     </BottomModal>
   )
