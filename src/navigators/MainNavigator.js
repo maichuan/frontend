@@ -92,11 +92,11 @@ UserTab.navigationOptions = {
   ),
 }
 
-const ProvessTab = createStackNavigator({
+const ProcessTab = createStackNavigator({
   Process: Process,
 })
 
-ProvessTab.navigationOptions = {
+ProcessTab.navigationOptions = {
   tabBarLabel: 'Process',
   // eslint-disable-next-line react/prop-types
   tabBarIcon: ({ tintColor }) => (
@@ -109,10 +109,10 @@ const HistoryTab = createStackNavigator({
 })
 
 HistoryTab.navigationOptions = {
-  tabBarLabel: 'Process',
+  tabBarLabel: 'History',
   // eslint-disable-next-line react/prop-types
   tabBarIcon: ({ tintColor }) => (
-    <TabBarIcon tintColor={tintColor} type="FontAwesome" name="gamepad" />
+    <TabBarIcon tintColor={tintColor} type="FontAwesome" name="history" />
   ),
 }
 
@@ -128,7 +128,7 @@ QrCodeTab.navigationOptions = {
 const TabNav = createBottomTabNavigator(
   {
     MainTab,
-    ProvessTab,
+    ProcessTab,
     QrCodeTab,
     HistoryTab,
     UserTab,
