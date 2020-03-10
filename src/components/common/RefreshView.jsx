@@ -1,8 +1,11 @@
 import React, { useState, useCallback } from 'react'
 import { RefreshControl } from 'react-native'
-
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
+
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+import { getAndSetLocation } from '../../utils/utils'
 
 const ScrollBody = styled.ScrollView.attrs(props => ({
   contentContainerStyle: {
@@ -15,15 +18,13 @@ const ScrollBody = styled.ScrollView.attrs(props => ({
   align-self: stretch;
 `
 
-const RefreshView = ({ children }) => {
+const RefreshView = ({ children, authStore }) => {
   const [refreshing, setRefreshing] = useState(false)
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true)
-
-    new Promise(resolve => {
-      setTimeout(resolve, 2000)
-    }).then(() => setRefreshing(false))
+    await getAndSetLocation(authStore)
+    setRefreshing(false)
   }, [refreshing])
 
   return (
@@ -39,6 +40,12 @@ const RefreshView = ({ children }) => {
 
 RefreshView.propTypes = {
   children: PropTypes.node,
+  authStore: PropTypes.object,
 }
 
-export default RefreshView
+export default compose(
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+  })),
+  observer,
+)(RefreshView)

@@ -30,18 +30,20 @@ const Home = ({ authStore, navigation }) => {
 
   const fetchWelcome = async () => {
     const { latitude, longitude } = authStore.curLocation
-    const res = await serverClient.get(
-      `/welcome?lat=${latitude}&long=${longitude}`,
-    )
+    if (latitude !== -1) {
+      const res = await serverClient.get(
+        `/welcome?lat=${latitude}&long=${longitude}`,
+      )
 
-    // console.log(res.data)
+      // console.log(res.data)
 
-    setData(res.data)
+      setData(res.data)
+    }
   }
 
   useEffect(() => {
     fetchWelcome()
-  }, [])
+  }, [authStore.curLocation.latitude])
 
   return (
     <HomeContext.Provider value={{ navigation }}>

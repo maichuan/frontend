@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Root } from 'native-base'
-import * as Location from 'expo-location'
-import * as Permissions from 'expo-permissions'
+
+import { getAndSetLocation } from '../utils/utils'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
@@ -13,20 +13,7 @@ import { firebaseApp } from '../utils/firebase'
 
 const Main = ({ spinnerStore, authStore }) => {
   const getLocationAsync = async () => {
-    let { status } = await Permissions.askAsync(Permissions.LOCATION)
-    // if (status !== 'granted') {
-    //   this.setState({
-    //     errorMessage: 'Permission to access location was denied',
-    //   });
-    // }
-    if (status === 'granted') {
-      let l = await Location.getCurrentPositionAsync({})
-
-      authStore.setCurLoaciton({
-        latitude: l.coords.latitude,
-        longitude: l.coords.longitude,
-      })
-    }
+    await getAndSetLocation(authStore)
   }
 
   useEffect(() => {

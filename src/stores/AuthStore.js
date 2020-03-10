@@ -9,7 +9,7 @@ export class AuthStore {
   auth = {}
 
   @observable
-  curLocation = { latitude: 13, longitude: 100 }
+  curLocation = { latitude: -1, longitude: -1 }
 
   @action
   setAuth = auth => {
