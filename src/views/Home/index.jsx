@@ -29,7 +29,11 @@ const Home = ({ authStore, navigation }) => {
   const [data, setData] = useState({})
 
   const fetchWelcome = async () => {
-    const res = await serverClient.get('/restaurants')
+    const { latitude, longitude } = authStore.curLocation
+    const res = await serverClient.get(
+      `/welcome?lat=${latitude}&long=${longitude}`,
+    )
+
     // console.log(res.data)
 
     setData(res.data)
