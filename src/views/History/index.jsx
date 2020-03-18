@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Height } from '../../utils/utils'
 import { Container, HistoryView } from './styled'
 import DateView from '../../components/history/DateView'
+import { HistoryContext } from '../../utils/context'
 
 const mock = {
   data: [
@@ -23,7 +24,7 @@ const mock = {
   ],
 }
 
-const History = () => {
+const History = ({ navigation }) => {
   const [data, setData] = useState([])
   const [contentSize, setContentSize] = useState(0)
 
@@ -31,18 +32,20 @@ const History = () => {
     setData(mock.data)
   }, [])
   return (
-    <Container>
-      <HistoryView
-        scrollEnabled={contentSize > Height * 0.9}
-        onContentSizeChange={(_, contentHeight) =>
-          setContentSize(contentHeight)
-        }
-      >
-        {data.map((d, i) => (
-          <DateView key={i} data={d} />
-        ))}
-      </HistoryView>
-    </Container>
+    <HistoryContext.Provider value={{ navigation }}>
+      <Container>
+        <HistoryView
+          scrollEnabled={contentSize > Height * 0.9}
+          onContentSizeChange={(_, contentHeight) =>
+            setContentSize(contentHeight)
+          }
+        >
+          {data.map((d, i) => (
+            <DateView key={i} data={d} />
+          ))}
+        </HistoryView>
+      </Container>
+    </HistoryContext.Provider>
   )
 }
 

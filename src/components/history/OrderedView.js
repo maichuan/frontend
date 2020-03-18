@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-const Component = styled.View`
+import { HistoryContext } from '../../utils/context'
+
+const Component = styled.TouchableOpacity`
   border-width: 1px;
   border-color: #000;
   margin: 3px;
@@ -17,8 +19,14 @@ const TotalPrice = styled.Text`
 `
 
 const OrderedView = ({ data }) => {
+  const { navigation } = useContext(HistoryContext)
+
+  const handlePageChange = () => {
+    navigation.navigate('OrderedHistory')
+  }
+
   return (
-    <Component>
+    <Component activeOpacity={0.8} onPress={handlePageChange}>
       <RestaurantName>{data.restaurantName}</RestaurantName>
       <TotalPrice>{data.price + ' .-'}</TotalPrice>
       <TotalPrice>{data.time}</TotalPrice>

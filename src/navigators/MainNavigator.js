@@ -15,6 +15,7 @@ import Process from '../views/Process'
 import History from '../views/History'
 
 import Constants from '../utils/constants'
+import OrderedHistory from '../views/OrderedHistory'
 
 const options = {
   headerMode: 'none',
@@ -106,6 +107,7 @@ ProcessTab.navigationOptions = {
 
 const HistoryTab = createStackNavigator({
   History: History,
+  OrderedHistory: OrderedHistory,
 })
 
 HistoryTab.navigationOptions = {
