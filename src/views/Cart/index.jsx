@@ -53,6 +53,10 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
         />
       </Container>
       <TotalPriceView>
+        <TotalText>Playment </TotalText>
+        <TotalText>Cash </TotalText>
+      </TotalPriceView>
+      <TotalPriceView>
         <TotalText>Total </TotalText>
         <PriceText>{menusStore.totalPrice + ' ฿'}</PriceText>
       </TotalPriceView>

@@ -46,3 +46,21 @@ export const questionConverter = question => {
     }
   })
 }
+
+export const getIncresingPrice = ({ totalPrice, tax, serviceCharge }) => {
+  const taxPercent = (100 + tax) / 100
+  const serviceChargePercent = (100 + serviceCharge) / 100
+
+  const net = (totalPrice / (taxPercent * serviceChargePercent)).toFixed(2)
+  const serviceChargePrice = ((net * serviceCharge) / 100).toFixed(2)
+  const taxPrice = (
+    ((parseFloat(net) + parseFloat(serviceChargePrice)) * tax) /
+    100
+  ).toFixed(2)
+
+  return {
+    net,
+    taxPrice,
+    serviceChargePrice,
+  }
+}

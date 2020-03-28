@@ -5,22 +5,36 @@ import OrderedView from './OrderedView'
 
 const Component = styled.View`
   padding: 15px 5px;
-  border-bottom-width: 1px;
-  border-bottom-color: #a5a5a5;
+  margin: 5px;
+  border-width: 2px;
+  border-color: #e3e3e3;
+  border-radius: 10px;
+  background-color: #fff;
 `
 const DateText = styled.Text`
   font-size: 25px;
   font-weight: 600;
   color: #858585;
+  padding: 5px 0;
+`
+const Hr = styled.View`
+  border-bottom-color: #aaaaaa;
+  border-bottom-width: 1px;
+`
+const ContentView = styled.View`
+  padding-top: 10px;
 `
 
 const DateView = ({ data }) => {
   return (
     <Component>
       <DateText>{data.date}</DateText>
-      {data.ordered.map((o, i) => (
-        <OrderedView key={i} data={o} />
-      ))}
+      <Hr />
+      <ContentView>
+        {data.ordered.map((o, i) => (
+          <OrderedView key={i} data={o} />
+        ))}
+      </ContentView>
     </Component>
   )
 }

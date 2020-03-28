@@ -11,9 +11,17 @@ import {
   Menus,
   ShowMore,
   ShowMoreText,
+  FreeView,
+  SummaryView,
+  IncreasePriceView,
+  IncreaseText,
+  TotalPriceView,
+  TotalPrice,
+  IncreaseView,
 } from './styled'
 import Ordered from '../../components/orderedHistory/Ordered'
 import AnimationHeight from '../../components/common/AnimationHeight'
+import { getIncresingPrice } from '../../utils/utils'
 
 const mock = {
   restaurantName: 'burger tan kong',
@@ -40,7 +48,7 @@ const mock = {
     {
       name: 'หมูย่าง',
       quantity: 1,
-      totalPrice: 30,
+      totalPrice: 3000,
       special: 'สุกๆ',
     },
     {
@@ -67,21 +75,52 @@ const mock = {
       totalPrice: 30,
       special: '',
     },
+    {
+      name: 'เนื้อย่าง',
+      quantity: 1,
+      totalPrice: 30,
+      special: 'ไม่ไหม้',
+    },
+    {
+      name: 'หมูทอด',
+      quantity: 1,
+      totalPrice: 30,
+      special: '',
+    },
+    {
+      name: 'หมูแดดเดียว',
+      quantity: 1,
+      totalPrice: 30,
+      special: '',
+    },
   ],
   serviceCharge: 10,
   tax: 7,
-  totalPrice: 116.5,
+  totalPrice: 117.7,
 }
 
-const OrderedHistory = () => {
+const OrderedHistory = ({ navigation }) => {
+  const { transactionId } = navigation.state.params
   const [data, setData] = useState({})
   const [contentSize, setContentSize] = useState(0)
   const [isShowMore, setIsShowMore] = useState(false)
   const [menuLength, setMenuLength] = useState(5)
+  const [prices, setPrices] = useState({})
 
   useEffect(() => {
     setData(mock)
+    console.log(`http://localhost:3000/ordered/${transactionId}`)
   }, [])
+
+  useEffect(() => {
+    setPrices(
+      getIncresingPrice({
+        totalPrice: data.totalPrice,
+        tax: data.tax,
+        serviceCharge: data.serviceCharge,
+      }),
+    )
+  }, [data])
 
   const handleShowMenu = () => {
     LayoutAnimation.spring()
@@ -111,6 +150,27 @@ const OrderedHistory = () => {
           </ShowMore>
         </Menus>
       </AnimationHeight>
+      <SummaryView>
+        <IncreaseView>
+          <IncreasePriceView>
+            <IncreaseText>Net:</IncreaseText>
+            <IncreaseText>{prices.net}</IncreaseText>
+          </IncreasePriceView>
+          <IncreasePriceView>
+            <IncreaseText>Service Charge({data.serviceCharge}%):</IncreaseText>
+            <IncreaseText>{prices.serviceChargePrice}</IncreaseText>
+          </IncreasePriceView>
+          <IncreasePriceView>
+            <IncreaseText>Tax({data.tax}%):</IncreaseText>
+            <IncreaseText>{prices.taxPrice}</IncreaseText>
+          </IncreasePriceView>
+        </IncreaseView>
+        <TotalPriceView>
+          <TotalPrice>Total:</TotalPrice>
+          <TotalPrice>{data.totalPrice}</TotalPrice>
+        </TotalPriceView>
+      </SummaryView>
+      <FreeView />
     </Container>
   )
 }

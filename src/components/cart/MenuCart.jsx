@@ -29,11 +29,6 @@ const Quantity = styled.Text`
   font-size: 16px;
   font-weight: 600;
 `
-const Remove = styled.TouchableOpacity``
-const RemoveText = styled.Text`
-  font-size: 30px;
-  color: #adadad;
-`
 const Name = styled.Text`
   font-size: 18px;
   flex: 1;
@@ -49,8 +44,6 @@ const DeleteView = styled.View`
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
-
-  /* padding-left: 15; */
 `
 const DeleteButton = styled.TouchableOpacity`
   align-items: center;
