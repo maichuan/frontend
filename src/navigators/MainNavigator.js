@@ -80,10 +80,13 @@ MainTab.navigationOptions = ({ navigation }) => {
   }
 }
 
-const UserTab = createStackNavigator({
-  Info: UserInfo,
-  // Login: Login,
-})
+const UserTab = createStackNavigator(
+  {
+    Info: UserInfo,
+    // Login: Login,
+  },
+  options,
+)
 
 UserTab.navigationOptions = {
   tabBarLabel: 'User',

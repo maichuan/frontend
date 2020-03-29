@@ -32,6 +32,8 @@ import { mock } from './mock'
 const Restaurant = ({ navigation, menusStore }) => {
   // const { id, imgURL, name, table } = navigation.state.params
   const { id, table } = navigation.state.params
+  console.log(table)
+
   const [searchText, setSearchText] = useState('')
   const [restaurant, setResturant] = useState(null)
 
@@ -61,10 +63,12 @@ const Restaurant = ({ navigation, menusStore }) => {
               <RestaurantName>{restaurant.name}</RestaurantName>
               <RestaurantName>{restaurant.id}</RestaurantName>
             </TableNoView>
-            <TableNoView>
-              <RestaurantName>Table No.</RestaurantName>
-              <TableNo>{table}</TableNo>
-            </TableNoView>
+            {table !== 0 && (
+              <TableNoView>
+                <RestaurantName>Table No.</RestaurantName>
+                <TableNo>{table}</TableNo>
+              </TableNoView>
+            )}
           </TextImage>
           <SearchView>
             <SearchInput

@@ -126,7 +126,7 @@ const Login = ({ navigation }) => {
 
   return (
     <Container>
-      <ProfileImg source={require('../../../assets/hamburger.jpg')} />
+      {/* <ProfileImg source={require('../../../assets/hamburger.jpg')} /> */}
       <Input
         onChangeText={text => {
           setEmail(text)

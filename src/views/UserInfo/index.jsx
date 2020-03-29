@@ -6,7 +6,16 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 import Login from '../Login'
 
-import { Logout, LogoutText, ProfileImg, Container, Name } from './styled'
+import {
+  Logout,
+  LogoutText,
+  ProfileImg,
+  Container,
+  Name,
+  EditInfoView,
+  EditButton,
+  EditText,
+} from './styled'
 import { firebaseApp } from '../../utils/firebase'
 
 const UserInfo = ({ navigation, authStore }) => {
@@ -25,6 +34,13 @@ const UserInfo = ({ navigation, authStore }) => {
           ? authStore.auth.displayName
           : authStore.auth.email}
       </Name>
+
+      <EditInfoView>
+        <EditButton activeOpacity={0.8}>
+          <EditText>Payment</EditText>
+          <EditText>{'>'}</EditText>
+        </EditButton>
+      </EditInfoView>
 
       <Logout onPress={() => onLogoutClicked()}>
         <LogoutText>Logout</LogoutText>
