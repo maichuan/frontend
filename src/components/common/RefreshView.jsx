@@ -14,7 +14,7 @@ const ScrollBody = styled.ScrollView.attrs(props => ({
   },
 }))`
   flex: 1;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   align-self: stretch;
 `
 

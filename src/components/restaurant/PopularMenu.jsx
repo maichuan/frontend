@@ -3,26 +3,28 @@ import { Text, Card, Left, Right, CardItem, Button } from 'native-base'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import { Width } from '../../utils/utils'
 import MenuModal from './MenuModal'
 
 const MenuButton = styled.TouchableOpacity`
   margin: 10px 10px 10px 0px;
-  width: 300px;
-  height: 150px;
+  width: ${Width / 1.5};
+  height: ${Width / 2.5};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
 const MenuImage = styled.Image`
-  width: 300px;
-  height: 150px;
+  width: ${Width / 1.5};
+  height: ${Width / 2.5};
+  border-radius: 10px;
 `
 const NameView = styled.View`
   position: absolute;
   bottom: 0;
-  margin: 10px;
   align-self: stretch;
 `
 const Box = styled.View``
 const Name = styled.Text`
+  padding: 15px 10px;
   font-size: 20px;
   font-weight: 500;
   color: white;

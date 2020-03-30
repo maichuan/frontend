@@ -19,11 +19,13 @@ const Main = ({ spinnerStore, authStore }) => {
   useEffect(() => {
     getLocationAsync()
 
+    // spinnerStore.open()
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
         authStore.setAuth(user)
       }
     })
+    // spinnerStore.close()
   }, [])
 
   return (

@@ -1,35 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+
 import { Container, ProcessType } from './styled'
 import ProcessMenu from '../../components/process/ProcessMenu'
 import { serverClient } from '../../api'
 
-const mock = {
-  data: [
-    {
-      menuId: 1,
-      name: 'Menu1',
-      status: 0,
-      queue: 2,
-    },
-    {
-      menuId: 2,
-      name: 'Menu2',
-      status: 1,
-      queue: 0,
-    },
-    ,
-    {
-      menuId: 3,
-      name: 'Menu3',
-      status: 1,
-      queue: 0,
-    },
-  ],
-}
+import { mock } from './mock'
 
-const Process = ({ navigation }) => {
+const Process = ({ navigation, authStore }) => {
   const [data, setData] = useState({})
 
   const fetchOrder = async () => {
@@ -37,7 +18,12 @@ const Process = ({ navigation }) => {
     setData(data.data)
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    if (authStore.auth.uid) {
+      // fetch
+    }
+  }, [])
+
   return (
     <Container>
       <ProcessType>Processing...</ProcessType>
@@ -56,8 +42,18 @@ const Process = ({ navigation }) => {
   )
 }
 
+// Process['navigationOptions'] = screenProps => ({
+//   title: 'Home',
+// })
+
 Process.propTypes = {
   navigation: PropTypes.object,
+  authStore: PropTypes.object,
 }
 
-export default Process
+export default compose(
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+  })),
+  observer,
+)(Process)

@@ -1,18 +1,43 @@
 import React, { useContext } from 'react'
-import { Text, Card, Left, Right, CardItem } from 'native-base'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { HomeContext } from '../../utils/context'
 
+import { HomeContext } from '../../utils/context'
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
-
 import { getDistance } from 'geolib'
+import Constants from '../../utils/constants'
 
 const RestaurantImage = styled.Image`
   height: 200px;
+  /* width: 100%; */
   flex: 1;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `
+const Component = styled.TouchableOpacity`
+  flex: 1;
+  border-radius: 10px;
+  height: 250px;
+  /* width: 100%; */
+  /* margin-bottom: 10px; */
+  margin: 10px;
+`
+export const TextImage = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 100%; */
+  height: 50px;
+  padding: 5px 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-width: 1px;
+  border-top-width: 0;
+  border-color: ${Constants.strongColor};
+`
+export const DataText = styled.Text``
 
 const RestaurantCard = ({ data, authStore }) => {
   const { navigation } = useContext(HomeContext)
@@ -24,32 +49,28 @@ const RestaurantCard = ({ data, authStore }) => {
     })
   }
   return (
-    <Card>
-      <CardItem cardBody button onPress={() => changePage()}>
-        <RestaurantImage
-          source={
-            data.imgURL
-              ? { uri: data.imgURL }
-              : require('../../../assets/hamburger.jpg')
-          }
-        />
-      </CardItem>
-      <CardItem button onPress={() => changePage()}>
-        <Left>
-          <Text>{data.name}</Text>
-        </Left>
-        <Right>
-          <Text>
-            {getDistance(authStore.curLocation, {
-              latitude: data.lat,
-              longitude: data.long,
-            }) /
-              1000 +
-              ' km'}
-          </Text>
-        </Right>
-      </CardItem>
-    </Card>
+    <Component onPress={changePage}>
+      <RestaurantImage
+        source={
+          data.imgURL
+            ? { uri: data.imgURL }
+            : require('../../../assets/hamburger.jpg')
+        }
+      />
+      {/* <CardItem cardBody button onPress={() => changePage()}>
+      </CardItem> */}
+      <TextImage>
+        <DataText>{data.name}</DataText>
+        <DataText>
+          {getDistance(authStore.curLocation, {
+            latitude: data.lat,
+            longitude: data.long,
+          }) /
+            1000 +
+            ' km'}
+        </DataText>
+      </TextImage>
+    </Component>
   )
 }
 

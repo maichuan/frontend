@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Platform } from 'react-native'
 import { Icon } from 'native-base'
+import { Linking } from 'expo'
 import PropTypes from 'prop-types'
 import Menu from '../../components/restaurant/Menu'
 import PopularMenu from '../../components/restaurant/PopularMenu'
@@ -21,31 +22,65 @@ import {
   PopularText,
   HorizontalView,
   Container,
+  LocationView,
+  LocationIconView,
+  LocationTextView,
+  LocationText,
+  LocationIcon,
+  Hr,
 } from './styled'
 import SearchInput from '../../components/common/SearchInput'
 import { SafeView } from '../../components/common/styled'
 import { Width } from '../../utils/utils'
 import { serverClient } from '../../api'
+import Constants from '../../utils/constants'
 
+import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
 
 const Restaurant = ({ navigation, menusStore }) => {
-  // const { id, imgURL, name, table } = navigation.state.params
-  const { id, table } = navigation.state.params
-  console.log(table)
+  const { id, imgURL, name, table } = navigation.state.params
 
   const [searchText, setSearchText] = useState('')
   const [restaurant, setResturant] = useState(null)
 
   const fetchMenu = async () => {
-    // const res = await serverClient.get(`/restaurants/${id}`)
-    const res = { data: { name: 'Test', id: 5 } } // TODO: Remove after complete question test
-    setResturant(res.data)
+    if (API_READY === 'true') {
+      const res = await serverClient.get(`/restaurants/${id}`)
+      setResturant(res.data)
+    } else {
+      setResturant(mock)
+    }
   }
 
   useEffect(() => {
     fetchMenu()
   }, [])
+
+  const openMap = () => {
+    if (Platform.OS === 'ios') {
+      Linking.openURL(
+        `http://maps.apple.com/?q=${restaurant.lat},${restaurant.long}`,
+      )
+    } else {
+      Linking.openURL(
+        `http://maps.google.com/?q=${restaurant.lat},${restaurant.long}`,
+      )
+    }
+  }
+
+  const openTel = () => {
+    Linking.openURL(`tel:${restaurant.phoneno}`)
+    // if (Platform.OS === 'ios') {
+    //   Linking.openURL(
+    //     `http://maps.apple.com/?q=${restaurant.lat},${restaurant.long}`,
+    //   )
+    // } else {
+    //   Linking.openURL(
+    //     `http://maps.google.com/?q=${restaurant.lat},${restaurant.long}`,
+    //   )
+    // }
+  }
 
   return (
     restaurant && (
@@ -54,14 +89,16 @@ const Restaurant = ({ navigation, menusStore }) => {
           <HeadImage
             source={
               restaurant.imgURL
-                ? { uri: restaurant.imgURL }
+                ? imgURL
+                  ? { uri: imgURL }
+                  : { uri: restaurant.imgURL }
                 : require('../../../assets/mock_res.jpg')
             }
           />
           <TextImage>
             <TableNoView>
-              <RestaurantName>{restaurant.name}</RestaurantName>
-              <RestaurantName>{restaurant.id}</RestaurantName>
+              <RestaurantName>{name ? name : restaurant.name}</RestaurantName>
+              {/* <RestaurantName>{restaurant.id}</RestaurantName> */}
             </TableNoView>
             {table !== 0 && (
               <TableNoView>
@@ -81,15 +118,31 @@ const Restaurant = ({ navigation, menusStore }) => {
               <Icon name="sort-variant" type="MaterialCommunityIcons" />
             </FilterButton>
           </SearchView>
+          <LocationView onPress={openMap}>
+            <LocationIconView>
+              <LocationIcon name="location" type="Entypo" />
+            </LocationIconView>
+            <LocationTextView>
+              <LocationText>{restaurant.address}</LocationText>
+            </LocationTextView>
+          </LocationView>
+          <Hr />
+          <LocationView onPress={openTel}>
+            <LocationIconView>
+              <LocationIcon name="mobile-phone" type="FontAwesome" />
+            </LocationIconView>
+            <LocationTextView>
+              <LocationText>{'Tel: ' + restaurant.phoneno}</LocationText>
+            </LocationTextView>
+          </LocationView>
           <PopularText>Most Popular</PopularText>
           <HorizontalView horizontal>
             {restaurant.menus &&
               restaurant.menus.map((m, i) => <PopularMenu key={i} data={m} />)}
           </HorizontalView>
           <PopularText>All Menu</PopularText>
-          {restaurant.menus
-            ? restaurant.menus.map((d, i) => <Menu key={i} data={d} />)
-            : mock.map((m, i) => <Menu key={i} data={m} />)}
+          {restaurant.menus &&
+            restaurant.menus.map((d, i) => <Menu key={i} data={d} />)}
         </Container>
         <Cart />
         {Platform.OS === 'ios' && <SafeView bottom />}

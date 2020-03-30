@@ -3,11 +3,14 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import { Width } from '../../utils/utils'
+import Constants from '../../utils/constants'
 import MenuModal from './MenuModal'
 
 const MenuImage = styled.Image`
   width: 33%;
   height: ${({ size }) => size};
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 `
 const NameView = styled.View`
   bottom: 0;
@@ -25,9 +28,10 @@ const Box = styled.TouchableOpacity`
   flex-direction: row;
   margin: 10px;
   border-width: 1px;
-  border-color: rgba(0, 0, 0, 0.4);
+  border-color: ${Constants.strongColor};
   max-width: 500px;
-  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4); */
+  border-radius: 10px;
+  background-color: #fff;
 `
 const Name = styled.Text`
   font-size: 20px;

@@ -17,12 +17,13 @@ const OpenQrButton = styled(View)`
   height: 90px;
   border-radius: 1000;
   background-color: ${Constants.tabColor};
-  border-width: 3px;
+  border-color: ${Constants.weakColor};
+  border-width: 1.5px;
 `
 const QrCodeIcon = styled(Icon)`
   font-size: 50px;
   margin: auto;
-  color: #fff;
+  color: ${Constants.weakColor};
 `
 
 const QrCodeButton = () => {

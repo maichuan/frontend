@@ -142,11 +142,15 @@ const TabNav = createBottomTabNavigator(
     initialRouteName: 'MainTab',
     tabBarOptions: {
       showLabel: false,
-      activeTintColor: '#F8F8F8',
-      inactiveTintColor: '#586589',
+      // activeTintColor: '#F8F8F8',
+      // inactiveTintColor: '#586589',
+      activeTintColor: Constants.strongColor,
+      inactiveTintColor: Constants.weakColor,
       style: {
         backgroundColor: Constants.tabColor,
         height: 60,
+        // borderTopWidth: '2px',
+        // borderTopColor: '#e6b400',
       },
       // labelStyle: {
       //   fontSize: 15,

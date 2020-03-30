@@ -30,19 +30,23 @@ export const WelcomeView = styled.View`
   background-color: ${Constants.tabColor};
   height: 100px;
   width: ${Width};
+  display: flex;
+  justify-content: center;
+  border-bottom-width: 1px;
+  border-bottom-color: #aaa;
 `
 export const WelcomeMessage = styled.Text`
-  color: white;
-  margin: auto;
-  font-size: 30px;
-  font-weight: 700;
+  color: ${Constants.strongColor};
+  font-size: 20px;
+  font-weight: 600;
+  padding: 0 20px;
 `
 export const SearchBox = styled.View`
   flex-direction: row;
   align-items: center;
   background-color: #fff;
   border-width: 1px;
-  border-color: #000;
+  border-color: ${Constants.strongColor};
   border-radius: 6px;
   max-width: 370px;
   margin: 10px 0px;
@@ -61,11 +65,7 @@ export const SearchInput = styled.TextInput`
   color: #424242;
 `
 export const HorizontalView = styled.ScrollView`
-  max-width: 370px;
-  height: ${Width / 3};
-  border: 2px solid rgba(183, 183, 183, 0.83);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 3px;
 `
 export const TrendRestaurant = styled.TouchableOpacity`
   width: ${Width / 2};
@@ -78,11 +78,14 @@ export const TrendRestaurant = styled.TouchableOpacity`
 `
 export const NearByText = styled.Text`
   font-style: normal;
-  color: #4a4a4a;
+  color: ${Constants.strongColor};
   font-weight: bold;
   font-size: 18px;
   line-height: 21px;
   display: flex;
   align-items: center;
   margin: 10px;
+`
+export const FreeView = styled.View`
+  height: 30px;
 `
