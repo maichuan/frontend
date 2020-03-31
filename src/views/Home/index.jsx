@@ -97,6 +97,10 @@ Home.propTypes = {
   navigation: PropTypes.object,
 }
 
+Home.navigationOptions = {
+  headerShown: false,
+}
+
 export default compose(
   inject(({ rootStore }) => ({
     authStore: rootStore.authStore,

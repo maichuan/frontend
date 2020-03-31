@@ -7,13 +7,13 @@ import MenuModal from './MenuModal'
 
 const MenuButton = styled.TouchableOpacity`
   margin: 10px 10px 10px 0px;
-  width: ${Width / 1.5};
-  height: ${Width / 2.5};
+  width: ${Width / 2};
+  height: ${Width / 3};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
 const MenuImage = styled.Image`
-  width: ${Width / 1.5};
-  height: ${Width / 2.5};
+  width: ${Width / 2};
+  height: ${Width / 3};
   border-radius: 10px;
 `
 const NameView = styled.View`
@@ -24,7 +24,7 @@ const NameView = styled.View`
 const Box = styled.View``
 const Name = styled.Text`
   padding: 15px 10px;
-  font-size: 20px;
+  font-size: 15px;
   font-weight: 500;
   color: white;
   text-shadow: 2px 2px black;

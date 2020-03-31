@@ -15,6 +15,7 @@ const History = ({ navigation }) => {
   useEffect(() => {
     setData(mock.data)
   }, [])
+
   return (
     <HistoryContext.Provider value={{ navigation }}>
       <Container>

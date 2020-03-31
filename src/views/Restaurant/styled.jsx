@@ -5,6 +5,7 @@ import Constants from '../../utils/constants'
 
 export const Container = styled.ScrollView`
   flex: 1;
+  background-color: ${Constants.veryWeakColor};
 `
 export const HeadImage = styled.Image`
   align-self: stretch;
@@ -72,7 +73,8 @@ export const HorizontalView = styled.ScrollView`
 export const LocationView = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
-  background-color: #fff;
+  /* background-color: #fff; */
+  /* background-color: ${Constants.weakColor}; */
 `
 export const LocationIconView = styled.View`
   border-right-width: 1px;
@@ -84,6 +86,7 @@ export const LocationIconView = styled.View`
 `
 export const LocationTextView = styled.View`
   width: ${Width * 0.7};
+  justify-content: center;
 `
 export const LocationText = styled.Text`
   padding: 10px;
@@ -91,8 +94,14 @@ export const LocationText = styled.Text`
 `
 export const LocationIcon = styled(Icon)`
   color: ${Constants.strongColor};
+  padding: 10px;
 `
 export const Hr = styled.View`
   border-bottom-color: ${Constants.strongColor};
   border-bottom-width: 0.5px;
+`
+export const Detail = styled.View`
+  margin: 5px;
+  border-radius: 10px;
+  background-color: ${Constants.weakColor};
 `

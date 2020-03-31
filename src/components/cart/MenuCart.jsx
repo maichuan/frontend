@@ -21,6 +21,7 @@ const Component = styled.TouchableHighlight`
   padding: 20px;
   border-width: 0.2px;
   border-color: #d1d0cd;
+  border-radius: 10px;
 `
 const Quantity = styled.Text`
   border-width: 1px;
@@ -49,6 +50,7 @@ const DeleteView = styled.View`
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
+  border-radius: 10px;
 `
 const DeleteButton = styled.TouchableOpacity`
   align-items: center;
@@ -58,10 +60,13 @@ const DeleteButton = styled.TouchableOpacity`
   justify-content: center;
   position: absolute;
   width: 80px;
-  background-color: red;
+  background-color: ${constants.redColor};
+  border-radius: 10px;
 `
 const DeleteText = styled.Text`
   color: #fff;
+  font-weight: 600;
+  font-size: 15px;
 `
 
 const MenuCart = ({ data, menusStore }) => {

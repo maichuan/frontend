@@ -18,7 +18,7 @@ import Constants from '../utils/constants'
 import OrderedHistory from '../views/OrderedHistory'
 
 const options = {
-  headerMode: 'none',
+  // headerMode: 'none',
   navigationOptions: {
     headerVisible: false,
     cardStyle: {
@@ -54,9 +54,11 @@ const optionsHeader = {
     headerStyle: {
       backgroundColor: Constants.tabColor,
     },
-    headerTintColor: '#fff',
+    headerTintColor: Constants.strongColor,
     headerTitleStyle: {
       fontWeight: 'bold',
+      fontSize: '18px',
+      color: Constants.strongColor,
     },
     headerBackTitle: ' ',
   },
@@ -68,7 +70,8 @@ const MainTab = createStackNavigator(
     Restaurant: Restaurant,
     Cart: Cart,
   },
-  options,
+  optionsHeader,
+  // options,
 )
 
 MainTab.navigationOptions = ({ navigation }) => {

@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import Constants from '../../utils/constants'
+
 const Container = styled.View`
   display: flex;
   border-bottom-width: 1px;
@@ -17,6 +19,7 @@ const QuantityView = styled.View`
 const FoodView = styled.View`
   width: 60%;
   padding: 10px 0;
+  display: flex;
 `
 const PriceView = styled.View`
   width: 20%;
@@ -24,25 +27,30 @@ const PriceView = styled.View`
   padding-right: 8px;
 `
 const Quantity = styled.Text`
-  border-width: 1px;
-  border-color: #adadad;
+  border-width: 2px;
+  border-color: ${Constants.tabColor};
   border-radius: 5px;
   padding: 10px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
+  color: ${Constants.tabColor};
 `
 const MenuName = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 500;
   padding-bottom: 5px;
+  color: ${Constants.strongColor};
 `
 const Price = styled.Text`
-  font-size: 22px;
+  font-size: 18px;
   text-align: right;
+  color: ${Constants.strongColor};
 `
 const Description = styled.Text`
   font-size: 12px;
   font-weight: 200;
+  color: ${Constants.strongColor};
 `
 
 const Ordered = ({ data }) => {
@@ -53,7 +61,7 @@ const Ordered = ({ data }) => {
       </QuantityView>
       <FoodView>
         <MenuName>{data.name}</MenuName>
-        <Description>{data.special}</Description>
+        {data.special !== '' && <Description>{data.special}</Description>}
       </FoodView>
       <PriceView>
         <Price>{data.totalPrice + '.-'}</Price>

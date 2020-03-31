@@ -1,61 +1,84 @@
 import React from 'react'
-import { Alert, Text } from 'react-native'
+import { Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { SwipeRow } from 'react-native-swipe-list-view'
+import { BallIndicator } from 'react-native-indicators'
+
 import Status from './Status'
 import { Width } from '../../utils/utils'
+import constants from '../../utils/constants'
 
 const Component = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   border-width: 1px;
   border-color: #adadad;
-  border-radius: 10px;
-  height: 100px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 80px;
   align-items: center;
   margin: 5px;
   background-color: #fff;
 `
 const Name = styled.Text`
-  padding: 0 10px;
-  font-size: 20px;
+  padding: 0 12px;
+  font-size: 18px;
+  font-weight: 500;
+  color: ${constants.strongColor};
 `
 const StatusView = styled.View`
   border-top-right-radius: 10px;
-  height: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 `
 const CancelButton = styled.TouchableOpacity`
-  background-color: ${({ disabled }) => (disabled ? 'gray' : 'red')};
-  border-bottom-right-radius: 10px;
-  padding: 5px;
-  align-items: center;
+  bottom: 0;
+  top: 0;
+  right: 0;
   justify-content: center;
-  height: 50%;
+  align-items: center;
+  position: absolute;
+  width: 80px;
+  background-color: ${constants.redColor};
+  border-radius: 5px;
 `
 const Cancel = styled.Text`
+  font-size: 16px;
   font-weight: 600;
   color: #fff;
 `
-const RightView = styled.View`
+const ProcessStatusView = styled.View`
   width: ${Width / 3.5};
-  border-left-width: 0.5px;
-  border-left-color: #aaaaaa;
+  border-right-width: 0.5px;
+  border-right-color: #aaaaaa;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+`
+const CancelView = styled.View`
+  align-items: center;
+  background-color: ${constants.weakColor};
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 10px;
+  margin: 5px;
 `
 
 const ProcessMenu = ({ data }) => {
   return (
-    <Component>
-      <Name>{data.name}</Name>
-      <RightView>
-        <StatusView>
-          <Status status={data.status} queue={data.queue} />
-        </StatusView>
+    <SwipeRow
+      disableRightSwipe={true}
+      disableLeftSwipe={data.status === 1}
+      stopRightSwipe={-100}
+      rightOpenValue={-80}
+    >
+      <CancelView>
         <CancelButton
-          disabled={data.status !== 0}
           onPress={() =>
             Alert.alert(
               'Cancel order',
@@ -77,8 +100,20 @@ const ProcessMenu = ({ data }) => {
         >
           <Cancel>Cancel</Cancel>
         </CancelButton>
-      </RightView>
-    </Component>
+      </CancelView>
+      <Component>
+        <ProcessStatusView>
+          <StatusView>
+            {data.status === 0 ? (
+              <Status status={data.status} queue={data.queue} />
+            ) : (
+              <BallIndicator color={constants.strongColor} />
+            )}
+          </StatusView>
+        </ProcessStatusView>
+        <Name>{data.name}</Name>
+      </Component>
+    </SwipeRow>
   )
 }
 

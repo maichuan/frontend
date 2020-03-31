@@ -9,9 +9,11 @@ import ProcessMenu from '../../components/process/ProcessMenu'
 import { serverClient } from '../../api'
 
 import { mock } from './mock'
+import { Height } from '../../utils/utils'
 
 const Process = ({ navigation, authStore }) => {
   const [data, setData] = useState({})
+  const [contentSize, setContentSize] = useState(0)
 
   const fetchOrder = async () => {
     const data = await serverClient.get('/orders')
@@ -25,8 +27,11 @@ const Process = ({ navigation, authStore }) => {
   }, [])
 
   return (
-    <Container>
-      <ProcessType>Processing...</ProcessType>
+    <Container
+      scrollEnabled={contentSize > Height * 0.65}
+      onContentSizeChange={(_, contentHeight) => setContentSize(contentHeight)}
+    >
+      <ProcessType>Cooking</ProcessType>
       {mock.data
         .filter(d => d.status === 1)
         .map((d, i) => (
@@ -43,8 +48,7 @@ const Process = ({ navigation, authStore }) => {
 }
 
 Process['navigationOptions'] = screenProps => ({
-  headerTitle: 'Jackk',
-  headerShown: false,
+  headerTitle: 'Processing...',
 })
 
 Process.propTypes = {

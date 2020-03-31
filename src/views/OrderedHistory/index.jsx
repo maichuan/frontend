@@ -26,7 +26,7 @@ import { getIncresingPrice } from '../../utils/utils'
 import { mock } from './mock'
 
 const OrderedHistory = ({ navigation }) => {
-  const { transactionId } = navigation.state.params
+  const orderedData = navigation.state.params.data
   const [data, setData] = useState({})
   // const [contentSize, setContentSize] = useState(0)
   const [isShowMore, setIsShowMore] = useState(false)
@@ -35,7 +35,7 @@ const OrderedHistory = ({ navigation }) => {
 
   useEffect(() => {
     setData(mock)
-    console.log(`http://localhost:3000/ordered/${transactionId}`)
+    console.log(`http://localhost:3000/ordered/${orderedData.transactionId}`)
   }, [])
 
   useEffect(() => {
@@ -56,28 +56,30 @@ const OrderedHistory = ({ navigation }) => {
 
   return (
     <Container
-      scrollEnabled={data.menus.length > 4}
+      scrollEnabled={data.menus ? data.menus.length > 4 : false}
       // onContentSizeChange={(_, contentHeight) => setContentSize(contentHeight)}
     >
       <Header>
         <RestaurantName>{data.restaurantName}</RestaurantName>
         <TransactionId>{'Transaction ID: ' + data.transactionId}</TransactionId>
       </Header>
-      <AnimationHeight>
-        <Menus>
-          {data.menus &&
-            data.menus
-              .slice(0, menuLength)
-              .map((menu, i) => <Ordered key={i} data={menu} />)}
-          {data.menus.length > 5 && (
-            <ShowMore activeOpacity={0.9} onPress={handleShowMenu}>
-              <ShowMoreText>
-                {isShowMore ? 'Show less' : 'Show more'}
-              </ShowMoreText>
-            </ShowMore>
-          )}
-        </Menus>
-      </AnimationHeight>
+      {data.menus && (
+        <AnimationHeight>
+          <Menus>
+            {data.menus &&
+              data.menus
+                .slice(0, menuLength)
+                .map((menu, i) => <Ordered key={i} data={menu} />)}
+            {data.menus.length > 5 && (
+              <ShowMore activeOpacity={0.9} onPress={handleShowMenu}>
+                <ShowMoreText>
+                  {isShowMore ? 'Show less' : 'Show more'}
+                </ShowMoreText>
+              </ShowMore>
+            )}
+          </Menus>
+        </AnimationHeight>
+      )}
       <SummaryView>
         <IncreaseView>
           <IncreasePriceView>
@@ -105,6 +107,13 @@ const OrderedHistory = ({ navigation }) => {
 
 OrderedHistory.propTypes = {
   navigation: PropTypes.object,
+}
+
+OrderedHistory.navigationOptions = props => {
+  const { data } = props.navigation.state.params
+  return {
+    headerTitle: data.restaurantName + ' ' + data.time,
+  }
 }
 
 export default OrderedHistory

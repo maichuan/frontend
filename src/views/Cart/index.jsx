@@ -1,15 +1,14 @@
 import React from 'react'
+import { Platform } from 'react-native'
 import PropTypes from 'prop-types'
 import { SwipeListView } from 'react-native-swipe-list-view'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
-import withSafeArea from '../../hocs/withSafeView'
 import MenuCart from '../../components/cart/MenuCart'
 import {
   Container,
-  SummayText,
   TotalPriceView,
   TotalText,
   PriceText,
@@ -17,6 +16,7 @@ import {
   ConfirmText,
 } from './styled'
 import { serverClient } from '../../api'
+import { SafeView } from '../../components/common/styled'
 import constants from '../../utils/constants'
 
 const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
@@ -43,7 +43,6 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
   return (
     <>
       <Container>
-        <SummayText>Order Summary</SummayText>
         <SwipeListView
           closeOnScroll
           closeOnRowOpen
@@ -70,6 +69,7 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
           <ConfirmText>Submit Order</ConfirmText>
         </ConfirmButton>
       </TotalPriceView>
+      {Platform.OS === 'ios' && <SafeView bottom color={constants.weakColor} />}
     </>
   )
 }
@@ -80,15 +80,13 @@ Cart.propTypes = {
   authStore: PropTypes.object,
   navigation: PropTypes.object,
 }
-// Cart.navigationOptions = {
-//   headerMode: 'float',
-//   headerShown: true,
-//   title: 'Hello',
-//   headerTitle: 'Wow',
-// }
+
+Cart.navigationOptions = {
+  headerTitle: 'Order Summary',
+}
 
 export default compose(
-  withSafeArea,
+  // withSafeArea,
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
     authStore: rootStore.authStore,

@@ -7,20 +7,20 @@ import Constants from '../../utils/constants'
 import MenuModal from './MenuModal'
 
 const MenuImage = styled.Image`
-  width: 33%;
-  height: ${({ size }) => size};
+  width: ${Width / 4};
+  height: ${Width / 4};
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 `
 const NameView = styled.View`
   bottom: 0;
   padding: 10px;
-  width: 42%;
+  width: ${Width / 2};
 `
 const PriceView = styled.View`
   bottom: 0;
   padding: 10px;
-  width: 25%;
+  width: ${Width / 5.5};
   align-items: flex-end;
 `
 const Box = styled.TouchableOpacity`
@@ -31,10 +31,11 @@ const Box = styled.TouchableOpacity`
   border-color: ${Constants.strongColor};
   max-width: 500px;
   border-radius: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: ${Constants.weakColor};
 `
 const Name = styled.Text`
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 500;
   color: ${Constants.strongColor};
 `
@@ -50,14 +51,12 @@ const Menu = ({ data }) => {
     <>
       <Box activeOpacity={0.9} onPress={() => addMenu()}>
         <MenuImage
-          size={Width / 3}
           source={
             data.imgURL
               ? { uri: data.imgURL }
               : require('../../../assets/shrimp.jpg')
           }
         />
-
         <NameView>
           <Name> {data.name}</Name>
         </NameView>

@@ -3,6 +3,7 @@ import Constants from '../../utils/constants'
 
 export const Container = styled.ScrollView`
   flex: 1;
+  background-color: ${Constants.veryWeakColor};
 `
 export const FreeView = styled.View`
   height: 35px;
@@ -15,14 +16,16 @@ export const Header = styled.View`
   background-color: #fff;
 `
 export const RestaurantName = styled.Text`
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 700;
-  padding: 15px;
+  padding: 15px 15px 5px 15px;
+  color: ${Constants.strongColor};
 `
 export const TransactionId = styled.Text`
   font-size: 10px;
   font-weight: 300;
-  padding: 0 15px 5px 15px;
+  padding: 0 15px 10px 15px;
+  color: ${Constants.strongColor};
 `
 export const Menus = styled.View`
   border-width: 1px;
@@ -36,7 +39,7 @@ export const ShowMore = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   height: 40px;
-  background-color: ${Constants.weakColor};
+  background-color: ${Constants.tabColor};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `
@@ -61,7 +64,8 @@ export const IncreasePriceView = styled.View`
   padding: 5px;
 `
 export const IncreaseText = styled.Text`
-  font-size: 15px;
+  font-size: 13px;
+  color: ${Constants.strongColor};
 `
 export const TotalPriceView = styled.View`
   border-top-width: 1px;
@@ -73,4 +77,6 @@ export const TotalPriceView = styled.View`
 `
 export const TotalPrice = styled.Text`
   font-size: 20px;
+  color: ${Constants.strongColor};
+  font-weight: 600;
 `

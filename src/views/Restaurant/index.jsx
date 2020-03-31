@@ -28,6 +28,7 @@ import {
   LocationText,
   LocationIcon,
   Hr,
+  Detail,
 } from './styled'
 import SearchInput from '../../components/common/SearchInput'
 import { SafeView } from '../../components/common/styled'
@@ -98,7 +99,7 @@ const Restaurant = ({ navigation, menusStore }) => {
               </TableNoView>
             )}
           </TextImage>
-          <SearchView>
+          {/* <SearchView>
             <SearchInput
               placeholder="Find something to eat"
               text={searchText}
@@ -108,24 +109,26 @@ const Restaurant = ({ navigation, menusStore }) => {
             <FilterButton>
               <Icon name="sort-variant" type="MaterialCommunityIcons" />
             </FilterButton>
-          </SearchView>
-          <LocationView onPress={openMap}>
-            <LocationIconView>
-              <LocationIcon name="location" type="Entypo" />
-            </LocationIconView>
-            <LocationTextView>
-              <LocationText>{restaurant.address}</LocationText>
-            </LocationTextView>
-          </LocationView>
-          <Hr />
-          <LocationView onPress={openTel}>
-            <LocationIconView>
-              <LocationIcon name="mobile-phone" type="FontAwesome" />
-            </LocationIconView>
-            <LocationTextView>
-              <LocationText>{'Tel: ' + restaurant.phoneno}</LocationText>
-            </LocationTextView>
-          </LocationView>
+          </SearchView> */}
+          <Detail>
+            <LocationView onPress={openMap}>
+              <LocationIconView>
+                <LocationIcon name="location" type="Entypo" />
+              </LocationIconView>
+              <LocationTextView>
+                <LocationText>{restaurant.address}</LocationText>
+              </LocationTextView>
+            </LocationView>
+            <Hr />
+            <LocationView onPress={openTel}>
+              <LocationIconView>
+                <LocationIcon name="mobile-phone" type="FontAwesome" />
+              </LocationIconView>
+              <LocationTextView>
+                <LocationText>{'Tel: ' + restaurant.phoneno}</LocationText>
+              </LocationTextView>
+            </LocationView>
+          </Detail>
           <PopularText>Most Popular</PopularText>
           <HorizontalView horizontal>
             {restaurant.menus &&
@@ -147,6 +150,12 @@ const Restaurant = ({ navigation, menusStore }) => {
 Restaurant.propTypes = {
   navigation: PropTypes.object,
   menusStore: PropTypes.object,
+}
+
+Restaurant.navigationOptions = props => {
+  // console.log(props)
+
+  return { headerShown: false }
 }
 
 export default compose(

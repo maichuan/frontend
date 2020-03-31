@@ -6,6 +6,7 @@ export const Container = styled.View`
   flex: 1;
   align-items: center;
   padding-top: 7px;
+  background-color: ${Constants.veryWeakColor};
 `
 export const SummayText = styled.Text`
   color: #d1d0cd;
@@ -21,7 +22,7 @@ export const TotalPriceView = styled.View`
   justify-content: space-between;
   padding: 10px 15px;
   background-color: #fff;
-  /* background-color: ${Constants.weakColor}; */
+  background-color: ${Constants.weakColor};
 `
 export const TotalText = styled.Text`
   font-size: 20px;
