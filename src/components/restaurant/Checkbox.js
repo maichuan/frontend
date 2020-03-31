@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import CheckBox from 'react-native-check-box'
+import constants from '../../utils/constants'
 
 const Checkbox = ({ choice, onListChecked }) => {
   const [checked, setIsCheck] = useState(false)
@@ -14,10 +15,14 @@ const Checkbox = ({ choice, onListChecked }) => {
   return (
     <CheckBox
       style={{ flex: 1 }}
+      rightTextStyle={{
+        color: checked ? constants.tabColor : constants.strongColor,
+      }}
       onClick={handleCheck}
       isChecked={checked}
       rightText={choice}
-      checkedCheckBoxColor="#75cf55"
+      checkedCheckBoxColor={constants.tabColor}
+      checkBoxColor={constants.strongColor}
     />
   )
 }

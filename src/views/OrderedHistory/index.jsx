@@ -28,7 +28,7 @@ import { mock } from './mock'
 const OrderedHistory = ({ navigation }) => {
   const { transactionId } = navigation.state.params
   const [data, setData] = useState({})
-  const [contentSize, setContentSize] = useState(0)
+  // const [contentSize, setContentSize] = useState(0)
   const [isShowMore, setIsShowMore] = useState(false)
   const [menuLength, setMenuLength] = useState(5)
   const [prices, setPrices] = useState({})
@@ -56,8 +56,8 @@ const OrderedHistory = ({ navigation }) => {
 
   return (
     <Container
-      scrollEnabled={contentSize > Height * 0.9}
-      onContentSizeChange={(_, contentHeight) => setContentSize(contentHeight)}
+      scrollEnabled={data.menus.length > 4}
+      // onContentSizeChange={(_, contentHeight) => setContentSize(contentHeight)}
     >
       <Header>
         <RestaurantName>{data.restaurantName}</RestaurantName>
@@ -69,11 +69,13 @@ const OrderedHistory = ({ navigation }) => {
             data.menus
               .slice(0, menuLength)
               .map((menu, i) => <Ordered key={i} data={menu} />)}
-          <ShowMore activeOpacity={0.9} onPress={handleShowMenu}>
-            <ShowMoreText>
-              {isShowMore ? 'Show less' : 'Show more'}
-            </ShowMoreText>
-          </ShowMore>
+          {data.menus.length > 5 && (
+            <ShowMore activeOpacity={0.9} onPress={handleShowMenu}>
+              <ShowMoreText>
+                {isShowMore ? 'Show less' : 'Show more'}
+              </ShowMoreText>
+            </ShowMore>
+          )}
         </Menus>
       </AnimationHeight>
       <SummaryView>

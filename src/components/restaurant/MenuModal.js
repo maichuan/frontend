@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Platform } from 'react-native'
 import styled from 'styled-components'
 import Modal from 'react-native-modal'
 import PropTypes from 'prop-types'
@@ -8,12 +9,14 @@ import { compose } from 'recompose'
 import { questionConverter, Height } from '../../utils/utils'
 import SingleAnswer from './SingleAnswer'
 import MultipleAnswer from './MultipleAnswer'
+import Constants from '../../utils/constants'
 
 const mockQuestion =
   'ท่านก้องอายุเท่าไร:0:20;30;10,ท่านก้องชอบอะไร:1:react;vue;java'
 
 const BottomModal = styled(Modal)`
   margin: 0;
+  justify-content: flex-end;
 `
 const SafeBottom = styled.SafeAreaView`
   flex: 1;
@@ -26,21 +29,29 @@ const ModalView = styled.View`
   flex-direction: column;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  border-color: rgba(0, 0, 0, 0.1);
+  /* border-color: rgba(0, 0, 0, 0.1); */
   max-height: 75%;
 `
 const ModalScroll = styled.ScrollView``
+const ModalAvoidView = styled.KeyboardAvoidingView`
+  justify-content: flex-end;
+  background-color: red;
+  margin: 0;
+  padding: 0;
+`
 const ModalFeed = styled.TouchableWithoutFeedback``
 const ModalInnerView = styled.View``
 const RestaurantName = styled.Text`
   font-weight: bold;
-  font-size: 28px;
+  font-size: 23px;
   margin: 15px;
+  color: ${Constants.strongColor};
 `
 const Description = styled.Text`
   font-weight: normal;
-  font-size: 20px;
+  font-size: 16px;
   margin: 20px;
+  color: ${Constants.strongColor};
 `
 const RowView = styled.View`
   display: flex;
@@ -53,12 +64,14 @@ const QuestionText = styled.Text`
   font-weight: bold;
   font-size: 20px;
   margin: 10px 0px;
+  color: ${Constants.strongColor};
 `
 const QuantityView = styled.View`
   border-radius: 5px;
   display: flex;
   flex-direction: row;
-  background-color: #c4c4c4;
+  /* background-color: #c4c4c4; */
+  background-color: ${Constants.tabColor};
   justify-content: center;
   align-items: center;
 `
@@ -70,16 +83,19 @@ const QuantityButton = styled.TouchableOpacity`
 const QuantityAction = styled.Text`
   font-size: 30px;
   font-weight: 900;
+  color: ${Constants.strongColor};
 `
 const Quantity = styled.Text`
   width: 40px;
   background-color: white;
   text-align: center;
   font-size: 25px;
+  color: ${Constants.strongColor};
 `
 const ConfirmView = styled.View`
   padding: 15px;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: ${Constants.weakColor};
   border-width: 1px;
   border-color: #c7c7c7;
 `
@@ -88,13 +104,14 @@ const ConfirmButton = styled.TouchableOpacity`
   border-radius: 10px;
   align-items: center;
   justify-content: center;
-  background-color: #75cf55;
+  /* background-color: #75cf55; */
+  background-color: ${Constants.tabColor};
   height: 50px;
 `
 const ComfirmText = styled.Text`
   font-size: 25px;
-  font-weight: 500;
-  color: #fff;
+  font-weight: 600;
+  color: ${Constants.strongColor};
 `
 const Special = styled.TextInput`
   border-bottom-width: 1px;
@@ -103,7 +120,8 @@ const Special = styled.TextInput`
   margin: 10px;
 `
 const QuestionView = styled.View`
-  background-color: #ededed;
+  /* background-color: #ededed; */
+  background-color: ${Constants.weakColor};
   padding: 5px 0;
 `
 const SingleQuestionView = styled.View`
@@ -136,8 +154,7 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   const [contentSize, setContentSize] = useState(0)
 
   useEffect(() => {
-    const ques = questionConverter(mockQuestion)
-    setQuestions(ques)
+    setQuestions(data.question)
   }, [])
 
   const increase = () => {
@@ -185,6 +202,9 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
       onSwipeComplete={closeModal}
     >
       <SafeBottom>
+        {/* <ModalAvoidView
+          behavior={Platform.OS === 'android' ? undefined : 'position'}
+        > */}
         <SwipeDownArea>
           <HeadSign />
         </SwipeDownArea>
@@ -229,9 +249,11 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
                       }
                     })}
                 </QuestionView>
+
                 <SpecialView>
                   <QuestionText>Special Instructions</QuestionText>
                   <Special
+                    placeholderTextColor={Constants.tabColor}
                     onChangeText={text => onChangeText(text)}
                     placeholder="Add some special instructions here."
                     value={special}
@@ -246,6 +268,7 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
             <ComfirmText>Add to Cart: {data.price * quantity} .-</ComfirmText>
           </ConfirmButton>
         </ConfirmView>
+        {/* </ModalAvoidView> */}
       </SafeBottom>
     </BottomModal>
   )

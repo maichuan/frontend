@@ -36,6 +36,7 @@ const Box = styled.TouchableOpacity`
 const Name = styled.Text`
   font-size: 20px;
   font-weight: 500;
+  color: ${Constants.strongColor};
 `
 
 const Menu = ({ data }) => {

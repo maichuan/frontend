@@ -7,12 +7,14 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 
 import { RestaurantContext } from '../../utils/context'
+import constants from '../../utils/constants'
 
 const InlineView = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 60px;
+  background-color: ${constants.weakColor};
 `
 const TotalPrice = styled.View`
   display: flex;
@@ -21,14 +23,18 @@ const TotalPrice = styled.View`
 `
 const CartIcon = styled(Icon)`
   margin: auto 10px;
+  color: ${constants.strongColor};
 `
 const Price = styled.Text`
   font-size: 20px;
   margin: auto 10px;
   font-weight: bold;
+  color: ${constants.strongColor};
 `
 const Continue = styled.TouchableOpacity`
-  background-color: ${({ disabled }) => (disabled ? '#d1d0cd' : '#75cf55')};
+  background-color: ${({ disabled }) =>
+    disabled ? '#fff9ed' : constants.tabColor};
+
   justify-content: center;
   align-items: center;
   padding: 0px 10px;
@@ -36,7 +42,7 @@ const Continue = styled.TouchableOpacity`
 `
 const ContinueText = styled.Text`
   font-size: 20px;
-  color: #fff;
+  color: ${constants.strongColor};
   font-weight: 700;
 `
 

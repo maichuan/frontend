@@ -20,7 +20,18 @@ export const mock = {
       price: 60,
       description: null,
       status: 1,
-      question: null,
+      question: [
+        {
+          question: 'Topping',
+          type: 0,
+          choices: ['Bubble', '2Bubble', 'Pudding', 'Show kuay'],
+        },
+        {
+          question: 'Size',
+          type: 1,
+          choices: ['XS', 'S', 'M', 'L', 'XL'],
+        },
+      ],
       imgURL:
         'https://scontent.fbkk11-1.fna.fbcdn.net/v/t1.0-9/47311681_1093778997459761_1828160285605625856_o.jpg?_nc_cat=110&_nc_ohc=UnWmj7HEQbQAX-rQJGv&_nc_ht=scontent.fbkk11-1.fna&oh=db17a092867e3e0e25f6a726057b3415&oe=5EC3A654',
       createdAt: null,
@@ -33,7 +44,18 @@ export const mock = {
       price: 80,
       description: null,
       status: 0,
-      question: null,
+      question: [
+        {
+          question: 'Topping',
+          type: 0,
+          choices: ['Bubble', '2Bubble', 'Pudding', 'Show kuay'],
+        },
+        {
+          question: 'Size',
+          type: 1,
+          choices: ['XS', 'S', 'M', 'L', 'XL'],
+        },
+      ],
       imgURL: 'https://pbs.twimg.com/media/DruJdq_VYAAm_0Y.jpg',
       createdAt: null,
       updatedAt: null,

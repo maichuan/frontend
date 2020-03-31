@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Text, Card, Left, Right, CardItem, Button } from 'native-base'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 

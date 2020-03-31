@@ -8,6 +8,7 @@ import { compose } from 'recompose'
 
 import { displayToast } from '../../utils/utils'
 import { Width } from '../../utils/utils'
+import constants from '../../utils/constants'
 
 const Component = styled.TouchableHighlight`
   width: ${Width};
@@ -23,7 +24,9 @@ const Component = styled.TouchableHighlight`
 `
 const Quantity = styled.Text`
   border-width: 1px;
-  border-color: #adadad;
+  /* border-color: #adadad; */
+  border-color: ${constants.tabColor};
+  color: ${constants.tabColor};
   border-radius: 5px;
   padding: 10px;
   font-size: 16px;
@@ -34,9 +37,11 @@ const Name = styled.Text`
   flex: 1;
   flex-wrap: wrap;
   padding: 0px 10px;
+  color: ${constants.strongColor};
 `
 const Price = styled.Text`
   font-size: 18px;
+  color: ${constants.strongColor};
 `
 const DeleteView = styled.View`
   align-items: center;

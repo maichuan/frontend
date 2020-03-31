@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import Constants from '../../utils/constants'
 
 export const Container = styled.ScrollView`
   flex: 1;
@@ -35,13 +36,13 @@ export const ShowMore = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   height: 40px;
-  background-color: green;
+  background-color: ${Constants.weakColor};
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 `
 export const ShowMoreText = styled.Text`
   font-weight: 600;
-  color: #fff;
+  color: ${Constants.strongColor};
 `
 export const SummaryView = styled.View`
   border-width: 1px;

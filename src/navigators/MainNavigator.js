@@ -49,6 +49,18 @@ const options = {
   //   // ),
   // },
 }
+const optionsHeader = {
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: Constants.tabColor,
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
+    },
+    headerBackTitle: ' ',
+  },
+}
 
 const MainTab = createStackNavigator(
   {
@@ -96,9 +108,12 @@ UserTab.navigationOptions = {
   ),
 }
 
-const ProcessTab = createStackNavigator({
-  Process: Process,
-})
+const ProcessTab = createStackNavigator(
+  {
+    Process: Process,
+  },
+  optionsHeader,
+)
 
 ProcessTab.navigationOptions = {
   tabBarLabel: 'Process',
@@ -108,10 +123,13 @@ ProcessTab.navigationOptions = {
   ),
 }
 
-const HistoryTab = createStackNavigator({
-  History: History,
-  OrderedHistory: OrderedHistory,
-})
+const HistoryTab = createStackNavigator(
+  {
+    History: History,
+    OrderedHistory: OrderedHistory,
+  },
+  optionsHeader,
+)
 
 HistoryTab.navigationOptions = {
   tabBarLabel: 'History',

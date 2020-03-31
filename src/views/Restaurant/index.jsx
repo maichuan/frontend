@@ -71,15 +71,6 @@ const Restaurant = ({ navigation, menusStore }) => {
 
   const openTel = () => {
     Linking.openURL(`tel:${restaurant.phoneno}`)
-    // if (Platform.OS === 'ios') {
-    //   Linking.openURL(
-    //     `http://maps.apple.com/?q=${restaurant.lat},${restaurant.long}`,
-    //   )
-    // } else {
-    //   Linking.openURL(
-    //     `http://maps.google.com/?q=${restaurant.lat},${restaurant.long}`,
-    //   )
-    // }
   }
 
   return (
@@ -145,7 +136,9 @@ const Restaurant = ({ navigation, menusStore }) => {
             restaurant.menus.map((d, i) => <Menu key={i} data={d} />)}
         </Container>
         <Cart />
-        {Platform.OS === 'ios' && <SafeView bottom />}
+        {Platform.OS === 'ios' && (
+          <SafeView bottom color={Constants.weakColor} />
+        )}
       </RestaurantContext.Provider>
     )
   )

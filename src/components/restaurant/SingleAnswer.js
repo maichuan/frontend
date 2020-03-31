@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import Constants from '../../utils/constants'
 import RadioForm from 'react-native-simple-radio-button'
 
 const Component = styled.View`
@@ -10,6 +11,10 @@ const Component = styled.View`
 `
 const Question = styled.Text`
   font-size: 20px;
+  color: ${Constants.strongColor};
+`
+const Radio = styled(RadioForm)`
+  padding: 10px 0 0 10px;
 `
 
 const SingleAnswer = ({ data, onAnswer }) => {
@@ -23,7 +28,7 @@ const SingleAnswer = ({ data, onAnswer }) => {
     <Component>
       <Question>{data.question}</Question>
 
-      <RadioForm
+      <Radio
         radio_props={data.choices.map(choice => ({
           label: choice,
           value: choice,
@@ -31,8 +36,10 @@ const SingleAnswer = ({ data, onAnswer }) => {
         initial={-1}
         onPress={value => setAns(value)}
         buttonSize={10}
-        buttonColor="#000"
-        selectedButtonColor="#75cf55"
+        buttonColor={Constants.strongColor}
+        selectedButtonColor={Constants.tabColor}
+        labelColor={Constants.strongColor}
+        selectedLabelColor={Constants.tabColor}
       />
     </Component>
   )

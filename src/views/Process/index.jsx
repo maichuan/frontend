@@ -42,9 +42,10 @@ const Process = ({ navigation, authStore }) => {
   )
 }
 
-// Process['navigationOptions'] = screenProps => ({
-//   title: 'Home',
-// })
+Process['navigationOptions'] = screenProps => ({
+  headerTitle: 'Jackk',
+  headerShown: false,
+})
 
 Process.propTypes = {
   navigation: PropTypes.object,

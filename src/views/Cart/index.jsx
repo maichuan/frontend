@@ -17,6 +17,7 @@ import {
   ConfirmText,
 } from './styled'
 import { serverClient } from '../../api'
+import constants from '../../utils/constants'
 
 const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
   const onSubmitClicked = async () => {
@@ -79,6 +80,12 @@ Cart.propTypes = {
   authStore: PropTypes.object,
   navigation: PropTypes.object,
 }
+// Cart.navigationOptions = {
+//   headerMode: 'float',
+//   headerShown: true,
+//   title: 'Hello',
+//   headerTitle: 'Wow',
+// }
 
 export default compose(
   withSafeArea,

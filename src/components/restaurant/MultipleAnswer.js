@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
+import Constants from '../../utils/constants'
 import Checkbox from './Checkbox'
 
 const Component = styled.View`
@@ -10,6 +11,10 @@ const Component = styled.View`
 `
 const Question = styled.Text`
   font-size: 20px;
+  color: ${Constants.strongColor};
+`
+const CheckBoxView = styled.View`
+  padding: 10px 0 0 10px;
 `
 
 const MultipleAnswer = ({ data, onAnswer }) => {
@@ -30,9 +35,11 @@ const MultipleAnswer = ({ data, onAnswer }) => {
   return (
     <Component>
       <Question>{data.question}</Question>
-      {data.choices.map((choice, i) => (
-        <Checkbox key={i} choice={choice} onListChecked={updateCheckedList} />
-      ))}
+      <CheckBoxView>
+        {data.choices.map((choice, i) => (
+          <Checkbox key={i} choice={choice} onListChecked={updateCheckedList} />
+        ))}
+      </CheckBoxView>
     </Component>
   )
 }
