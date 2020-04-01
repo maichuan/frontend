@@ -51,6 +51,7 @@ const DeleteView = styled.View`
   flex-direction: row;
   justify-content: space-between;
   border-radius: 10px;
+  margin: 1px;
 `
 const DeleteButton = styled.TouchableOpacity`
   align-items: center;

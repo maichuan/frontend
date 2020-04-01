@@ -57,7 +57,7 @@ const optionsHeader = {
     headerTintColor: Constants.strongColor,
     headerTitleStyle: {
       fontWeight: 'bold',
-      fontSize: '18px',
+      fontSize: 18,
       color: Constants.strongColor,
     },
     headerBackTitle: ' ',
@@ -100,7 +100,7 @@ const UserTab = createStackNavigator(
     Info: UserInfo,
     // Login: Login,
   },
-  options,
+  optionsHeader,
 )
 
 UserTab.navigationOptions = {

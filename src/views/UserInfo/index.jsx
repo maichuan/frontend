@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'native-base'
+import { Icon } from 'native-base'
 import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
@@ -17,6 +17,8 @@ import {
   EditText,
 } from './styled'
 import { firebaseApp } from '../../utils/firebase'
+import TabBarIcon from '../../components/common/TabBarIcon'
+import constants from '../../utils/constants'
 
 const UserInfo = ({ navigation, authStore }) => {
   const onLogoutClicked = async () => {
@@ -54,6 +56,16 @@ const UserInfo = ({ navigation, authStore }) => {
 UserInfo.propTypes = {
   navigation: PropTypes.object,
   authStore: PropTypes.object,
+}
+
+UserInfo.navigationOptions = {
+  headerTitle: () => (
+    <TabBarIcon
+      tintColor={constants.strongColor}
+      type="FontAwesome"
+      name="user-circle-o"
+    />
+  ),
 }
 
 export default compose(

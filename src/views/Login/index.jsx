@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Alert } from 'react-native'
+import { Alert, Platform, Keyboard } from 'react-native'
 import PropTypes from 'prop-types'
 import * as firebase from 'firebase'
 import * as Facebook from 'expo-facebook'
@@ -21,68 +21,81 @@ import {
   FBBlock,
   FBLogo,
   FBText,
+  KeyBoardAvoiding,
+  WithoutFeedback,
 } from './styled'
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState(null)
   const [pass, setPass] = useState(null)
+  const [username, setUsername] = useState('')
+  const [isSignIn, setIsSignIn] = useState(true)
 
   const signin = () => {
-    if (email === null || pass === null) {
-      Alert.alert(
-        'Authentication Failed',
-        'Please enter your email and password',
-        [{ text: 'OK', onPress: () => {} }],
-        { cancelable: false },
-      )
-    } else if (firebaseApp) {
-      firebaseApp
-        .auth()
-        .signInWithEmailAndPassword(email, pass)
-        .then(user => {
-          serverClient.post('/user/signup', {
-            uid: user.user.uid,
+    if (isSignIn) {
+      if (email === null || pass === null) {
+        Alert.alert(
+          'Authentication Failed',
+          'Please enter your email and password',
+          [{ text: 'OK', onPress: () => {} }],
+          { cancelable: false },
+        )
+      } else if (firebaseApp) {
+        firebaseApp
+          .auth()
+          .signInWithEmailAndPassword(email, pass)
+          .then(user => {
+            serverClient.post('/user/signup', {
+              uid: user.user.uid,
+            })
+            navigation.navigate('Home')
           })
-          navigation.navigate('Home')
-        })
-        .catch(function(error) {
-          console.log(error)
-          Alert.alert(
-            'Authentication Failed',
-            'Your email or password is wrong',
-            [{ text: 'OK', onPress: () => {} }],
-            { cancelable: false },
-          )
-        })
+          .catch(function(error) {
+            console.log(error)
+            Alert.alert(
+              'Authentication Failed',
+              'Your email or password is wrong',
+              [{ text: 'OK', onPress: () => {} }],
+              { cancelable: false },
+            )
+          })
+      }
+    } else {
+      setIsSignIn(!isSignIn)
     }
   }
 
   const signup = () => {
-    if (email === null || pass === null) {
-      Alert.alert(
-        'Authentication Failed',
-        'Please enter your email and password',
-        [{ text: 'OK', onPress: () => {} }],
-        { cancelable: false },
-      )
-    } else if (firebaseApp) {
-      firebaseApp
-        .auth()
-        .createUserWithEmailAndPassword(email, pass)
-        .then(user =>
-          serverClient.post('/user/signup', {
-            uid: user.user.uid,
-          }),
+    if (isSignIn) {
+      setIsSignIn(!isSignIn)
+    } else {
+      if (email === null || pass === null || username === '') {
+        Alert.alert(
+          'Authentication Failed',
+          'Please enter your email and password',
+          [{ text: 'OK', onPress: () => {} }],
+          { cancelable: false },
         )
-        .catch(function(error) {
-          console.log(error)
-          Alert.alert(
-            'SignUp Failed',
-            'Check your email format',
-            [{ text: 'OK', onPress: () => {} }],
-            { cancelable: false },
+      } else if (firebaseApp) {
+        firebaseApp
+          .auth()
+          .createUserWithEmailAndPassword(email, pass)
+          .then(user =>
+            serverClient.post('/user/signup', {
+              uid: user.user.uid,
+              username,
+            }),
           )
-        })
+          .catch(function(error) {
+            console.log(error)
+            Alert.alert(
+              'SignUp Failed',
+              'Check your email format',
+              [{ text: 'OK', onPress: () => {} }],
+              { cancelable: false },
+            )
+          })
+      }
     }
   }
 
@@ -113,6 +126,7 @@ const Login = ({ navigation }) => {
 
         serverClient.post('/user/signup', {
           uid: firebaseApp.auth().currentUser.uid,
+          username: firebaseApp.auth().currentUser.displayName,
         })
 
         return Promise.resolve({ type: 'success' })
@@ -125,37 +139,50 @@ const Login = ({ navigation }) => {
   }
 
   return (
-    <Container>
-      {/* <ProfileImg source={require('../../../assets/hamburger.jpg')} /> */}
-      <Input
-        onChangeText={text => {
-          setEmail(text)
-        }}
-        placeholder="Email Addesss"
-      />
-      <Input
-        onChangeText={text => {
-          setPass(text)
-        }}
-        secureTextEntry
-        placeholder="Password"
-      />
-      <BGroup>
-        <SLButton onPress={signin}>
-          <SText>SignIn</SText>
-        </SLButton>
-        <VLine />
-        <SRButton onPress={signup}>
-          <SText>SignUp</SText>
-        </SRButton>
-      </BGroup>
-      <FBLogin onPress={signInWithFB}>
-        <FBBlock>
-          <FBLogo source={require('../../../assets/fb_logo.png')} />
-          <FBText>Continue with Facebook</FBText>
-        </FBBlock>
-      </FBLogin>
-    </Container>
+    <KeyBoardAvoiding behavior={Platform.OS == 'ios' ? 'padding' : undefined}>
+      <WithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <>
+            <Input
+              onChangeText={text => {
+                setEmail(text)
+              }}
+              placeholder="Email Addesss"
+            />
+            <Input
+              onChangeText={text => {
+                setPass(text)
+              }}
+              secureTextEntry
+              placeholder="Password"
+            />
+            {!isSignIn && (
+              <Input
+                onChangeText={text => {
+                  setUsername(text)
+                }}
+                placeholder="Username"
+              />
+            )}
+            <BGroup>
+              <SLButton isSignIn={isSignIn} onPress={signin}>
+                <SText>SignIn</SText>
+              </SLButton>
+              <VLine />
+              <SRButton isSignIn={isSignIn} onPress={signup}>
+                <SText>SignUp</SText>
+              </SRButton>
+            </BGroup>
+            <FBLogin onPress={signInWithFB}>
+              <FBBlock>
+                <FBLogo source={require('../../../assets/fb_logo.png')} />
+                <FBText>Continue with Facebook</FBText>
+              </FBBlock>
+            </FBLogin>
+          </>
+        </Container>
+      </WithoutFeedback>
+    </KeyBoardAvoiding>
   )
 }
 

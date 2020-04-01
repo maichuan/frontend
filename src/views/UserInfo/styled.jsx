@@ -1,25 +1,26 @@
 import styled from 'styled-components'
 import { Width } from '../../utils/utils'
+import constants from '../../utils/constants'
 
 export const Container = styled.View`
   flex: 1;
   display: flex;
-  justify-content: center;
   align-items: center;
+  background-color: ${constants.veryWeakColor};
 `
 export const Logout = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
-  background-color: red;
-  width: ${Width / 1.5};
+  background-color: ${constants.weakColor};
+  width: ${Width / 2};
   height: 50px;
   margin: 15px 0px;
-  border-radius: 20px;
+  border-radius: 50px;
 `
 export const LogoutText = styled.Text`
-  color: white;
+  color: ${constants.strongColor};
   font-size: 20px;
-  font-weight: 800;
+  font-weight: 700;
 `
 export const ProfileImg = styled.Image`
   width: ${Width / 3};
