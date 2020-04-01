@@ -16,6 +16,7 @@ import History from '../views/History'
 
 import Constants from '../utils/constants'
 import OrderedHistory from '../views/OrderedHistory'
+import SearchResult from '../views/SearchResult'
 
 const options = {
   // headerMode: 'none',
@@ -67,6 +68,7 @@ const optionsHeader = {
 const MainTab = createStackNavigator(
   {
     Home: Home,
+    Search: SearchResult,
     Restaurant: Restaurant,
     Cart: Cart,
   },

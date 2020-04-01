@@ -18,7 +18,7 @@ import {
 import RestaurantCard from '../../components/home/RestaurantCard'
 import TrendRestaurantCard from '../../components/home/TrendRestaurantCard'
 import { HomeContext } from '../../utils/context'
-import SearchInput from '../../components/common/SearchInput'
+import SearchInput from '../../components/common/FakeSearchInput'
 import { SafeView } from '../../components/common/styled'
 import RefreshView from '../../components/common/RefreshView'
 import Constant from '../../utils/constants'
@@ -29,7 +29,6 @@ import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
 
 const Home = ({ authStore, navigation }) => {
-  const [searchText, setSearchText] = useState('')
   const [data, setData] = useState({})
 
   const fetchWelcome = async () => {
@@ -50,6 +49,10 @@ const Home = ({ authStore, navigation }) => {
     fetchWelcome()
   }, [authStore.curLocation.latitude])
 
+  const searchPage = () => {
+    navigation.navigate('Search')
+  }
+
   return (
     <HomeContext.Provider value={{ navigation }}>
       <SafeView color={Constant.tabColor}>
@@ -61,11 +64,10 @@ const Home = ({ authStore, navigation }) => {
                 ? authStore.auth.displayName
                 : 'Guest'}
             </WelcomeMessage>
-            <SearchContainer>
+            <SearchContainer activeOpacity={0.8} onPress={searchPage}>
               <SearchInput
+                onPress={searchPage}
                 placeholder="Search for your restaurant"
-                text={searchText}
-                setText={setSearchText}
               />
             </SearchContainer>
           </WelcomeView>

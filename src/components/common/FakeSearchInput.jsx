@@ -18,32 +18,22 @@ const SearchIcon = styled(Icon)`
   margin: 3px 10px;
   color: ${constants.strongColor};
 `
-export const Input = styled.TextInput`
+export const Input = styled.Text`
   flex: 1;
   color: ${constants.strongColor};
 `
 
-const SearchInput = ({ placeholder, text, setText, width }) => {
+const SearchInput = ({ placeholder, width }) => {
   return (
     <SearchBox width={width}>
       <SearchIcon name="ios-search" size={20} color="#000" />
-      <Input
-        autoCapitalize="none"
-        onSubmitEditing={() => console.log('wow')}
-        value={text}
-        placeholder={placeholder}
-        onChangeText={searchString => {
-          setText(searchString)
-        }}
-      />
+      <Input>{placeholder}</Input>
     </SearchBox>
   )
 }
 
 SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired,
-  setText: PropTypes.func.isRequired,
   width: PropTypes.number,
 }
 

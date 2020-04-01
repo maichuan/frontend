@@ -5,7 +5,7 @@ import { Width } from '../../utils/utils'
 import Constants from '../../utils/constants'
 
 export const Containers = styled.View`
-  background-color: #fff;
+  background-color: ${Constants.veryWeakColor};
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -41,17 +41,17 @@ export const WelcomeMessage = styled.Text`
   font-weight: 600;
   padding: 0 20px;
 `
-export const SearchBox = styled.View`
-  flex-direction: row;
-  align-items: center;
-  background-color: #fff;
-  border-width: 1px;
-  border-color: ${Constants.strongColor};
-  border-radius: 6px;
-  max-width: 370px;
-  margin: 10px 0px;
-`
-export const SearchContainer = styled.View`
+// export const SearchBox = styled.View`
+//   flex-direction: row;
+//   align-items: center;
+//   background-color: #fff;
+//   border-width: 1px;
+//   border-color: ${Constants.strongColor};
+//   border-radius: 6px;
+//   max-width: 370px;
+//   margin: 10px 0px;
+// `
+export const SearchContainer = styled.TouchableOpacity`
   display: flex;
   align-items: center;
   width: ${Width};
