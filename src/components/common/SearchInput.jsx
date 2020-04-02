@@ -23,13 +23,19 @@ export const Input = styled.TextInput`
   color: ${constants.strongColor};
 `
 
-const SearchInput = ({ placeholder, text, setText, width }) => {
+const SearchInput = ({
+  placeholder,
+  text,
+  setText,
+  width,
+  onSearchClicked,
+}) => {
   return (
     <SearchBox width={width}>
       <SearchIcon name="ios-search" size={20} color="#000" />
       <Input
         autoCapitalize="none"
-        onSubmitEditing={() => console.log('wow')}
+        onSubmitEditing={onSearchClicked}
         value={text}
         placeholder={placeholder}
         onChangeText={searchString => {
@@ -44,6 +50,7 @@ SearchInput.propTypes = {
   placeholder: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   setText: PropTypes.func.isRequired,
+  onSearchClicked: PropTypes.func.isRequired,
   width: PropTypes.number,
 }
 

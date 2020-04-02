@@ -98,6 +98,7 @@ import SearchButton from '../../components/searchResult/SearchButton'
 class SearchResult extends React.Component {
   state = {
     searchText: '',
+    input: '',
     data: {},
     displayText: false,
   }
@@ -107,13 +108,17 @@ class SearchResult extends React.Component {
   }
 
   handleSearch = async () => {
+    this.setState({
+      searchText: this.state.input,
+    })
     if (API_READY === 'true') {
-      const res = await serverClient.get(`/search?q=${this.state.searchText}`)
+      const res = await serverClient.get(`/search?q=${this.state.input}`)
 
       this.setState({ data: res.data })
     } else {
-      console.log(`/search?q=${this.state.searchText}`)
+      console.log(`/search?q=${this.state.input}`)
       this.setState({
+        input: '',
         displayText: true,
         data: mock,
       })
@@ -129,8 +134,9 @@ class SearchResult extends React.Component {
             <SearchContainer>
               <SearchInput
                 placeholder="Search for your restaurant"
-                text={this.state.searchText}
-                setText={e => this.setState({ searchText: e })}
+                text={this.state.input}
+                setText={e => this.setState({ input: e })}
+                onSearchClicked={this.handleSearch}
               />
             </SearchContainer>
           </WelcomeView>
