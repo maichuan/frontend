@@ -1,5 +1,5 @@
 export const mock = {
-  data: [
+  orders: [
     {
       menuId: 1,
       name: 'Menu1',
