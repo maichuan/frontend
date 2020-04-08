@@ -20,15 +20,18 @@ import { SafeView } from '../../components/common/styled'
 import constants from '../../utils/constants'
 
 const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
+  const { restaurantId } = navigation.state.params
+
   const onSubmitClicked = async () => {
     if (authStore.auth.uid) {
       spinnerStore.open()
       await new Promise(r => setTimeout(r, 1000))
       serverClient.post('/order', {
-        userId: 1,
+        userId: authStore.user.id,
         menus: menusStore.menus,
-        restaurantId: 1,
-        totalPrice: 1,
+        restaurantId,
+        totalPrice: menusStore.totalPrice,
+        answers: menusStore.answers,
       })
       menusStore.clear()
       spinnerStore.close()

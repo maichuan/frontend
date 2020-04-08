@@ -9,11 +9,19 @@ export class AuthStore {
   auth = {}
 
   @observable
+  user = {}
+
+  @observable
   curLocation = { latitude: -1, longitude: -1 }
 
   @action
   setAuth = auth => {
     this.auth = auth
+  }
+
+  @action
+  setUser = user => {
+    this.user = user
   }
 
   @action

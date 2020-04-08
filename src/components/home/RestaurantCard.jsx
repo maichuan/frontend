@@ -37,7 +37,9 @@ export const TextImage = styled.View`
   border-top-width: 0;
   border-color: ${Constants.strongColor};
 `
-export const DataText = styled.Text``
+export const DataText = styled.Text`
+  color: ${Constants.strongColor};
+`
 
 const RestaurantCard = ({ data, authStore }) => {
   const { navigation } = useContext(HomeContext)

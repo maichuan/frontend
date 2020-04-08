@@ -113,7 +113,6 @@ class SearchResult extends React.Component {
     })
     if (API_READY === 'true') {
       const res = await serverClient.get(`/search?q=${this.state.input}`)
-
       this.setState({ data: res.data })
     } else {
       console.log(`/search?q=${this.state.input}`)

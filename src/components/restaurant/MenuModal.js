@@ -172,7 +172,7 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
   }
 
   const handleConfirmClicked = () => {
-    menusStore.addMenu({ ...data, quantity })
+    menusStore.addMenu({ ...data, quantity, answers })
     closeModal()
   }
 

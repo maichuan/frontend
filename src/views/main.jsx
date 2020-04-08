@@ -10,10 +10,16 @@ import PropTypes from 'prop-types'
 import AppNavigator from '../navigators/AppNavigator'
 import Spinner from '../components/common/Spinner'
 import { firebaseApp } from '../utils/firebase'
+import { serverClient } from '../api'
 
 const Main = ({ spinnerStore, authStore }) => {
   const getLocationAsync = async () => {
     await getAndSetLocation(authStore)
+  }
+
+  const fetchUser = async user => {
+    const { data } = await serverClient.get(`user/${user.uid}`)
+    authStore.setUser(data.user)
   }
 
   useEffect(() => {
@@ -23,6 +29,7 @@ const Main = ({ spinnerStore, authStore }) => {
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
         authStore.setAuth(user)
+        fetchUser(user)
       }
     })
     // spinnerStore.close()

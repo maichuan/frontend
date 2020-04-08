@@ -39,19 +39,22 @@ import Constants from '../../utils/constants'
 import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
 
-const Restaurant = ({ navigation, menusStore }) => {
+const Restaurant = ({ navigation, menusStore, spinnerStore }) => {
   const { id, imgURL, name, table } = navigation.state.params
 
   const [searchText, setSearchText] = useState('')
   const [restaurant, setResturant] = useState(null)
 
   const fetchMenu = async () => {
+    spinnerStore.open()
     if (API_READY === 'true') {
       const res = await serverClient.get(`/restaurants/${id}`)
+
       setResturant(res.data)
     } else {
       setResturant(mock)
     }
+    spinnerStore.close()
   }
 
   useEffect(() => {
@@ -138,7 +141,7 @@ const Restaurant = ({ navigation, menusStore }) => {
           {restaurant.menus &&
             restaurant.menus.map((d, i) => <Menu key={i} data={d} />)}
         </Container>
-        <Cart />
+        <Cart restaurantId={restaurant.id} />
         {Platform.OS === 'ios' && (
           <SafeView bottom color={Constants.weakColor} />
         )}
@@ -150,17 +153,18 @@ const Restaurant = ({ navigation, menusStore }) => {
 Restaurant.propTypes = {
   navigation: PropTypes.object,
   menusStore: PropTypes.object,
+  spinnerStore: PropTypes.object,
 }
 
 Restaurant.navigationOptions = props => {
   // console.log(props)
-
   return { headerShown: false }
 }
 
 export default compose(
   inject(({ rootStore }) => ({
     menusStore: rootStore.menusStore,
+    spinnerStore: rootStore.spinnerStore,
   })),
   observer,
 )(Restaurant)

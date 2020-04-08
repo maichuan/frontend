@@ -28,10 +28,11 @@ import { API_READY } from 'react-native-dotenv'
 
 import { mock } from './mock'
 
-const Home = ({ authStore, navigation }) => {
-  const [data, setData] = useState({})
+const Home = ({ authStore, navigation, spinnerStore }) => {
+  const [data, setData] = useState({ restaurants: [], trends: [] })
 
   const fetchWelcome = async () => {
+    spinnerStore.open()
     const { latitude, longitude } = authStore.curLocation
     if (API_READY === 'true' && latitude !== -1) {
       console.log('API Mode', API_READY)
@@ -43,6 +44,7 @@ const Home = ({ authStore, navigation }) => {
       console.log('Mock Mode')
       setData(mock)
     }
+    spinnerStore.close()
   }
 
   useEffect(() => {
@@ -73,13 +75,16 @@ const Home = ({ authStore, navigation }) => {
           </WelcomeView>
           <RefreshView>
             <Body>
-              <NearByText>Trend restaurant</NearByText>
-              <HorizontalView horizontal>
-                {data.trends &&
-                  data.trends.map((d, i) => (
-                    <TrendRestaurantCard key={i} data={d} />
-                  ))}
-              </HorizontalView>
+              {data.trends.length > 0 && (
+                <>
+                  <NearByText>Trend restaurant</NearByText>
+                  <HorizontalView horizontal>
+                    {data.trends.map((d, i) => (
+                      <TrendRestaurantCard key={i} data={d} />
+                    ))}
+                  </HorizontalView>
+                </>
+              )}
               <NearByText>Near By restaurant</NearByText>
               {data.restaurants &&
                 data.restaurants.map((d, i) => (
@@ -97,6 +102,7 @@ const Home = ({ authStore, navigation }) => {
 Home.propTypes = {
   authStore: PropTypes.object,
   navigation: PropTypes.object,
+  spinnerStore: PropTypes.object,
 }
 
 Home.navigationOptions = {
@@ -106,6 +112,7 @@ Home.navigationOptions = {
 export default compose(
   inject(({ rootStore }) => ({
     authStore: rootStore.authStore,
+    spinnerStore: rootStore.spinnerStore,
   })),
   observer,
 )(Home)
