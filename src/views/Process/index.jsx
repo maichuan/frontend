@@ -11,6 +11,7 @@ import { serverClient } from '../../api'
 import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
 import { Height } from '../../utils/utils'
+import DynamicRefreshView from '../../components/common/DynamicRefreshView'
 
 const Process = ({ navigation, authStore, spinnerStore }) => {
   const [data, setData] = useState({ orders: [] })
@@ -36,7 +37,8 @@ const Process = ({ navigation, authStore, spinnerStore }) => {
   }, [])
 
   return (
-    <Container
+    <DynamicRefreshView
+      onRefreshAction={fetchOrder}
       scrollEnabled={contentSize > Height * 0.65}
       onContentSizeChange={(_, contentHeight) => setContentSize(contentHeight)}
     >
@@ -56,7 +58,7 @@ const Process = ({ navigation, authStore, spinnerStore }) => {
         .map((d, i) => (
           <ProcessMenu data={d} key={i} />
         ))}
-    </Container>
+    </DynamicRefreshView>
   )
 }
 
