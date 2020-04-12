@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { LayoutAnimation } from 'react-native'
 import PropTypes from 'prop-types'
 
-import { Height } from '../../utils/utils'
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+
 import {
   Container,
   Header,
@@ -22,10 +24,12 @@ import {
 import Ordered from '../../components/orderedHistory/Ordered'
 import AnimationHeight from '../../components/common/AnimationHeight'
 import { getIncresingPrice } from '../../utils/utils'
+import { serverClient } from '../../api'
 
+import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
 
-const OrderedHistory = ({ navigation }) => {
+const OrderedHistory = ({ navigation, authStore, spinnerStore }) => {
   const orderedData = navigation.state.params.data
   const [data, setData] = useState({})
   // const [contentSize, setContentSize] = useState(0)
@@ -33,16 +37,30 @@ const OrderedHistory = ({ navigation }) => {
   const [menuLength, setMenuLength] = useState(5)
   const [prices, setPrices] = useState({})
 
+  const fetchOrdered = async () => {
+    if (API_READY === 'true') {
+      const res = await serverClient.get(
+        `/ordered/${orderedData.transactionId}`,
+      )
+      setData(res.data)
+    } else {
+      setData(mock)
+    }
+  }
+
   useEffect(() => {
-    setData(mock)
-    console.log(`http://localhost:3000/ordered/${orderedData.transactionId}`)
+    spinnerStore.open()
+    if (authStore.auth.uid) {
+      fetchOrdered()
+    }
+    spinnerStore.close()
   }, [])
 
   useEffect(() => {
     setPrices(
       getIncresingPrice({
         totalPrice: data.totalPrice,
-        tax: data.tax,
+        vat: data.vat,
         serviceCharge: data.serviceCharge,
       }),
     )
@@ -87,12 +105,15 @@ const OrderedHistory = ({ navigation }) => {
             <IncreaseText>{prices.net}</IncreaseText>
           </IncreasePriceView>
           <IncreasePriceView>
-            <IncreaseText>Service Charge({data.serviceCharge}%):</IncreaseText>
+            <IncreaseText>
+              Service Charge(
+              {data.serviceCharge ? data.serviceCharge + '%' : '-'}):
+            </IncreaseText>
             <IncreaseText>{prices.serviceChargePrice}</IncreaseText>
           </IncreasePriceView>
           <IncreasePriceView>
-            <IncreaseText>Tax({data.tax}%):</IncreaseText>
-            <IncreaseText>{prices.taxPrice}</IncreaseText>
+            <IncreaseText>Vat({data.vat ? data.vat + '%' : '-'}):</IncreaseText>
+            <IncreaseText>{prices.vatPrice}</IncreaseText>
           </IncreasePriceView>
         </IncreaseView>
         <TotalPriceView>
@@ -107,6 +128,8 @@ const OrderedHistory = ({ navigation }) => {
 
 OrderedHistory.propTypes = {
   navigation: PropTypes.object,
+  authStore: PropTypes.object,
+  spinnerStore: PropTypes.object,
 }
 
 OrderedHistory.navigationOptions = props => {
@@ -116,4 +139,10 @@ OrderedHistory.navigationOptions = props => {
   }
 }
 
-export default OrderedHistory
+export default compose(
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+    spinnerStore: rootStore.spinnerStore,
+  })),
+  observer,
+)(OrderedHistory)

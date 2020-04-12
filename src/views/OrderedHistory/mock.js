@@ -70,6 +70,6 @@ export const mock = {
     },
   ],
   serviceCharge: 10,
-  tax: 7,
+  vat: 7,
   totalPrice: 117.7,
 }
