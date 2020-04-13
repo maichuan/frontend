@@ -64,3 +64,8 @@ export const getIncresingPrice = ({ totalPrice, vat, serviceCharge }) => {
     serviceChargePrice,
   }
 }
+
+export const getTime = date => {
+  date = new Date(date)
+  return date.getHours() + '.' + date.getMinutes()
+}

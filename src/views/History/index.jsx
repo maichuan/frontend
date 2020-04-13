@@ -9,6 +9,7 @@ import { Container, HistoryView } from './styled'
 import DateView from '../../components/history/DateView'
 import { HistoryContext } from '../../utils/context'
 import { serverClient } from '../../api'
+import DynamicRefreshView from '../../components/common/DynamicRefreshView'
 
 import { API_READY } from 'react-native-dotenv'
 import { mock } from './mock'
@@ -22,6 +23,8 @@ const History = ({ navigation, authStore, spinnerStore }) => {
       const res = await serverClient.get('/history', {
         headers: { id: authStore.user.id },
       })
+      console.log(res.data)
+
       setData(res.data.data)
     } else {
       setData(mock.data)
@@ -38,7 +41,7 @@ const History = ({ navigation, authStore, spinnerStore }) => {
 
   return (
     <HistoryContext.Provider value={{ navigation }}>
-      <Container>
+      <DynamicRefreshView onRefreshAction={fetchHistory}>
         <HistoryView
           scrollEnabled={contentSize > Height * 0.9}
           onContentSizeChange={(_, contentHeight) =>
@@ -49,7 +52,7 @@ const History = ({ navigation, authStore, spinnerStore }) => {
             <DateView key={i} data={d} />
           ))}
         </HistoryView>
-      </Container>
+      </DynamicRefreshView>
     </HistoryContext.Provider>
   )
 }

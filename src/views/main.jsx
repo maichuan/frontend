@@ -19,7 +19,9 @@ const Main = ({ spinnerStore, authStore }) => {
 
   const fetchUser = async user => {
     const { data } = await serverClient.get(`user/${user.uid}`)
-    authStore.setUser(data.user)
+    if (data.user) {
+      authStore.setUser(data.user)
+    }
   }
 
   useEffect(() => {

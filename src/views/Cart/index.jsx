@@ -14,15 +14,17 @@ import {
   PriceText,
   ConfirmButton,
   ConfirmText,
+  SubmitIcon,
 } from './styled'
 import { serverClient } from '../../api'
 import { SafeView } from '../../components/common/styled'
 import constants from '../../utils/constants'
 
 const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
-  const { restaurantId } = navigation.state.params
+  const { restaurantId, table } = navigation.state.params
 
-  const onSubmitClicked = async () => {
+  const onSubmitClicked = async type => {
+    // type 0 = eat in, type 1 = take-away
     if (authStore.auth.uid) {
       spinnerStore.open()
       await new Promise(r => setTimeout(r, 1000))
@@ -32,6 +34,8 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
         restaurantId,
         totalPrice: menusStore.totalPrice,
         answers: menusStore.answers,
+        table,
+        type,
       })
       menusStore.clear()
       spinnerStore.close()
@@ -67,9 +71,18 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
         <ConfirmButton
           disabled={!(menusStore.menus.length > 0)}
           activeOpacity={0.8}
-          onPress={() => onSubmitClicked()}
+          onPress={() => onSubmitClicked(1)}
         >
-          <ConfirmText>Submit Order</ConfirmText>
+          <SubmitIcon name="shopping-bag" type="FontAwesome5" />
+          <ConfirmText>Take-away</ConfirmText>
+        </ConfirmButton>
+        <ConfirmButton
+          disabled={table < 1 || !(menusStore.menus.length > 0)}
+          activeOpacity={0.8}
+          onPress={() => onSubmitClicked(0)}
+        >
+          <SubmitIcon name="food" size={27} type="MaterialCommunityIcons" />
+          <ConfirmText>Eat in</ConfirmText>
         </ConfirmButton>
       </TotalPriceView>
       {Platform.OS === 'ios' && <SafeView bottom color={constants.weakColor} />}

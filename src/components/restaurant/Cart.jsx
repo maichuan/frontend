@@ -46,7 +46,7 @@ const ContinueText = styled.Text`
   font-weight: 700;
 `
 
-const Cart = ({ menusStore, restaurantId }) => {
+const Cart = ({ menusStore, restaurantId, table }) => {
   const { navigation } = useContext(RestaurantContext)
 
   return (
@@ -57,7 +57,7 @@ const Cart = ({ menusStore, restaurantId }) => {
       </TotalPrice>
       <Continue
         disabled={!(menusStore.menus.length > 0)}
-        onPress={() => navigation.navigate('Cart', { restaurantId })}
+        onPress={() => navigation.navigate('Cart', { restaurantId, table })}
       >
         <ContinueText>Continue</ContinueText>
       </Continue>
@@ -68,6 +68,7 @@ const Cart = ({ menusStore, restaurantId }) => {
 Cart.propTypes = {
   menusStore: PropTypes.object,
   restaurantId: PropTypes.number,
+  table: PropTypes.number,
 }
 
 export default compose(

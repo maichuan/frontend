@@ -9,7 +9,7 @@ export class AuthStore {
   auth = {}
 
   @observable
-  user = {}
+  user = { username: 'guest' }
 
   @observable
   curLocation = { latitude: -1, longitude: -1 }
@@ -27,6 +27,7 @@ export class AuthStore {
   @action
   removeAuth = () => {
     this.auth = {}
+    this.user = { username: 'guest' }
   }
 
   @action

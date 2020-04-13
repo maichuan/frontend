@@ -1,5 +1,7 @@
 import styled from 'styled-components'
+import { Icon } from 'native-base'
 import Constants from '../../utils/constants'
+import { Width } from '../../utils/utils'
 
 export const Container = styled.View`
   display: flex;
@@ -37,14 +39,20 @@ export const PriceText = styled.Text`
 export const ConfirmButton = styled.TouchableOpacity`
   background-color: ${({ disabled }) =>
     disabled ? '#d1d0cd' : Constants.tabColor};
-  width: 100%;
+  width: 45%;
   border-radius: 10px;
   height: 50px;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 `
 export const ConfirmText = styled.Text`
-  font-size: 20px;
+  font-size: ${Width / 23};
   font-weight: 700;
+  color: ${Constants.strongColor};
+`
+export const SubmitIcon = styled(Icon)`
+  font-size: ${({ size }) => (size ? (Width * 3) / 40 : Width / 20)};
+  padding-right: 5px;
   color: ${Constants.strongColor};
 `

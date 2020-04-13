@@ -24,7 +24,10 @@ const QrCodeScanner = ({ navigation }) => {
       const dataToJson = JSON.parse(data)
       if (validateQrCode(dataToJson)) {
         setScanned(true)
-        navigation.navigate('Restaurant', dataToJson)
+        navigation.navigate('Restaurant', {
+          ...dataToJson,
+          table: Number.parseInt(dataToJson.table),
+        })
       }
     } catch (e) {
       // skip

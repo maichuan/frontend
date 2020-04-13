@@ -61,10 +61,7 @@ const Home = ({ authStore, navigation, spinnerStore }) => {
         <Containers>
           <WelcomeView>
             <WelcomeMessage>
-              Hi,{' '}
-              {authStore.auth.displayName
-                ? authStore.auth.displayName
-                : 'Guest'}
+              Hi, {authStore.user.username ? authStore.user.username : 'Guest'}
             </WelcomeMessage>
             <SearchContainer activeOpacity={0.8} onPress={searchPage}>
               <SearchInput

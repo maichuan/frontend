@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { HistoryContext } from '../../utils/context'
+import { getTime } from '../../utils/utils'
 import constants from '../../utils/constants'
 
 const Component = styled.TouchableOpacity`
@@ -66,7 +67,7 @@ const OrderedView = ({ data }) => {
   return (
     <Component activeOpacity={0.8} onPress={handlePageChange}>
       <TimeView>
-        <Time>{data.time}</Time>
+        <Time>{getTime(data.createdAt)}</Time>
       </TimeView>
       <Detail>
         <RestaurantName>{data.restaurantName}</RestaurantName>

@@ -7,6 +7,9 @@ import { firebaseApp } from '../../utils/firebase'
 import { FACEBOOK_APPID, FACEBOOK_APPNAME } from 'react-native-dotenv'
 import { serverClient } from '../../api'
 
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+
 import withSafeArea from '../../hocs/withSafeView'
 import {
   ProfileImg,
@@ -25,7 +28,7 @@ import {
   WithoutFeedback,
 } from './styled'
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, authStore, spinnerStore }) => {
   const [email, setEmail] = useState(null)
   const [pass, setPass] = useState(null)
   const [username, setUsername] = useState('')
@@ -41,6 +44,7 @@ const Login = ({ navigation }) => {
           { cancelable: false },
         )
       } else if (firebaseApp) {
+        spinnerStore.open()
         firebaseApp
           .auth()
           .signInWithEmailAndPassword(email, pass)
@@ -59,6 +63,7 @@ const Login = ({ navigation }) => {
               { cancelable: false },
             )
           })
+        spinnerStore.close()
       }
     } else {
       setIsSignIn(!isSignIn)
@@ -77,23 +82,31 @@ const Login = ({ navigation }) => {
           { cancelable: false },
         )
       } else if (firebaseApp) {
+        console.log('log spinner open ja')
+
+        spinnerStore.open()
         firebaseApp
           .auth()
           .createUserWithEmailAndPassword(email, pass)
-          .then(user =>
-            serverClient.post('/user/signup', {
+          .then(async user => {
+            const { data } = await serverClient.post('/user/signup', {
               uid: user.user.uid,
               username,
-            }),
-          )
+            })
+            authStore.setUser(data.user)
+          })
           .catch(function(error) {
             console.log(error)
+
             Alert.alert(
               'SignUp Failed',
               'Check your email format',
               [{ text: 'OK', onPress: () => {} }],
               { cancelable: false },
             )
+          })
+          .finally(() => {
+            spinnerStore.close()
           })
       }
     }
@@ -113,6 +126,7 @@ const Login = ({ navigation }) => {
 
     switch (type) {
       case 'success': {
+        spinnerStore.open()
         await firebaseApp
           .auth()
           .setPersistence(firebase.auth.Auth.Persistence.LOCAL) // Set persistent auth state
@@ -124,10 +138,12 @@ const Login = ({ navigation }) => {
         // Do something with Facebook profile data
         // OR you have subscribed to auth state change, authStateChange handler will process the profile data
 
-        serverClient.post('/user/signup', {
+        const { data } = await serverClient.post('/user/signup', {
           uid: firebaseApp.auth().currentUser.uid,
           username: firebaseApp.auth().currentUser.displayName,
         })
+        authStore.setUser(data.user)
+        spinnerStore.open()
 
         return Promise.resolve({ type: 'success' })
       }
@@ -188,6 +204,15 @@ const Login = ({ navigation }) => {
 
 Login.propTypes = {
   navigation: PropTypes.object,
+  authStore: PropTypes.object,
+  spinnerStore: PropTypes.object,
 }
 
-export default withSafeArea(Login)
+export default compose(
+  withSafeArea,
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+    spinnerStore: rootStore.spinnerStore,
+  })),
+  observer,
+)(Login)

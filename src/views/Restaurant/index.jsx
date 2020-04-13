@@ -102,17 +102,6 @@ const Restaurant = ({ navigation, menusStore, spinnerStore }) => {
               </TableNoView>
             )}
           </TextImage>
-          {/* <SearchView>
-            <SearchInput
-              placeholder="Find something to eat"
-              text={searchText}
-              setText={setSearchText}
-              width={Width / 1.6}
-            />
-            <FilterButton>
-              <Icon name="sort-variant" type="MaterialCommunityIcons" />
-            </FilterButton>
-          </SearchView> */}
           <Detail>
             <LocationView onPress={openMap}>
               <LocationIconView>
@@ -141,7 +130,7 @@ const Restaurant = ({ navigation, menusStore, spinnerStore }) => {
           {restaurant.menus &&
             restaurant.menus.map((d, i) => <Menu key={i} data={d} />)}
         </Container>
-        <Cart restaurantId={restaurant.id} />
+        <Cart table={table} restaurantId={restaurant.id} />
         {Platform.OS === 'ios' && (
           <SafeView bottom color={Constants.weakColor} />
         )}
