@@ -53,9 +53,12 @@ const Login = ({ navigation, authStore, spinnerStore }) => {
               uid: user.user.uid,
             })
             navigation.navigate('Home')
+            spinnerStore.close()
           })
           .catch(function(error) {
             console.log(error)
+            spinnerStore.close()
+
             Alert.alert(
               'Authentication Failed',
               'Your email or password is wrong',
@@ -63,7 +66,6 @@ const Login = ({ navigation, authStore, spinnerStore }) => {
               { cancelable: false },
             )
           })
-        spinnerStore.close()
       }
     } else {
       setIsSignIn(!isSignIn)
@@ -143,7 +145,7 @@ const Login = ({ navigation, authStore, spinnerStore }) => {
           username: firebaseApp.auth().currentUser.displayName,
         })
         authStore.setUser(data.user)
-        spinnerStore.open()
+        spinnerStore.close()
 
         return Promise.resolve({ type: 'success' })
       }
