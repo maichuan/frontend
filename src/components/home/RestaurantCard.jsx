@@ -11,6 +11,7 @@ import { serverClient } from '../../api'
 
 const RestaurantImage = styled.Image`
   height: 200px;
+  width: 100%;
   flex: 1;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;

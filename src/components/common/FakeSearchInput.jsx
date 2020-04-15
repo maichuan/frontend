@@ -11,7 +11,7 @@ const SearchBox = styled.View`
   border-width: 1px;
   border-color: ${constants.strongColor};
   border-radius: 6px;
-  max-width: ${props => (props.width ? props.width : '370px')};
+  max-width: ${props => (props.width ? props.width : '360px')};
   margin: 10px 0px;
 `
 const SearchIcon = styled(Icon)`
