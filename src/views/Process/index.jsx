@@ -16,6 +16,7 @@ import DynamicRefreshView from '../../components/common/DynamicRefreshView'
 const Process = ({ navigation, authStore, spinnerStore }) => {
   const [data, setData] = useState({ orders: [] })
   const [contentSize, setContentSize] = useState(0)
+  const [prevCancelOrder, setCancelOrder] = useState(0)
 
   const fetchOrder = async () => {
     if (API_READY === 'true') {
@@ -35,6 +36,14 @@ const Process = ({ navigation, authStore, spinnerStore }) => {
     }
     spinnerStore.close()
   }, [])
+
+  useEffect(() => {
+    spinnerStore.open()
+    if (authStore.auth.uid) {
+      fetchOrder()
+    }
+    spinnerStore.close()
+  }, [prevCancelOrder])
 
   return (
     <DynamicRefreshView
@@ -56,7 +65,7 @@ const Process = ({ navigation, authStore, spinnerStore }) => {
       {data.orders
         .filter(d => d.status === 0)
         .map((d, i) => (
-          <ProcessMenu data={d} key={i} />
+          <ProcessMenu onCancelComplete={setCancelOrder} data={d} key={i} />
         ))}
     </DynamicRefreshView>
   )

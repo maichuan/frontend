@@ -3,10 +3,14 @@ import { Text, StyleSheet, Button } from 'react-native'
 import PropTypes from 'prop-types'
 import { BarCodeScanner } from 'expo-barcode-scanner'
 
+import { observer, inject } from 'mobx-react'
+import { compose } from 'recompose'
+
 import { validateQrCode } from '../../utils/validators'
 import { CameraView, Exit, XText } from './styled'
+import { serverClient } from '../../api'
 
-const QrCodeScanner = ({ navigation }) => {
+const QrCodeScanner = ({ navigation, authStore }) => {
   const [hasPermission, setHasPermission] = useState(null)
   const [scanned, setScanned] = useState(false)
 
@@ -24,6 +28,10 @@ const QrCodeScanner = ({ navigation }) => {
       const dataToJson = JSON.parse(data)
       if (validateQrCode(dataToJson)) {
         setScanned(true)
+        serverClient.post('/restaurants/click', {
+          userId: authStore.user.id || null,
+          resId: dataToJson.id,
+        })
         navigation.navigate('Restaurant', {
           ...dataToJson,
           table: Number.parseInt(dataToJson.table),
@@ -60,6 +68,12 @@ const QrCodeScanner = ({ navigation }) => {
 
 QrCodeScanner.propTypes = {
   navigation: PropTypes.object,
+  authStore: PropTypes.object,
 }
 
-export default QrCodeScanner
+export default compose(
+  inject(({ rootStore }) => ({
+    authStore: rootStore.authStore,
+  })),
+  observer,
+)(QrCodeScanner)

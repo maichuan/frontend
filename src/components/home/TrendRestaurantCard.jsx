@@ -8,6 +8,7 @@ import { compose } from 'recompose'
 import { getDistance } from 'geolib'
 import Constants from '../../utils/constants'
 import { Width } from '../../utils/utils'
+import { serverClient } from '../../api'
 
 const RestaurantImage = styled.Image`
   height: ${Width / 2 - 50};
@@ -44,6 +45,10 @@ const TrendRestaurantCard = ({ data, authStore }) => {
   const { navigation } = useContext(HomeContext)
 
   const changePage = () => {
+    serverClient.post('/restaurants/click', {
+      userId: authStore.user.id || null,
+      resId: data.id,
+    })
     navigation.navigate('Restaurant', {
       ...data,
       table: 0,

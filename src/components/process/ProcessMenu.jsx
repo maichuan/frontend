@@ -8,6 +8,7 @@ import { BallIndicator } from 'react-native-indicators'
 import Status from './Status'
 import { Width } from '../../utils/utils'
 import constants from '../../utils/constants'
+import { serverClient } from '../../api'
 
 const Component = styled.View`
   display: flex;
@@ -27,6 +28,8 @@ const Name = styled.Text`
   padding: 0 12px;
   font-size: 18px;
   font-weight: 500;
+  width: 75%;
+  flex-wrap: wrap;
   color: ${constants.strongColor};
 `
 const StatusView = styled.View`
@@ -69,7 +72,31 @@ const CancelView = styled.View`
   margin: 6.5px;
 `
 
-const ProcessMenu = ({ data }) => {
+const ProcessMenu = ({ data, onCancelComplete }) => {
+  const cancelOrder = async () => {
+    const { status } = await serverClient.put('/order', {
+      orderId: data.orderId,
+      orderItemId: data.id,
+      menuId: data.menuId,
+    })
+    if (status === 200) {
+      onCancelComplete(data.id)
+    } else {
+      Alert.alert(
+        'Cannot cancel this order',
+        'Maybe this order is start cooking',
+        [
+          {
+            text: 'Ok',
+            // onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+        ],
+        { cancelable: false },
+      )
+    }
+  }
+
   return (
     <SwipeRow
       disableRightSwipe={true}
@@ -91,7 +118,7 @@ const ProcessMenu = ({ data }) => {
                 },
                 {
                   text: 'Cancel this order',
-                  onPress: () => console.log('OK Pressed'),
+                  onPress: cancelOrder,
                 },
               ],
               { cancelable: false },
@@ -119,6 +146,7 @@ const ProcessMenu = ({ data }) => {
 
 ProcessMenu.propTypes = {
   data: PropTypes.object,
+  onCancelComplete: PropTypes.func,
 }
 
 export default ProcessMenu

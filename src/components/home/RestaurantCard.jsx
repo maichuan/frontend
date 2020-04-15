@@ -7,10 +7,10 @@ import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
 import { getDistance } from 'geolib'
 import Constants from '../../utils/constants'
+import { serverClient } from '../../api'
 
 const RestaurantImage = styled.Image`
   height: 200px;
-  /* width: 100%; */
   flex: 1;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -19,8 +19,6 @@ const Component = styled.TouchableOpacity`
   flex: 1;
   border-radius: 10px;
   height: 250px;
-  /* width: 100%; */
-  /* margin-bottom: 10px; */
   margin: 10px;
 `
 export const TextImage = styled.View`
@@ -28,7 +26,6 @@ export const TextImage = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* width: 100%; */
   height: 50px;
   padding: 5px 10px;
   border-bottom-left-radius: 10px;
@@ -45,6 +42,10 @@ const RestaurantCard = ({ data, authStore }) => {
   const { navigation } = useContext(HomeContext)
 
   const changePage = () => {
+    serverClient.post('/restaurants/click', {
+      userId: authStore.user.id || null,
+      resId: data.id,
+    })
     navigation.navigate('Restaurant', {
       ...data,
       table: 0,
@@ -59,8 +60,6 @@ const RestaurantCard = ({ data, authStore }) => {
             : require('../../../assets/hamburger.jpg')
         }
       />
-      {/* <CardItem cardBody button onPress={() => changePage()}>
-      </CardItem> */}
       <TextImage>
         <DataText>{data.name}</DataText>
         <DataText>
