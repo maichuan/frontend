@@ -58,6 +58,7 @@ const Restaurant = ({ navigation, menusStore, spinnerStore }) => {
   }
 
   useEffect(() => {
+    menusStore.clear()
     fetchMenu()
   }, [])
 

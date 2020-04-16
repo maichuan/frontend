@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
 import Constants from '../../utils/constants'
+import { generateListOfOrderDetails } from '../../utils/utils'
 
 const Container = styled.View`
   display: flex;
@@ -61,7 +62,10 @@ const Ordered = ({ data }) => {
       </QuantityView>
       <FoodView>
         <MenuName>{data.name}</MenuName>
-        {data.special !== '' && <Description>{data.special}</Description>}
+        {data.special &&
+          generateListOfOrderDetails(
+            JSON.parse(data.special),
+          ).map((special, i) => <Description key={i}>{special}</Description>)}
       </FoodView>
       <PriceView>
         <Price>{data.totalPrice + '.-'}</Price>

@@ -37,7 +37,7 @@ export const TextImage = styled.View`
 `
 export const Name = styled.Text`
   font-size: 15px;
-  color: ${Constants.weakColor};
+  color: ${Constants.strongColor};
   font-weight: 600;
 `
 
@@ -77,7 +77,9 @@ const TrendRestaurantCard = ({ data, authStore }) => {
               latitude: data.lat,
               longitude: data.long,
             }) / 1000
-          ).toFixed(2) + ' km'}
+          )
+            .toFixed(2)
+            .slice(0, 4) + ' km'}
         </Name>
       </TextImage>
     </Component>

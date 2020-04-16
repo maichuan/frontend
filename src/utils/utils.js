@@ -69,3 +69,14 @@ export const getTime = date => {
   date = new Date(date)
   return date.getHours() + '.' + date.getMinutes()
 }
+
+export const generateListOfOrderDetails = details => {
+  return details.map(detail => {
+    return (
+      '-' +
+      detail.question +
+      ': ' +
+      (Array.isArray(detail.choices) ? detail.choices.join() : detail.choices)
+    )
+  })
+}

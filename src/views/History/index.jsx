@@ -23,8 +23,6 @@ const History = ({ navigation, authStore, spinnerStore }) => {
       const res = await serverClient.get('/history', {
         headers: { id: authStore.user.id },
       })
-      console.log(res.data)
-
       setData(res.data.data)
     } else {
       setData(mock.data)

@@ -27,13 +27,14 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
     // type 0 = eat in, type 1 = take-away
     if (authStore.auth.uid) {
       spinnerStore.open()
+      console.log(menusStore.answers)
+
       await new Promise(r => setTimeout(r, 1000))
       serverClient.post('/order', {
         userId: authStore.user.id,
         menus: menusStore.menus,
         restaurantId,
         totalPrice: menusStore.totalPrice,
-        answers: menusStore.answers,
         table,
         type,
       })
