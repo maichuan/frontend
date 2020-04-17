@@ -60,7 +60,7 @@ const OrderedView = ({ data }) => {
 
   const handlePageChange = () => {
     navigation.navigate('OrderedHistory', {
-      data,
+      data: { ...data, time: getTime(data.createdAt) },
     })
   }
 
