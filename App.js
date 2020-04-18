@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { AppLoading } from 'expo'
 import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons'
+import Omise from 'omise-react-native'
 
 import { Provider } from 'mobx-react'
 import { rootStore } from './src/stores/RootStore'
 
 import Main from './src/views/main.jsx'
+import { OMISE_TOKEN } from 'react-native-dotenv'
+
+Omise.config(OMISE_TOKEN, '2019-05-29')
 
 const App = () => {
   const [isReady, setIsReady] = useState(false)

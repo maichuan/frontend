@@ -19,6 +19,7 @@ import {
 import { serverClient } from '../../api'
 import { SafeView } from '../../components/common/styled'
 import constants from '../../utils/constants'
+import { mockPayment } from '../../utils/payment'
 
 const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
   const { restaurantId, table } = navigation.state.params
@@ -27,9 +28,9 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
     // type 0 = eat in, type 1 = take-away
     if (authStore.auth.uid) {
       spinnerStore.open()
-      console.log(menusStore.answers)
 
-      await new Promise(r => setTimeout(r, 1000))
+      const { data } = await mockPayment(menusStore.totalPrice)
+
       serverClient.post('/order', {
         userId: authStore.user.id,
         menus: menusStore.menus,
@@ -37,6 +38,7 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
         totalPrice: menusStore.totalPrice,
         table,
         type,
+        chargeId: data.chargeId,
       })
       menusStore.clear()
       spinnerStore.close()

@@ -27,6 +27,7 @@ import { serverClient } from '../../api'
 import { API_READY } from 'react-native-dotenv'
 
 import { mock } from './mock'
+import axios from 'axios'
 
 const Home = ({ authStore, navigation, spinnerStore }) => {
   const [data, setData] = useState({ restaurants: [], trends: [] })
@@ -51,7 +52,7 @@ const Home = ({ authStore, navigation, spinnerStore }) => {
     fetchWelcome()
   }, [authStore.curLocation.latitude])
 
-  const searchPage = () => {
+  const searchPage = async () => {
     navigation.navigate('Search')
   }
 

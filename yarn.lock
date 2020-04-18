@@ -1943,6 +1943,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+base-64@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
+  integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
+
 base64-js@^1.1.2, base64-js@^1.2.3:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.3.1.tgz#58ece8cb75dd07e71ed08c736abc5fac4dbf8df1"
@@ -5475,6 +5480,13 @@ object.values@^1.1.0:
     es-abstract "^1.17.0-next.1"
     function-bind "^1.1.1"
     has "^1.0.3"
+
+omise-react-native@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/omise-react-native/-/omise-react-native-0.0.8.tgz#e64f9a28faf641036006d1cbd95bfeeb6b870cfc"
+  integrity sha512-740iXEHtrEBuhDGepbhJgXnD+3/IfjL+GDGHGFkMRBKbneOsJSKQp3/63RpAxl1q6BBgrQoTbd+lpXykXJihUg==
+  dependencies:
+    base-64 "^0.1.0"
 
 on-finished@~2.3.0:
   version "2.3.0"
