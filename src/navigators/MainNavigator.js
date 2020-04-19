@@ -17,6 +17,7 @@ import History from '../views/History'
 import Constants from '../utils/constants'
 import OrderedHistory from '../views/OrderedHistory'
 import SearchResult from '../views/SearchResult'
+import Payment from '../views/Payment'
 
 const options = {
   // headerMode: 'none',
@@ -100,6 +101,7 @@ MainTab.navigationOptions = ({ navigation }) => {
 const UserTab = createStackNavigator(
   {
     Info: UserInfo,
+    Payment: Payment,
     // Login: Login,
   },
   optionsHeader,

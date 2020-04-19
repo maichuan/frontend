@@ -26,25 +26,13 @@ export const ProfileImg = styled.Image`
   width: ${Width / 3};
   height: ${Width / 3};
   border-radius: 100px;
-  margin: 10px 0;
+  margin: 20px 0;
 `
 export const Name = styled.Text`
   font-size: 20px;
   font-weight: 600;
+  color: ${constants.strongColor};
 `
-export const EditInfoView = styled.View`
-  width: ${Width};
+export const InfoView = styled.View`
   padding: 15px 0;
 `
-export const EditButton = styled.TouchableOpacity`
-  width: ${Width};
-  border-width: 0.5px;
-  border-color: #aaaaaa;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 10px;
-`
-export const EditText = styled.Text``
