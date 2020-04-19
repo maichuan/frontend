@@ -14,6 +14,9 @@ export class AuthStore {
   @observable
   curLocation = { latitude: -1, longitude: -1 }
 
+  @observable
+  notificationToken = ''
+
   @action
   setAuth = auth => {
     this.auth = auth
@@ -33,5 +36,10 @@ export class AuthStore {
   @action
   setCurLoaciton = location => {
     this.curLocation = location
+  }
+
+  @action
+  setNotificationToken = token => {
+    this.notificationToken = token
   }
 }

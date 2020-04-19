@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
-import { getAndSetLocation } from '../../utils/utils'
+import { getAndSetLocation } from '../../utils/permission'
 
 const ScrollBody = styled.ScrollView.attrs(props => ({
   contentContainerStyle: {
@@ -23,7 +23,13 @@ const RefreshView = ({ children, authStore }) => {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true)
-    await getAndSetLocation(authStore)
+
+    const location = await getAndSetLocation()
+    authStore.setCurLoaciton({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    })
+
     setRefreshing(false)
   }, [refreshing])
 

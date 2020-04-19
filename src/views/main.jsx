@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { Vibration } from 'react-native'
 import { Root } from 'native-base'
-
-import { getAndSetLocation } from '../utils/utils'
+import { Notifications } from 'expo'
+import {
+  getAndSetLocation,
+  getAndSetNotificationToken,
+} from '../utils/permission'
 
 import { observer, inject } from 'mobx-react'
 import { compose } from 'recompose'
@@ -14,7 +18,20 @@ import { serverClient } from '../api'
 
 const Main = ({ spinnerStore, authStore }) => {
   const getLocationAsync = async () => {
-    await getAndSetLocation(authStore)
+    const location = await getAndSetLocation()
+
+    authStore.setCurLoaciton({
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    })
+  }
+
+  const getNotification = async () => {
+    // const token = await getAndSetNotificationToken()
+    // console.log('Token: ', token)
+
+    // authStore.setNotificationToken(token)
+    authStore.setNotificationToken(await getAndSetNotificationToken())
   }
 
   const fetchUser = async user => {
@@ -26,7 +43,7 @@ const Main = ({ spinnerStore, authStore }) => {
 
   useEffect(() => {
     getLocationAsync()
-
+    getNotification()
     // spinnerStore.open()
     firebaseApp.auth().onAuthStateChanged(user => {
       if (user) {
@@ -44,6 +61,10 @@ const Main = ({ spinnerStore, authStore }) => {
     </Root>
   )
 }
+
+Main._notificationSubscription = Notifications.addListener(() =>
+  Vibration.vibrate(),
+)
 
 Main.propTypes = {
   spinnerStore: PropTypes.object,

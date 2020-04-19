@@ -39,6 +39,7 @@ const Cart = ({ menusStore, spinnerStore, authStore, navigation }) => {
         table,
         type,
         chargeId: data.chargeId,
+        token: authStore.notificationToken,
       })
       menusStore.clear()
       spinnerStore.close()
