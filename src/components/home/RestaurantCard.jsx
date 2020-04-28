@@ -58,7 +58,7 @@ const RestaurantCard = ({ data, authStore }) => {
         source={
           data.imgURL
             ? { uri: data.imgURL }
-            : require('../../../assets/hamburger.jpg')
+            : require('../../../assets/no_image.png')
         }
       />
       <TextImage>

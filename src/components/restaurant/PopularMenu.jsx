@@ -45,7 +45,7 @@ const PopularMenu = ({ data }) => {
             source={
               data.imgURL
                 ? { uri: data.imgURL }
-                : require('../../../assets/shrimp.jpg')
+                : require('../../../assets/no_image.png')
             }
           />
         </MenuButton>

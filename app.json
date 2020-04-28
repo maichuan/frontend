@@ -18,7 +18,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jack.kelner",
+      "buildNumber": "1.0.0"
     }
   }
 }

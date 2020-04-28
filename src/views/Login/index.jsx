@@ -52,7 +52,7 @@ const Login = ({ navigation, authStore, spinnerStore }) => {
             serverClient.post('/user/signup', {
               uid: user.user.uid,
             })
-            navigation.navigate('Home')
+            //   navigation.navigate('Home')
             spinnerStore.close()
           })
           .catch(function(error) {
