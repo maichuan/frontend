@@ -48,7 +48,8 @@ export const getIncresingPrice = ({ totalPrice, vat, serviceCharge }) => {
 
 export const getTime = date => {
   date = new Date(date)
-  return date.getHours() + '.' + date.getMinutes()
+  const minute = date.getMinutes()
+  return date.getHours() + '.' + (minute < 10 ? '0' + minute : minute)
 }
 
 export const generateListOfOrderDetails = details => {
