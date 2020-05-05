@@ -147,9 +147,9 @@ class SearchResult extends React.Component {
                 </SearchText>
               )}
               {this.state.data.restaurants &&
-                this.state.data.restaurants.map((d, i) => (
-                  <RestaurantCard key={i} data={d} />
-                ))}
+                this.state.data.restaurants
+                  .filter(res => res.lat)
+                  .map((d, i) => <RestaurantCard key={i} data={d} />)}
             </Body>
           </RefreshView>
         </Containers>

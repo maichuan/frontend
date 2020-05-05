@@ -26,8 +26,7 @@ import { serverClient } from '../../api'
 
 import { API_READY } from 'react-native-dotenv'
 
-import { mock } from './mock'
-import axios from 'axios'
+// import { mock } from './mock'
 
 const Home = ({ authStore, navigation, spinnerStore }) => {
   const [data, setData] = useState({ restaurants: [], trends: [] })
@@ -43,7 +42,7 @@ const Home = ({ authStore, navigation, spinnerStore }) => {
       setData(res.data)
     } else {
       console.log('Mock Mode')
-      setData(mock)
+      // setData(mock)
     }
     spinnerStore.close()
   }

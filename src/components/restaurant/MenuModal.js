@@ -218,7 +218,9 @@ const MenuModal = ({ data, showModal, closeModal, menusStore }) => {
             <ModalFeed>
               <ModalInnerView>
                 <RestaurantName>{data.name}</RestaurantName>
-                <Description>Food description Lorem ipsum</Description>
+                {data.description !== '' && (
+                  <Description>{data.description}</Description>
+                )}
                 <QuestionView>
                   <RowView>
                     <QuestionText>Quantity</QuestionText>
